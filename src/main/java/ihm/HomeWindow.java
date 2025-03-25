@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JButton;
@@ -13,16 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class HomeWindow {
-	public HomeWindow() throws FontFormatException, IOException {
+	public HomeWindow() {
 	 	JFrame frame = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
 	 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	 	frame.setResizable(false);
-	 
-	 	Font font_title = Font.createFont(Font.TRUETYPE_FONT, new File("font/Lostar.ttf"));
-	 	font_title = font_title.deriveFont(Font.BOLD, 70);
-	 	
-	 	JLabel titre = new JLabel("SOKOBAN", SwingConstants.CENTER);
-	 	titre.setFont(font_title);
+
+        JLabel titre = new JLabel("SOKOBAN", SwingConstants.CENTER);
+		titre.setFont(new Font(Font.SERIF, Font.BOLD, 70));
 	 	titre.setBounds(0, 50, 400, 100);
 	 	
 	    JButton play = new JButton("Jouer");  

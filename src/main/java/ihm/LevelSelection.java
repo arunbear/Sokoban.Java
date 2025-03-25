@@ -126,13 +126,8 @@ public class LevelSelection {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				levelSelection.dispose();
-				try {
-					new HomeWindow();
-				} catch (FontFormatException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
+                new HomeWindow();
+            }
 	    });
 	  
 	    

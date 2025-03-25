@@ -3,7 +3,6 @@ package ihm;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -127,14 +126,9 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				}
-				try {
-					new HomeWindow();
-				} catch (FontFormatException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
+                new HomeWindow();
+
+            }
 	    });
 	 	validate.addActionListener(new ActionListener() {
 			@Override
@@ -219,14 +213,9 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 						}
 					}
 					dispose();
-					try {
-						new HomeWindow();
-					} catch (FontFormatException | IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-				}
+                    new HomeWindow();
+
+                }
 				else {
 					invalid_level.setText("Niveau invalide !");
 				}
