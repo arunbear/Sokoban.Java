@@ -125,7 +125,7 @@ public class LevelEditorSetup {
 			public void actionPerformed(ActionEvent e) {
 				set_parameters.dispose();
 				try {
-					new FenetreAccueil();
+					new HomeWindow();
 				} catch (FontFormatException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

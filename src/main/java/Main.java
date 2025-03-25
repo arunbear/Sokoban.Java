@@ -1,7 +1,7 @@
 import java.awt.FontFormatException;
 import java.io.IOException;
 import javax.swing.SwingUtilities;
-import ihm.FenetreAccueil;
+import ihm.HomeWindow;
 
 
 public class Main implements Runnable  {
@@ -16,7 +16,7 @@ public class Main implements Runnable  {
 	@Override
 	public void run() {
 		try {
-			new FenetreAccueil();
+			new HomeWindow();
 		} catch (FontFormatException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

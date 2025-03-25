@@ -128,7 +128,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 					e2.printStackTrace();
 				}
 				try {
-					new FenetreAccueil();
+					new HomeWindow();
 				} catch (FontFormatException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -220,7 +220,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 					}
 					dispose();
 					try {
-						new FenetreAccueil();
+						new HomeWindow();
 					} catch (FontFormatException | IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

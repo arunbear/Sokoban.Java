@@ -13,8 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class FenetreAccueil {
-	public FenetreAccueil () throws FontFormatException, IOException {
+public class HomeWindow {
+	public HomeWindow() throws FontFormatException, IOException {
 	 	JFrame accueil= new JFrame("Sokoban v1.0 par Gabriel FARAGO"); 
 	 	accueil.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	 	accueil.setResizable(false);
