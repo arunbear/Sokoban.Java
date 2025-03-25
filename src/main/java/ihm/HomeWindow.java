@@ -1,6 +1,5 @@
 package ihm;
 
-
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
@@ -15,9 +14,9 @@ import javax.swing.SwingConstants;
 
 public class HomeWindow {
 	public HomeWindow() throws FontFormatException, IOException {
-	 	JFrame accueil= new JFrame("Sokoban v1.0 par Gabriel FARAGO"); 
-	 	accueil.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	 	accueil.setResizable(false);
+	 	JFrame frame = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
+	 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	 	frame.setResizable(false);
 	 
 	 	Font font_title = Font.createFont(Font.TRUETYPE_FONT, new File("font/Lostar.ttf"));
 	 	font_title = font_title.deriveFont(Font.BOLD, 70);
@@ -43,7 +42,7 @@ public class HomeWindow {
 	    play.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				accueil.dispose();
+				frame.dispose();
 				try {
 					new LevelSelection();
 				} catch (FontFormatException | IOException e1) {
@@ -55,7 +54,7 @@ public class HomeWindow {
 	    edit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				accueil.dispose();
+				frame.dispose();
 				try {
 					new LevelEditorSetup();
 				} catch (FontFormatException | IOException e1) {
@@ -65,13 +64,13 @@ public class HomeWindow {
 			}
 	    });
 	    
-	    accueil.add(play);  
-	    accueil.add(edit);
-	    accueil.add(quit);
-	    accueil.add(titre);
-	    accueil.setSize(400,400);  
-	    accueil.setLayout(null);  
-	    accueil.setVisible(true);  
+	    frame.add(play);
+	    frame.add(edit);
+	    frame.add(quit);
+	    frame.add(titre);
+	    frame.setSize(400,400);
+	    frame.setLayout(null);
+	    frame.setVisible(true);
 			
 	}
 }
