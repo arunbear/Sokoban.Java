@@ -2,8 +2,6 @@ package ihm;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
@@ -29,36 +27,25 @@ public class HomeWindow {
 	    edit.setBounds(25,300,150,50);
 	    quit.setBounds(225, 300, 150, 50);
 	    
-	    quit.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.exit( 0 );
-			}
-	    });
-	    play.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-				try {
-					new LevelSelection();
-				} catch (FontFormatException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-	    });
-	    edit.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-				try {
-					new LevelEditorSetup();
-				} catch (FontFormatException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-	    });
+	    quit.addActionListener(_ -> System.exit( 0 ));
+	    play.addActionListener(_ -> {
+            frame.dispose();
+            try {
+                new LevelSelection();
+            } catch (FontFormatException | IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
+	    edit.addActionListener(_ -> {
+            frame.dispose();
+            try {
+                new LevelEditorSetup();
+            } catch (FontFormatException | IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
 	    
 	    frame.add(play);
 	    frame.add(edit);
