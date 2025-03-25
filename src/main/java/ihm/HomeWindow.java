@@ -19,9 +19,9 @@ public class HomeWindow {
 		title.setFont(new Font(Font.SERIF, Font.BOLD, 70));
 	 	title.setBounds(0, 50, 400, 100);
 	 	
-	    JButton play = new JButton("Jouer");  
-	    JButton edit = new JButton("Éditeur de niveau");
-	    JButton quit = new JButton("Quitter");
+	    JButton play = new JButton("Play");
+	    JButton edit = new JButton("Edit levels");
+	    JButton quit = new JButton("Quit");
 	    
 	    play.setBounds(75,225,250,50);  
 	    edit.setBounds(25,300,150,50);
