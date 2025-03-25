@@ -17,9 +17,9 @@ public class HomeWindow {
 	 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	 	frame.setResizable(false);
 
-        JLabel titre = new JLabel("SOKOBAN", SwingConstants.CENTER);
-		titre.setFont(new Font(Font.SERIF, Font.BOLD, 70));
-	 	titre.setBounds(0, 50, 400, 100);
+        JLabel title = new JLabel("SOKOBAN", SwingConstants.CENTER);
+		title.setFont(new Font(Font.SERIF, Font.BOLD, 70));
+	 	title.setBounds(0, 50, 400, 100);
 	 	
 	    JButton play = new JButton("Jouer");  
 	    JButton edit = new JButton("Éditeur de niveau");
@@ -63,7 +63,7 @@ public class HomeWindow {
 	    frame.add(play);
 	    frame.add(edit);
 	    frame.add(quit);
-	    frame.add(titre);
+	    frame.add(title);
 	    frame.setSize(400,400);
 	    frame.setLayout(null);
 	    frame.setVisible(true);
