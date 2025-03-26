@@ -139,9 +139,10 @@ public class LevelSelection {
 	    levelSelection.add(browse);
 	    levelSelection.add(path);
 	    levelSelection.setSize(400,400);  
-	    levelSelection.setLayout(null);  
-	    levelSelection.setVisible(true); 
-	    
+	    levelSelection.setLayout(null);
+		levelSelection.setLocationRelativeTo(null);
+	    levelSelection.setVisible(true);
+
 	}
 
 }

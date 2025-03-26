@@ -141,8 +141,9 @@ public class LevelEditorSetup {
 	    set_parameters.add(name_display);
 	    set_parameters.add(nameInput);
 	    set_parameters.setSize(400,400);  
-	    set_parameters.setLayout(null);  
-	    set_parameters.setVisible(true);  
+	    set_parameters.setLayout(null);
+		set_parameters.setLocationRelativeTo(null);
+	    set_parameters.setVisible(true);
 	}
 	}
 	

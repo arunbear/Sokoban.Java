@@ -53,8 +53,9 @@ public class HomeWindow {
 	    frame.add(title);
 	    frame.setSize(400,400);
 	    frame.setLayout(null);
+		frame.setLocationRelativeTo(null); // center the window
 	    frame.setVisible(true);
-			
+
 	}
 }
 
