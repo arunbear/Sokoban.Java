@@ -23,10 +23,8 @@ import logic.Controleur;
 public class LevelSelection {
 	private static File path_selected;
 	private static JButton browse;
-	@SuppressWarnings("rawtypes")
-	private static JComboBox levelList;
+	private static JComboBox<String> levelList;
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public LevelSelection() throws IOException {
 		
 		path_selected = new File(new File(".").getCanonicalPath() + "/levels/level1.txt");
@@ -44,7 +42,7 @@ public class LevelSelection {
 			.mapToObj("Level %s"::formatted)
 			.toArray(String[]::new);
 
-		levelList = new JComboBox(existingLevels);
+		levelList = new JComboBox<>(existingLevels);
 	 	levelList.setSelectedIndex(0);
 	 	levelList.setBounds(50, 100, 100, 50);
 	 	
