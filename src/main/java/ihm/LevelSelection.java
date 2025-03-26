@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.stream.IntStream;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -36,13 +37,16 @@ public class LevelSelection {
 	 
 	 	Font font_title = Font.createFont(Font.TRUETYPE_FONT, new File("font/Lostar.ttf"));
 	 	font_title = font_title.deriveFont(Font.BOLD, 40);
-	 	
-	 	JLabel titre = new JLabel("Choix du niveau :", SwingConstants.CENTER);
+
+		JLabel titre = new JLabel("Choose a level:", SwingConstants.CENTER);
 	 	titre.setFont(font_title);
 	 	titre.setBounds(0, 20, 400, 50);
-	 	
-	 	String[] existingLevels = {"Niveau 1", "Niveau 2" , "Niveau 3", "Niveau 4", "Niveau 5", "Niveau 6", "Niveau 7", "Niveau 8", "Niveau 9", "Niveau 10"};	 	
-	 	
+
+        String[] existingLevels =
+			IntStream.range(1, 10+1)
+			.mapToObj("Level %s"::formatted)
+			.toArray(String[]::new);
+
 		levelList = new JComboBox(existingLevels);
 	 	levelList.setSelectedIndex(0);
 	 	levelList.setBounds(50, 100, 100, 50);
@@ -57,9 +61,9 @@ public class LevelSelection {
 	 	path.setBounds(50, 150, 300, 50);
 	 	
 	 	
-	 	JButton validate = new JButton("Valider");  
-	    JButton back = new JButton("Retour");
-	    JButton quit = new JButton("Quitter");
+	 	JButton validate = new JButton("Play");
+	    JButton back = new JButton("Back");
+	    JButton quit = new JButton("Quit");
 	    
 	    validate.setBounds(75,225,250,50);  
 	    back.setBounds(25,300,150,50);
