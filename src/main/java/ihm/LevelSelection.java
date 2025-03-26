@@ -27,20 +27,17 @@ public class LevelSelection {
 	private static JComboBox levelList;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public LevelSelection() throws FontFormatException, IOException{
+	public LevelSelection() throws IOException {
 		
 		path_selected = new File(new File(".").getCanonicalPath() + "/levels/level1.txt");
 		
 		
 		JFrame levelSelection= new JFrame("Sokoban v1.0 par Gabriel FARAGO"); 
 		levelSelection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	 
-	 	Font font_title = Font.createFont(Font.TRUETYPE_FONT, new File("font/Lostar.ttf"));
-	 	font_title = font_title.deriveFont(Font.BOLD, 40);
 
-		JLabel titre = new JLabel("Choose a level:", SwingConstants.CENTER);
-	 	titre.setFont(font_title);
-	 	titre.setBounds(0, 20, 400, 50);
+        JLabel title = new JLabel("CHOOSE A LEVEL", SwingConstants.CENTER);
+		title.setFont(new Font(Font.SERIF, Font.BOLD, 40));
+	 	title.setBounds(0, 20, 400, 50);
 
         String[] existingLevels =
 			IntStream.range(1, 10+1)
@@ -138,7 +135,7 @@ public class LevelSelection {
 	    levelSelection.add(validate);  
 	    levelSelection.add(back);
 	    levelSelection.add(quit);
-	    levelSelection.add(titre);
+	    levelSelection.add(title);
 	    levelSelection.add(levelList);
 	    levelSelection.add(browse);
 	    levelSelection.add(path);
