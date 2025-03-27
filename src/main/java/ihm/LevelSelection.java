@@ -96,18 +96,15 @@ public class LevelSelection {
 			}
 	    });
 	    
-	    levelList.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				path.setText("level" + Integer.toString(levelList.getSelectedIndex() + 1) + ".txt");
-				try {
-					path_selected = new File(new File(".").getCanonicalPath() + "/levels/level" +  Integer.toString(levelList.getSelectedIndex() + 1) + ".txt");
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-	    });
+	    levelList.addActionListener(_ -> {
+			var fileName = "level%d.txt".formatted(levelList.getSelectedIndex() + 1);
+            path.setText(fileName);
+            try {
+                path_selected = new File(new File(".").getCanonicalPath() + "/levels/%s".formatted(fileName));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
 	    
 	    validate.addActionListener(new ActionListener() {
 			@Override
