@@ -9,7 +9,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class Controleur {
     private int niveau;
-    private String path_to_level;
+    private final String pathToLevel;
     public Entrepot entrepot;
     public Gardien gardien;
     
@@ -27,7 +27,7 @@ public class Controleur {
     	else {    	
     		this.niveau = 99; //code for imported levels
     	}
-    	this.path_to_level = path_to_level;
+    	this.pathToLevel = path_to_level;
     	this.gardien = new Gardien(0,0);
     	
     	this.entrepot = new Entrepot(path_to_level ,this.niveau, this);
@@ -78,12 +78,12 @@ public class Controleur {
     }
     
     public String getPathToLevel() {
-    	return path_to_level;
+    	return pathToLevel;
     }
 
 	public void restart() throws IOException {
 		this.gardien = new Gardien(0,0);
-    	this.entrepot = new Entrepot(this.path_to_level, this.niveau, this);
+    	this.entrepot = new Entrepot(this.pathToLevel, this.niveau, this);
 	}    
 
 }
