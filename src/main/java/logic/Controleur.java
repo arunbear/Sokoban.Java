@@ -2,9 +2,8 @@ package logic;
 
 
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.util.List;
-
-import logic.Direction;
 
 
 @SuppressWarnings("unused")
@@ -17,7 +16,8 @@ public class Controleur {
     
     
     public Controleur (String path_to_level) throws IOException {
-    	if (path_to_level.contains("levels\\level")) {
+		var levelsPath = "levels%slevel".formatted(FileSystems.getDefault().getSeparator());
+    	if (path_to_level.contains(levelsPath)) {
     		int pos = path_to_level.length() - 5;
     		this.niveau = Integer.valueOf(path_to_level.substring(pos, pos + 1));
     		if (niveau == 0) {
