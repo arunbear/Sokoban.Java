@@ -12,9 +12,9 @@ public class Controleur {
     private final String pathToLevel;
     public Entrepot entrepot;
     public Gardien gardien;
-    
-    
-    
+
+	private static final int customLevel = 99;
+
     public Controleur (String path_to_level) throws IOException {
 		var levelsPath = "levels%slevel".formatted(FileSystems.getDefault().getSeparator());
     	if (path_to_level.contains(levelsPath)) {
@@ -25,7 +25,7 @@ public class Controleur {
     		}
     	}
     	else {    	
-    		this.niveau = 99; //code for imported levels
+    		this.niveau = customLevel;
     	}
     	this.pathToLevel = path_to_level;
     	this.gardien = new Gardien(0,0);
@@ -76,7 +76,11 @@ public class Controleur {
     public int getLevel() {
     	return niveau;
     }
-    
+
+	public boolean isOnCustomLevel() {
+		return niveau == customLevel;
+	}
+
     public String getPathToLevel() {
     	return pathToLevel;
     }

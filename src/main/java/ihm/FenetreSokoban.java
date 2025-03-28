@@ -34,11 +34,11 @@ public class FenetreSokoban extends JFrame implements KeyListener{
         HAUTEUR_FENETRE = controleur.entrepot.getNbLignes() * TAILLE_IMAGE;
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         this.setPreferredSize( new Dimension( LARGEUR_FENETRE + 16, HAUTEUR_FENETRE + 39 ));
-        if (controleur.getLevel() != 99) {
-        	this.setTitle( "Niveau " + Integer.toString(controleur.getLevel()) );
+        if (controleur.isOnCustomLevel()) {
+            this.setTitle( "Custom level");
         }
         else {
-        	this.setTitle( "Niveau custom");
+            this.setTitle( "Level %s".formatted(controleur.getLevel()));
         }
         this.setResizable(false);
 
