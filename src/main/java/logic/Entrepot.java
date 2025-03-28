@@ -16,10 +16,10 @@ public class Entrepot {
 
     private List<Case> case_tableau = new ArrayList<Case> ();
     
-    public Controleur controleur;
+    public Controller controleur;
     
     
-    public Entrepot(String path_to_level, int level, Controleur controleur) throws IOException {
+    public Entrepot(String path_to_level, int level, Controller controleur) throws IOException {
     	this.controleur = controleur;
     	    	
     	Path file = Paths.get(path_to_level);

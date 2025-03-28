@@ -12,7 +12,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import logic.Controleur;
+import logic.Controller;
 import logic.Direction;
 import logic.Game_Managers;
 
@@ -24,10 +24,10 @@ public class FenetreSokoban extends JFrame implements KeyListener{
     
     private int LARGEUR_FENETRE = 25 * TAILLE_IMAGE;
 	private int HAUTEUR_FENETRE = 15 * TAILLE_IMAGE;
-    private Controleur controleur;
+    private Controller controleur;
     private List<Direction> previousActions = new ArrayList<Direction> ();
 
-    public FenetreSokoban( Controleur controleur ) {
+    public FenetreSokoban( Controller controleur ) {
         this.controleur = controleur;
         
         LARGEUR_FENETRE = controleur.entrepot.getNbColonnes() * TAILLE_IMAGE;
@@ -112,7 +112,7 @@ public class FenetreSokoban extends JFrame implements KeyListener{
         		 try {
         			this.dispose();
         			String oldPath = this.controleur.getPathToLevel();
-        			new FenetreSokoban(new Controleur(oldPath.substring(0, oldPath.length() - 5) + Integer.toString(this.controleur.getLevel() + 1 ) + ".txt"));
+        			new FenetreSokoban(new Controller(oldPath.substring(0, oldPath.length() - 5) + Integer.toString(this.controleur.getLevel() + 1 ) + ".txt"));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}

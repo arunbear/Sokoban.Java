@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import logic.ContenuCase;
-import logic.Controleur;
+import logic.Controller;
 
 
 @SuppressWarnings("serial")
@@ -22,9 +22,9 @@ public class PaneauSokoban extends JPanel {
 
     private static EnumMap< ContenuCase, Image > images;
 
-    private Controleur controleur;
+    private Controller controleur;
 
-    public PaneauSokoban( Controleur controleur ) {
+    public PaneauSokoban( Controller controleur ) {
         this.controleur = controleur;
         try {
             images = new EnumMap< ContenuCase, Image >(

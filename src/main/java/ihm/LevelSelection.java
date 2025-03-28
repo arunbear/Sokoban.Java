@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import logic.Controleur;
+import logic.Controller;
 
 public class LevelSelection {
     private static File path_selected;
@@ -106,7 +106,7 @@ public class LevelSelection {
             public void actionPerformed(ActionEvent e) {
                 levelSelection.dispose();
                 try {
-                    new FenetreSokoban(new Controleur(path_selected.getPath()));
+                    new FenetreSokoban(new Controller(path_selected.getPath()));
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();

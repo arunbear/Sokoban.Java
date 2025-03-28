@@ -21,7 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import logic.ContenuCase;
-import logic.Controleur;
+import logic.Controller;
 
 @SuppressWarnings("serial")
 public class Editor extends JFrame implements MouseListener, MouseMotionListener {
@@ -29,7 +29,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	static final int TAILLE_IMAGE = 32;
 	static int LARGEUR_FENETRE = 0;
 	static int HAUTEUR_FENETRE = 0;
-	static Controleur controleur;
+	static Controller controleur;
 	static ContenuCase content = ContenuCase.ARRIERE_PLAN;
 
 	public Editor (int nbLignes, int nbColonnes, String name) throws IOException  {  
@@ -43,7 +43,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 		lowerWriter.close();
 		levelWriter.close();
 		
-		controleur = new Controleur(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt").getPath());
+		controleur = new Controller(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt").getPath());
 		LARGEUR_FENETRE = controleur.entrepot.getNbColonnes() * TAILLE_IMAGE;
         HAUTEUR_FENETRE = controleur.entrepot.getNbLignes() * TAILLE_IMAGE;
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
