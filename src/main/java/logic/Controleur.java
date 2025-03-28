@@ -19,7 +19,7 @@ public class Controleur {
 		var levelsPath = "levels%slevel".formatted(FileSystems.getDefault().getSeparator());
     	if (path_to_level.contains(levelsPath)) {
     		int pos = path_to_level.length() - 5;
-    		this.niveau = Integer.valueOf(path_to_level.substring(pos, pos + 1));
+    		this.niveau = Integer.parseInt(path_to_level.substring(pos, pos + 1));
     		if (niveau == 0) {
     			niveau = 10;
     		}
@@ -42,31 +42,31 @@ public class Controleur {
     			if (l != 0) {
     				if (entrepot.getCase((l - 1), c).acceptGardian(direction)) {
     					gardien.set_pos(l-1, c);
-    				};
-    			};
-    			break;
+    				}
+                }
+                break;
     		case BAS:
     			if (l != entrepot.getNbLignes() - 1) {
     				if (entrepot.getCase((l + 1), c).acceptGardian(direction)) {
     					gardien.set_pos(l+1, c);
-    				};
-    			};
-    			break;
+    				}
+                }
+                break;
     		case GAUCHE:
     			if (c != 0) {
     				if (entrepot.getCase(l, c - 1).acceptGardian(direction)) {
     					gardien.set_pos(l, c-1);
-    				};
-    			};
-    			break;
+    				}
+                }
+                break;
     		case DROITE:
     			if (c != entrepot.getNbColonnes() - 1) {
     				if (entrepot.getCase(l, c + 1).acceptGardian(direction)) {
     					gardien.set_pos(l, c+1);
-    				};
-    			};
-    			break;
-    	};
+    				}
+                }
+                break;
+    	}
     }
 
     public boolean levelEnd() {
