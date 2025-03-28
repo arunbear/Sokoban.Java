@@ -45,6 +45,7 @@ public class FenetreSokoban extends JFrame implements KeyListener{
         this.add( new PaneauSokoban( controleur ));
         this.addKeyListener( this );
         this.pack();
+        this.setLocationRelativeTo( null );
         this.setVisible( true );
     }
 
