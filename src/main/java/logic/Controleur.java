@@ -8,7 +8,7 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public class Controleur {
-    private int niveau;
+    private int level;
     private final String pathToLevel;
     public Entrepot entrepot;
     public Gardien gardien;
@@ -19,18 +19,18 @@ public class Controleur {
 		var levelsPath = "levels%slevel".formatted(FileSystems.getDefault().getSeparator());
     	if (path_to_level.contains(levelsPath)) {
     		int pos = path_to_level.length() - 5;
-    		this.niveau = Integer.parseInt(path_to_level.substring(pos, pos + 1));
-    		if (niveau == 0) {
-    			niveau = 10;
+    		this.level = Integer.parseInt(path_to_level.substring(pos, pos + 1));
+    		if (level == 0) {
+    			level = 10;
     		}
     	}
     	else {    	
-    		this.niveau = customLevel;
+    		this.level = customLevel;
     	}
     	this.pathToLevel = path_to_level;
     	this.gardien = new Gardien(0,0);
     	
-    	this.entrepot = new Entrepot(path_to_level ,this.niveau, this);
+    	this.entrepot = new Entrepot(path_to_level ,this.level, this);
     }
     
     public void action(Direction direction) {
@@ -74,11 +74,11 @@ public class Controleur {
     }
 
     public int getLevel() {
-    	return niveau;
+    	return level;
     }
 
 	public boolean isOnCustomLevel() {
-		return niveau == customLevel;
+		return level == customLevel;
 	}
 
     public String getPathToLevel() {
@@ -87,7 +87,7 @@ public class Controleur {
 
 	public void restart() throws IOException {
 		this.gardien = new Gardien(0,0);
-    	this.entrepot = new Entrepot(this.pathToLevel, this.niveau, this);
+    	this.entrepot = new Entrepot(this.pathToLevel, this.level, this);
 	}    
 
 }
