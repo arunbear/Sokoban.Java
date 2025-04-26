@@ -18,7 +18,7 @@ import logic.Controller;
 @SuppressWarnings("serial")
 public class PaneauSokoban extends JPanel {
 
-    private static final int TAILLE_IMAGE = FenetreSokoban.TAILLE_IMAGE;
+    private static final int TAILLE_IMAGE = SokobanWindow.TAILLE_IMAGE;
 
     private static EnumMap< ContenuCase, Image > images;
 

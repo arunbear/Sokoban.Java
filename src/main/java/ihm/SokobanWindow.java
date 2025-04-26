@@ -17,8 +17,7 @@ import logic.Direction;
 import logic.Game_Managers;
 
 
-@SuppressWarnings("serial")
-public class FenetreSokoban extends JFrame implements KeyListener{
+public class SokobanWindow extends JFrame implements KeyListener{
 
     static final int TAILLE_IMAGE = 32;
     
@@ -27,7 +26,7 @@ public class FenetreSokoban extends JFrame implements KeyListener{
     private Controller controleur;
     private List<Direction> previousActions = new ArrayList<Direction> ();
 
-    public FenetreSokoban( Controller controleur ) {
+    public SokobanWindow(Controller controleur ) {
         this.controleur = controleur;
         
         LARGEUR_FENETRE = controleur.entrepot.getNbColonnes() * TAILLE_IMAGE;
@@ -112,7 +111,7 @@ public class FenetreSokoban extends JFrame implements KeyListener{
         		 try {
         			this.dispose();
         			String oldPath = this.controleur.getPathToLevel();
-        			new FenetreSokoban(new Controller(oldPath.substring(0, oldPath.length() - 5) + Integer.toString(this.controleur.getLevel() + 1 ) + ".txt"));
+        			new SokobanWindow(new Controller(oldPath.substring(0, oldPath.length() - 5) + Integer.toString(this.controleur.getLevel() + 1 ) + ".txt"));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}

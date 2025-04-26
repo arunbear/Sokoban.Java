@@ -106,7 +106,7 @@ public class LevelSelection {
             public void actionPerformed(ActionEvent e) {
                 levelSelection.dispose();
                 try {
-                    new FenetreSokoban(new Controller(path_selected.getPath()));
+                    new SokobanWindow(new Controller(path_selected.getPath()));
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
