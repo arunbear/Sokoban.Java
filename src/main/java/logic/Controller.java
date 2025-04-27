@@ -1,10 +1,8 @@
 package logic;
 
-
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.util.List;
-
 
 @SuppressWarnings("unused")
 public class Controller {
@@ -24,15 +22,15 @@ public class Controller {
     			level = 10;
     		}
     	}
-    	else {    	
+    	else {
     		this.level = customLevel;
     	}
     	this.pathToLevel = path_to_level;
     	this.gardien = new Gardien(0,0);
-    	
+
     	this.entrepot = new Entrepot(path_to_level ,this.level, this);
     }
-    
+
     public void action(Direction direction) {
     	List<Integer> position = gardien.getPosition();
     	int l = position.get(0);
@@ -88,6 +86,6 @@ public class Controller {
 	public void restart() throws IOException {
 		this.gardien = new Gardien(0,0);
     	this.entrepot = new Entrepot(this.pathToLevel, this.level, this);
-	}    
+	}
 
 }
