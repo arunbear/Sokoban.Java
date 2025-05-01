@@ -3,6 +3,7 @@ package ihm;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,23 +12,22 @@ import javax.swing.SwingConstants;
 
 public class HomeWindow {
     public HomeWindow() {
-        JFrame frame = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
+        /* Create a */ JFrame frame = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
-        JLabel title = new JLabel("SOKOBAN", SwingConstants.CENTER);
+        /* Create a */ JLabel title = new JLabel("SOKOBAN", SwingConstants.CENTER);
         title.setFont(new Font(Font.SERIF, Font.BOLD, 70));
         title.setBounds(0, 50, 400, 100);
 
-        JButton play = new JButton("Play");
-        JButton edit = new JButton("Edit levels");
+        // Create buttons
+
         JButton quit = new JButton("Quit");
-
-        play.setBounds(75, 225, 250, 50);
-        edit.setBounds(25, 300, 150, 50);
         quit.setBounds(225, 300, 150, 50);
-
         quit.addActionListener(_ -> System.exit(0));
+
+        JButton play = new JButton("Play");
+        play.setBounds(75, 225, 250, 50);
         play.addActionListener(_ -> {
             frame.dispose();
             try {
@@ -37,6 +37,9 @@ public class HomeWindow {
                 e1.printStackTrace();
             }
         });
+
+        JButton edit = new JButton("Edit levels");
+        edit.setBounds(25, 300, 150, 50);
         edit.addActionListener(_ -> {
             frame.dispose();
             try {
@@ -47,10 +50,12 @@ public class HomeWindow {
             }
         });
 
-        frame.add(play);
-        frame.add(edit);
-        frame.add(quit);
+        // Add elements to the frame
+        for (var jButton : List.of(play, edit, quit)) {
+            frame.add(jButton);
+        }
         frame.add(title);
+
         frame.setSize(400, 400);
         frame.setLayout(null);
         frame.setLocationRelativeTo(null); // center the window
