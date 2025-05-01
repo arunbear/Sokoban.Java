@@ -12,32 +12,27 @@ import javax.swing.SwingConstants;
 
 public class HomeWindow {
     public HomeWindow() {
-        /* Create a */ JFrame frame = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-
-        /* Create a */ JLabel title = new JLabel("SOKOBAN", SwingConstants.CENTER);
-        title.setFont(new Font(Font.SERIF, Font.BOLD, 70));
-        title.setBounds(0, 50, 400, 100);
+        JFrame frame = createFrame();
+        JLabel title = createTitle();
 
         // Create buttons
+        JButton quit = createQuitButton();
+        JButton play = createPlayButton(frame);
+        JButton edit = createEditButton(frame);
 
-        JButton quit = new JButton("Quit");
-        quit.setBounds(225, 300, 150, 50);
-        quit.addActionListener(_ -> System.exit(0));
+        List.of(play, edit, quit, title).forEach(frame::add);
 
-        JButton play = new JButton("Play");
-        play.setBounds(75, 225, 250, 50);
-        play.addActionListener(_ -> {
-            frame.dispose();
-            try {
-                new LevelSelection();
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-        });
+        configureFrame(frame);
+    }
 
+    private static void configureFrame(JFrame frame) {
+        frame.setSize(400, 400);
+        frame.setLayout(null);
+        frame.setLocationRelativeTo(null); // center the window
+        frame.setVisible(true);
+    }
+
+    private static JButton createEditButton(JFrame frame) {
         JButton edit = new JButton("Edit levels");
         edit.setBounds(25, 300, 150, 50);
         edit.addActionListener(_ -> {
@@ -49,18 +44,43 @@ public class HomeWindow {
                 e1.printStackTrace();
             }
         });
+        return edit;
+    }
 
-        // Add elements to the frame
-        for (var jButton : List.of(play, edit, quit)) {
-            frame.add(jButton);
-        }
-        frame.add(title);
+    private static JButton createPlayButton(JFrame frame) {
+        JButton play = new JButton("Play");
+        play.setBounds(75, 225, 250, 50);
+        play.addActionListener(_ -> {
+            frame.dispose();
+            try {
+                new LevelSelection();
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        });
+        return play;
+    }
 
-        frame.setSize(400, 400);
-        frame.setLayout(null);
-        frame.setLocationRelativeTo(null); // center the window
-        frame.setVisible(true);
+    private static JButton createQuitButton() {
+        JButton quit = new JButton("Quit");
+        quit.setBounds(225, 300, 150, 50);
+        quit.addActionListener(_ -> System.exit(0));
+        return quit;
+    }
 
+    private static JLabel createTitle() {
+        JLabel title = new JLabel("SOKOBAN", SwingConstants.CENTER);
+        title.setFont(new Font(Font.SERIF, Font.BOLD, 70));
+        title.setBounds(0, 50, 400, 100);
+        return title;
+    }
+
+    private static JFrame createFrame() {
+        JFrame frame = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        return frame;
     }
 }
 
