@@ -31,10 +31,6 @@ public class LevelSelection {
         JFrame levelSelection = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
         levelSelection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JLabel title = new JLabel("CHOOSE A LEVEL", SwingConstants.CENTER);
-        title.setFont(new Font(Font.SERIF, Font.BOLD, 40));
-        title.setBounds(0, 20, 400, 50);
-
         String[] existingLevels =
             IntStream.range(1, 10 + 1)
             .mapToObj("Level %s"::formatted)
@@ -54,19 +50,8 @@ public class LevelSelection {
         path.setBounds(50, 150, 300, 50);
 
         JButton validate = new JButton("Play");
-        JButton back = new JButton("Back");
-        JButton quit = new JButton("Quit");
 
         validate.setBounds(75, 225, 250, 50);
-        back.setBounds(25, 300, 150, 50);
-        quit.setBounds(225, 300, 150, 50);
-
-        quit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
         browse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -113,13 +98,10 @@ public class LevelSelection {
                 }
             }
         });
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                levelSelection.dispose();
-                new HomeWindow();
-            }
-        });
+
+        JLabel title = createTitle();
+        JButton quit = createQuitButton();
+        JButton back = createBackButton(levelSelection);
 
         levelSelection.add(validate);
         levelSelection.add(back);
@@ -133,6 +115,39 @@ public class LevelSelection {
         levelSelection.setLocationRelativeTo(null);
         levelSelection.setVisible(true);
 
+    }
+
+    private static JButton createBackButton(JFrame levelSelection) {
+        JButton back = new JButton("Back");
+        back.setBounds(25, 300, 150, 50);
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                levelSelection.dispose();
+                new HomeWindow();
+            }
+        });
+        return back;
+    }
+
+    private static JButton createQuitButton() {
+        JButton quit = new JButton("Quit");
+        quit.setBounds(225, 300, 150, 50);
+
+        quit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        return quit;
+    }
+
+    private static JLabel createTitle() {
+        JLabel title = new JLabel("CHOOSE A LEVEL", SwingConstants.CENTER);
+        title.setFont(new Font(Font.SERIF, Font.BOLD, 40));
+        title.setBounds(0, 20, 400, 50);
+        return title;
     }
 
 }
