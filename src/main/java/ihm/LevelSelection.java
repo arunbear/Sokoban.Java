@@ -22,7 +22,6 @@ import logic.Controller;
 public class LevelSelection {
     private static File path_selected;
     private static JButton browse;
-    private static JComboBox<String> levelList;
 
     public LevelSelection() throws IOException {
 
@@ -30,15 +29,6 @@ public class LevelSelection {
 
         JFrame levelSelection = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
         levelSelection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        String[] existingLevels =
-            IntStream.range(1, 10 + 1)
-            .mapToObj("Level %s"::formatted)
-            .toArray(String[]::new);
-
-        levelList = new JComboBox<>(existingLevels);
-        levelList.setSelectedIndex(0);
-        levelList.setBounds(50, 100, 100, 50);
 
         Icon browse_icon = new ImageIcon("img/browser.png");
         browse = new JButton(browse_icon);
@@ -73,20 +63,12 @@ public class LevelSelection {
             }
         });
 
-        levelList.addActionListener(_ -> {
-            var fileName = "level%d.txt".formatted(levelList.getSelectedIndex() + 1);
-            path.setText(fileName);
-            try {
-                path_selected = new File(new File(".").getCanonicalPath() + "/levels/%s".formatted(fileName));
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        });
-
         JLabel title = createTitle();
         JButton quit = createQuitButton();
         JButton back = createBackButton(levelSelection);
         JButton play = createPlayButton(levelSelection);
+
+        JComboBox<String> levelList = createLevelList(path);
 
         levelSelection.add(play);
         levelSelection.add(back);
@@ -100,6 +82,28 @@ public class LevelSelection {
         levelSelection.setLocationRelativeTo(null);
         levelSelection.setVisible(true);
 
+    }
+
+    private static JComboBox<String> createLevelList(JLabel path) {
+        String[] existingLevels =
+            IntStream.range(1, 10 + 1)
+            .mapToObj("Level %s"::formatted)
+            .toArray(String[]::new);
+
+        JComboBox<String> levelList = new JComboBox<>(existingLevels);
+        levelList.setSelectedIndex(0);
+        levelList.setBounds(50, 100, 100, 50);
+
+        levelList.addActionListener(_ -> {
+            var fileName = "level%d.txt".formatted(levelList.getSelectedIndex() + 1);
+            path.setText(fileName);
+            try {
+                path_selected = new File(new File(".").getCanonicalPath() + "/levels/%s".formatted(fileName));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+        return levelList;
     }
 
     private static JButton createPlayButton(JFrame levelSelection) {
