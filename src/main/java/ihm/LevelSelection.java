@@ -49,9 +49,6 @@ public class LevelSelection {
         JLabel path = new JLabel("level1.txt", SwingConstants.CENTER);
         path.setBounds(50, 150, 300, 50);
 
-        JButton validate = new JButton("Play");
-
-        validate.setBounds(75, 225, 250, 50);
         browse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,24 +83,12 @@ public class LevelSelection {
             }
         });
 
-        validate.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                levelSelection.dispose();
-                try {
-                    new SokobanWindow(new Controller(path_selected.getPath()));
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-            }
-        });
-
         JLabel title = createTitle();
         JButton quit = createQuitButton();
         JButton back = createBackButton(levelSelection);
+        JButton play = createPlayButton(levelSelection);
 
-        levelSelection.add(validate);
+        levelSelection.add(play);
         levelSelection.add(back);
         levelSelection.add(quit);
         levelSelection.add(title);
@@ -115,6 +100,25 @@ public class LevelSelection {
         levelSelection.setLocationRelativeTo(null);
         levelSelection.setVisible(true);
 
+    }
+
+    private static JButton createPlayButton(JFrame levelSelection) {
+        JButton play = new JButton("Play");
+
+        play.setBounds(75, 225, 250, 50);
+        play.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                levelSelection.dispose();
+                try {
+                    new SokobanWindow(new Controller(path_selected.getPath()));
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            }
+        });
+        return play;
     }
 
     private static JButton createBackButton(JFrame levelSelection) {
