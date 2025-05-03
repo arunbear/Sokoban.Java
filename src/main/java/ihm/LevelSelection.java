@@ -21,7 +21,6 @@ import logic.Controller;
 
 public class LevelSelection {
     private static File path_selected;
-    private static JButton browse;
 
     public LevelSelection() throws IOException {
 
@@ -30,14 +29,39 @@ public class LevelSelection {
         JFrame levelSelection = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
         levelSelection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        JLabel path = new JLabel("level1.txt", SwingConstants.CENTER);
+        path.setBounds(50, 150, 300, 50);
+
+        JButton browse = createBrowseButton(path);
+
+        JLabel title = createTitle();
+        JButton quit = createQuitButton();
+        JButton back = createBackButton(levelSelection);
+        JButton play = createPlayButton(levelSelection);
+
+        JComboBox<String> levelList = createLevelList(path);
+
+        levelSelection.add(play);
+        levelSelection.add(back);
+        levelSelection.add(quit);
+        levelSelection.add(title);
+        levelSelection.add(levelList);
+        levelSelection.add(browse);
+        levelSelection.add(path);
+        levelSelection.setSize(400, 400);
+        levelSelection.setLayout(null);
+        levelSelection.setLocationRelativeTo(null);
+        levelSelection.setVisible(true);
+
+    }
+
+    private static JButton createBrowseButton(JLabel path) {
         Icon browse_icon = new ImageIcon("img/browser.png");
-        browse = new JButton(browse_icon);
+
+        JButton browse = new JButton(browse_icon);
         browse.setOpaque(false);
         browse.setContentAreaFilled(false);
         browse.setBounds(250, 100, 100, 50);
-
-        JLabel path = new JLabel("level1.txt", SwingConstants.CENTER);
-        path.setBounds(50, 150, 300, 50);
 
         browse.addActionListener(new ActionListener() {
             @Override
@@ -62,26 +86,7 @@ public class LevelSelection {
 
             }
         });
-
-        JLabel title = createTitle();
-        JButton quit = createQuitButton();
-        JButton back = createBackButton(levelSelection);
-        JButton play = createPlayButton(levelSelection);
-
-        JComboBox<String> levelList = createLevelList(path);
-
-        levelSelection.add(play);
-        levelSelection.add(back);
-        levelSelection.add(quit);
-        levelSelection.add(title);
-        levelSelection.add(levelList);
-        levelSelection.add(browse);
-        levelSelection.add(path);
-        levelSelection.setSize(400, 400);
-        levelSelection.setLayout(null);
-        levelSelection.setLocationRelativeTo(null);
-        levelSelection.setVisible(true);
-
+        return browse;
     }
 
     private static JComboBox<String> createLevelList(JLabel path) {
