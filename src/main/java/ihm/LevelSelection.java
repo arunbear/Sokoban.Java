@@ -63,25 +63,17 @@ public class LevelSelection {
         browse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fileBrowser = new JFileChooser();
-                File f = null;
-                try {
-                    f = new File(new File(".").getCanonicalPath() + "/levels");
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-                fileBrowser.setCurrentDirectory(f);
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
-                fileBrowser.setFileFilter(filter);
+                JFileChooser fileBrowser = makeFileChooser();
+
                 int returnVal = fileBrowser.showOpenDialog(null);
+
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     String browser_result = fileBrowser.getSelectedFile().getName();
                     path.setText(browser_result);
                     selectedLevelFile = fileBrowser.getSelectedFile();
                 }
-
             }
+
         });
         return browse;
     }
@@ -149,4 +141,19 @@ public class LevelSelection {
         return title;
     }
 
+    private static JFileChooser makeFileChooser() {
+        JFileChooser fileBrowser = new JFileChooser();
+
+        File browseDirectory;
+        try {
+            browseDirectory = new File("%s/levels".formatted(new File(".").getCanonicalPath()));
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        fileBrowser.setCurrentDirectory(browseDirectory);
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+        fileBrowser.setFileFilter(filter);
+        return fileBrowser;
+    }
 }
