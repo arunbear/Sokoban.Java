@@ -32,22 +32,14 @@ public class LevelSelection {
         JLabel levelFileLabel = new JLabel("level1.txt", SwingConstants.CENTER);
         levelFileLabel.setBounds(50, 150, 300, 50);
 
-        JButton browse = createBrowseButton(levelFileLabel);
-
-        JLabel title = createTitle();
-        JButton quit = createQuitButton();
-        JButton back = createBackButton(levelSelection);
-        JButton play = createPlayButton(levelSelection);
-
-        JComboBox<String> levelList = createLevelList(levelFileLabel);
-
-        levelSelection.add(play);
-        levelSelection.add(back);
-        levelSelection.add(quit);
-        levelSelection.add(title);
-        levelSelection.add(levelList);
-        levelSelection.add(browse);
+        levelSelection.add(aPlayButton(levelSelection));
+        levelSelection.add(aBackButton(levelSelection));
+        levelSelection.add(aQuitButton());
+        levelSelection.add(aTitle());
+        levelSelection.add(aListOfLevels(levelFileLabel));
+        levelSelection.add(aBrowseButton(levelFileLabel));
         levelSelection.add(levelFileLabel);
+
         levelSelection.setSize(400, 400);
         levelSelection.setLayout(null);
         levelSelection.setLocationRelativeTo(null);
@@ -55,10 +47,11 @@ public class LevelSelection {
 
     }
 
-    private static JButton createBrowseButton(JLabel path) {
+    private static JButton aBrowseButton(JLabel path) {
         Icon browse_icon = new ImageIcon("img/browser.png");
 
         JButton browse = new JButton(browse_icon);
+        browse.setToolTipText("Browse for a level file");
         browse.setOpaque(false);
         browse.setContentAreaFilled(false);
         browse.setBounds(250, 100, 100, 50);
@@ -89,7 +82,7 @@ public class LevelSelection {
         return browse;
     }
 
-    private static JComboBox<String> createLevelList(JLabel path) {
+    private static JComboBox<String> aListOfLevels(JLabel path) {
         String[] existingLevels =
             IntStream.range(1, 10 + 1)
             .mapToObj("Level %s"::formatted)
@@ -111,7 +104,7 @@ public class LevelSelection {
         return levelList;
     }
 
-    private static JButton createPlayButton(JFrame levelSelection) {
+    private static JButton aPlayButton(JFrame levelSelection) {
         JButton play = new JButton("Play");
 
         play.setBounds(75, 225, 250, 50);
@@ -127,7 +120,7 @@ public class LevelSelection {
         return play;
     }
 
-    private static JButton createBackButton(JFrame levelSelection) {
+    private static JButton aBackButton(JFrame levelSelection) {
         JButton back = new JButton("Back");
         back.setBounds(25, 300, 150, 50);
         back.addActionListener(_ -> {
@@ -137,7 +130,7 @@ public class LevelSelection {
         return back;
     }
 
-    private static JButton createQuitButton() {
+    private static JButton aQuitButton() {
         JButton quit = new JButton("Quit");
         quit.setBounds(225, 300, 150, 50);
 
@@ -145,7 +138,7 @@ public class LevelSelection {
         return quit;
     }
 
-    private static JLabel createTitle() {
+    private static JLabel aTitle() {
         JLabel title = new JLabel("CHOOSE A LEVEL", SwingConstants.CENTER);
         title.setFont(new Font(Font.SERIF, Font.BOLD, 40));
         title.setBounds(0, 20, 400, 50);
