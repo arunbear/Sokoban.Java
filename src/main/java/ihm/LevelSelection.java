@@ -20,16 +20,20 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import logic.Controller;
 
 public class LevelSelection {
+    private static final String defaultFileName = "level1.txt";
     private static File selectedLevelFile;
 
     public LevelSelection() throws IOException {
 
-        selectedLevelFile = new File(new File(".").getCanonicalPath() + "/levels/level1.txt");
+        selectedLevelFile = new File("%s/levels/%s".formatted(
+            new File(".").getCanonicalPath(),
+            defaultFileName)
+        );
 
         JFrame levelSelection = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
         levelSelection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JLabel levelFileLabel = new JLabel("level1.txt", SwingConstants.CENTER);
+        JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
         levelFileLabel.setBounds(50, 150, 300, 50);
 
         levelSelection.add(aPlayButton(levelSelection));
