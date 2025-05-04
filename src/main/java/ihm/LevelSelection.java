@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 import javax.swing.Icon;
@@ -115,16 +116,13 @@ public class LevelSelection {
         JButton play = new JButton("Play");
 
         play.setBounds(75, 225, 250, 50);
-        play.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                levelSelection.dispose();
-                try {
-                    new SokobanWindow(new Controller(path_selected.getPath()));
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+        play.addActionListener(e -> {
+            levelSelection.dispose();
+            try {
+                new SokobanWindow(new Controller(path_selected.getPath()));
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
             }
         });
         return play;
@@ -133,12 +131,9 @@ public class LevelSelection {
     private static JButton createBackButton(JFrame levelSelection) {
         JButton back = new JButton("Back");
         back.setBounds(25, 300, 150, 50);
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                levelSelection.dispose();
-                new HomeWindow();
-            }
+        back.addActionListener(_ -> {
+            levelSelection.dispose();
+            new HomeWindow();
         });
         return back;
     }
@@ -147,12 +142,7 @@ public class LevelSelection {
         JButton quit = new JButton("Quit");
         quit.setBounds(225, 300, 150, 50);
 
-        quit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        quit.addActionListener(_ -> System.exit(0));
         return quit;
     }
 
