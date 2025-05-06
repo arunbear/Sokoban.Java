@@ -22,7 +22,9 @@ import logic.Controller;
 public class LevelSelection {
     private static final String defaultFileName = "level1.txt";
     private static File selectedLevelFile;
+
     private final JFrame frame = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
+    private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
 
     public LevelSelection() throws IOException {
 
@@ -31,15 +33,14 @@ public class LevelSelection {
             defaultFileName)
         );
 
-        JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
         levelFileLabel.setBounds(50, 150, 300, 50);
 
-        frame.add(aPlayButton(frame));
-        frame.add(aBackButton(frame));
+        frame.add(aPlayButton());
+        frame.add(aBackButton());
         frame.add(aQuitButton());
         frame.add(aTitle());
-        frame.add(aListOfLevels(levelFileLabel));
-        frame.add(aBrowseButton(levelFileLabel));
+        frame.add(aListOfLevels());
+        frame.add(aBrowseButton());
         frame.add(levelFileLabel);
 
         configureFrame();
@@ -53,7 +54,7 @@ public class LevelSelection {
         frame.setVisible(true);
     }
 
-    private static JButton aBrowseButton(JLabel path) {
+    private JButton aBrowseButton() {
         Icon browse_icon = new ImageIcon("img/browser.png");
 
         JButton browse = new JButton(browse_icon);
@@ -71,7 +72,7 @@ public class LevelSelection {
 
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     String browser_result = fileBrowser.getSelectedFile().getName();
-                    path.setText(browser_result);
+                    levelFileLabel.setText(browser_result);
                     selectedLevelFile = fileBrowser.getSelectedFile();
                 }
             }
@@ -80,7 +81,7 @@ public class LevelSelection {
         return browse;
     }
 
-    private static JComboBox<String> aListOfLevels(JLabel path) {
+    private JComboBox<String> aListOfLevels() {
         String[] existingLevels =
             IntStream.range(1, 10 + 1)
             .mapToObj("Level %s"::formatted)
@@ -92,7 +93,7 @@ public class LevelSelection {
 
         levelList.addActionListener(_ -> {
             var fileName = "level%d.txt".formatted(levelList.getSelectedIndex() + 1);
-            path.setText(fileName);
+            levelFileLabel.setText(fileName);
             try {
                 selectedLevelFile = new File(new File(".").getCanonicalPath() + "/levels/%s".formatted(fileName));
             } catch (IOException e1) {
@@ -102,12 +103,12 @@ public class LevelSelection {
         return levelList;
     }
 
-    private static JButton aPlayButton(JFrame levelSelection) {
+    private JButton aPlayButton() {
         JButton play = new JButton("Play");
 
         play.setBounds(75, 225, 250, 50);
         play.addActionListener(e -> {
-            levelSelection.dispose();
+            frame.dispose();
             try {
                 new SokobanWindow(new Controller(selectedLevelFile.getPath()));
             } catch (IOException e1) {
@@ -118,11 +119,11 @@ public class LevelSelection {
         return play;
     }
 
-    private static JButton aBackButton(JFrame levelSelection) {
+    private JButton aBackButton() {
         JButton back = new JButton("Back");
         back.setBounds(25, 300, 150, 50);
         back.addActionListener(_ -> {
-            levelSelection.dispose();
+            frame.dispose();
             new HomeWindow();
         });
         return back;
