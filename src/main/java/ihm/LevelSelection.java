@@ -22,6 +22,7 @@ import logic.Controller;
 public class LevelSelection {
     private static final String defaultFileName = "level1.txt";
     private static File selectedLevelFile;
+    private final JFrame frame = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
 
     public LevelSelection() throws IOException {
 
@@ -30,25 +31,26 @@ public class LevelSelection {
             defaultFileName)
         );
 
-        JFrame levelSelection = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
-        levelSelection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
         levelFileLabel.setBounds(50, 150, 300, 50);
 
-        levelSelection.add(aPlayButton(levelSelection));
-        levelSelection.add(aBackButton(levelSelection));
-        levelSelection.add(aQuitButton());
-        levelSelection.add(aTitle());
-        levelSelection.add(aListOfLevels(levelFileLabel));
-        levelSelection.add(aBrowseButton(levelFileLabel));
-        levelSelection.add(levelFileLabel);
+        frame.add(aPlayButton(frame));
+        frame.add(aBackButton(frame));
+        frame.add(aQuitButton());
+        frame.add(aTitle());
+        frame.add(aListOfLevels(levelFileLabel));
+        frame.add(aBrowseButton(levelFileLabel));
+        frame.add(levelFileLabel);
 
-        levelSelection.setSize(400, 400);
-        levelSelection.setLayout(null);
-        levelSelection.setLocationRelativeTo(null);
-        levelSelection.setVisible(true);
+        configureFrame();
+    }
 
+    private void configureFrame() {
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 400);
+        frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private static JButton aBrowseButton(JLabel path) {
