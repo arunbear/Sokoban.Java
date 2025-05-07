@@ -9,7 +9,7 @@ public class Worker {
     private int column;
 
 
-    public void set_pos(int line, int column) {
+    public void moveTo(int line, int column) {
         this.line = line;
         this.column = column;
     }
@@ -39,5 +39,4 @@ public class Worker {
     }
 
 }
-	
 
