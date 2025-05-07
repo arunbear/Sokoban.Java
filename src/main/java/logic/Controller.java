@@ -32,9 +32,8 @@ public class Controller {
     }
 
     public void action(Direction direction) {
-    	List<Integer> position = worker.getPosition();
-    	int l = position.get(0);
-    	int c = position.get(1);
+    	int l = worker.getLine();
+    	int c = worker.getColumn();
     	switch (direction) {
     		case HAUT:
     			if (l != 0) {

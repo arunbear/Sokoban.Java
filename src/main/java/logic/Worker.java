@@ -1,8 +1,5 @@
 package logic;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * Represents a warehouse worker (the player in the game).
@@ -17,11 +14,12 @@ public class Worker {
         this.column = column;
     }
 
-    public List<Integer> getPosition() {
-        List<Integer> position = new ArrayList<>();
-        position.add(line);
-        position.add(column);
-        return position;
+    public int getColumn() {
+        return column;
+    }
+
+    public int getLine() {
+        return line;
     }
 }
 	
