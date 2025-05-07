@@ -51,7 +51,7 @@ public class Entrepot {
 					case "G":
 						// Case joueur
 						case_tableau.add(new Case(i, j, ContenuCase.JOUEUR, this));
-						controleur.gardien.set_pos(i, j);
+						controleur.worker.set_pos(i, j);
 						break;
 					case "C":
 						// Case Caisse
@@ -60,7 +60,7 @@ public class Entrepot {
 					case "B":
 						// Case joueur sur une cible
 						case_tableau.add(new Case(i, j, ContenuCase.JOUEUR_RANGEMENT, this));
-						controleur.gardien.set_pos(i, j);
+						controleur.worker.set_pos(i, j);
 						break;
 					case "V":
 						// Case caisse déjà validée
