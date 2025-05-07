@@ -2,7 +2,6 @@ package logic;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
-import java.util.List;
 
 @SuppressWarnings("unused")
 public class Controller {
@@ -38,28 +37,28 @@ public class Controller {
     		case HAUT:
     			if (l != 0) {
     				if (entrepot.getCase((l - 1), c).acceptGardian(direction)) {
-    					worker.set_pos(l-1, c);
+						worker.moveUp();
     				}
                 }
                 break;
     		case BAS:
     			if (l != entrepot.getNbLignes() - 1) {
     				if (entrepot.getCase((l + 1), c).acceptGardian(direction)) {
-    					worker.set_pos(l+1, c);
+    					worker.moveDown();
     				}
                 }
                 break;
     		case GAUCHE:
     			if (c != 0) {
     				if (entrepot.getCase(l, c - 1).acceptGardian(direction)) {
-    					worker.set_pos(l, c-1);
+    					worker.moveLeft();
     				}
                 }
                 break;
     		case DROITE:
     			if (c != entrepot.getNbColonnes() - 1) {
     				if (entrepot.getCase(l, c + 1).acceptGardian(direction)) {
-    					worker.set_pos(l, c+1);
+    					worker.moveRight();
     				}
                 }
                 break;

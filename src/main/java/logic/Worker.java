@@ -21,6 +21,23 @@ public class Worker {
     public int getLine() {
         return line;
     }
+
+    public void moveUp() {
+        this.line -= 1;
+    }
+
+    public void moveDown() {
+        this.line += 1;
+    }
+
+    public void moveLeft() {
+        this.column -= 1;
+    }
+
+    public void moveRight() {
+        this.column += 1;
+    }
+
 }
 	
 
