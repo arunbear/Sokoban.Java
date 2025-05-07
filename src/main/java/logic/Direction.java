@@ -7,17 +7,12 @@ public enum Direction {
     RIGHT;
 
     public static Direction DirectionInverse(Direction direction) {
-        switch (direction) {
-            case UP:
-                return Direction.DOWN;
-            case DOWN:
-                return Direction.UP;
-            case LEFT:
-                return Direction.RIGHT;
-            case RIGHT:
-                return Direction.LEFT;
-        }
-        return direction;
+        return switch (direction) {
+            case UP    -> Direction.DOWN;
+            case DOWN  -> Direction.UP;
+            case LEFT  -> Direction.RIGHT;
+            case RIGHT -> Direction.LEFT;
+        };
     }
 }
 
