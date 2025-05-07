@@ -84,7 +84,7 @@ public class Case {
     						return false;
     					}
     					break;
-    				
+
     			}
     			switch(this.getContentVoisine(direction)) {
     				case CAISSE:
@@ -129,7 +129,7 @@ public class Case {
 						return false;
 					}
 					break;
-				
+
     			}
     			switch(this.getContentVoisine(direction)) {
 					case CAISSE:
@@ -159,7 +159,7 @@ public class Case {
     		default:
     			break;
     	}
-    	Direction previous_player = Direction.DirectionInverse(direction);
+    	Direction previous_player = direction.reverse();
     	switch(this.getContentVoisine(previous_player)) {
     		case JOUEUR:
     			this.setContentVoisine(previous_player, ContenuCase.CASE_VIDE);
@@ -171,10 +171,7 @@ public class Case {
     			break;
     	}
     	return false;
-	
+
     }
-
-
-
 
 }
