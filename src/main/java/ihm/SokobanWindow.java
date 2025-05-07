@@ -56,14 +56,14 @@ public class SokobanWindow extends JFrame implements KeyListener{
     @Override
     public void keyPressed( KeyEvent e ) {
         Object input = switch( e.getKeyCode() ) {
-            case KeyEvent.VK_UP    -> Direction.HAUT;
-            case KeyEvent.VK_Z    -> Direction.HAUT;
-            case KeyEvent.VK_DOWN  -> Direction.BAS;
-            case KeyEvent.VK_S  -> Direction.BAS;
-            case KeyEvent.VK_LEFT  -> Direction.GAUCHE;
-            case KeyEvent.VK_Q -> Direction.GAUCHE;
-            case KeyEvent.VK_RIGHT -> Direction.DROITE;
-            case KeyEvent.VK_D -> Direction.DROITE;
+            case KeyEvent.VK_UP    -> Direction.UP;
+            case KeyEvent.VK_Z    -> Direction.UP;
+            case KeyEvent.VK_DOWN  -> Direction.DOWN;
+            case KeyEvent.VK_S  -> Direction.DOWN;
+            case KeyEvent.VK_LEFT  -> Direction.LEFT;
+            case KeyEvent.VK_Q -> Direction.LEFT;
+            case KeyEvent.VK_RIGHT -> Direction.RIGHT;
+            case KeyEvent.VK_D -> Direction.RIGHT;
             case KeyEvent.VK_BACK_SPACE -> Game_Managers.RESTART;
             case KeyEvent.VK_SPACE -> Game_Managers.STEP_BACK;
             case KeyEvent.VK_ESCAPE -> Game_Managers.STOP;

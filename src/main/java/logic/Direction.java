@@ -1,21 +1,21 @@
 package logic;
 
 public enum Direction {
-    HAUT,
-    BAS,
-    GAUCHE,
-    DROITE;
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT;
 
     public static Direction DirectionInverse(Direction direction) {
         switch (direction) {
-            case HAUT:
-                return Direction.BAS;
-            case BAS:
-                return Direction.HAUT;
-            case GAUCHE:
-                return Direction.DROITE;
-            case DROITE:
-                return Direction.GAUCHE;
+            case UP:
+                return Direction.DOWN;
+            case DOWN:
+                return Direction.UP;
+            case LEFT:
+                return Direction.RIGHT;
+            case RIGHT:
+                return Direction.LEFT;
         }
         return direction;
     }

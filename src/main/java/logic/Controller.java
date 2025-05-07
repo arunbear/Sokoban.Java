@@ -34,28 +34,28 @@ public class Controller {
     	int l = worker.getLine();
     	int c = worker.getColumn();
     	switch (direction) {
-    		case HAUT:
+    		case UP:
     			if (l != 0) {
     				if (entrepot.getCase((l - 1), c).acceptGardian(direction)) {
 						worker.moveUp();
     				}
                 }
                 break;
-    		case BAS:
+    		case DOWN:
     			if (l != entrepot.getNbLignes() - 1) {
     				if (entrepot.getCase((l + 1), c).acceptGardian(direction)) {
     					worker.moveDown();
     				}
                 }
                 break;
-    		case GAUCHE:
+    		case LEFT:
     			if (c != 0) {
     				if (entrepot.getCase(l, c - 1).acceptGardian(direction)) {
     					worker.moveLeft();
     				}
                 }
                 break;
-    		case DROITE:
+    		case RIGHT:
     			if (c != entrepot.getNbColonnes() - 1) {
     				if (entrepot.getCase(l, c + 1).acceptGardian(direction)) {
     					worker.moveRight();

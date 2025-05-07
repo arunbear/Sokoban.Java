@@ -25,16 +25,16 @@ public class Case {
     
     public void setContentVoisine(Direction direction, ContenuCase content) {
     	switch (direction) {
-		case HAUT:
+		case UP:
 			entrepot.getCase(ligne - 1, colonne).setContent(content);
 			break;
-		case BAS:
+		case DOWN:
 			entrepot.getCase(ligne + 1, colonne).setContent(content);
 			break;
-		case GAUCHE:
+		case LEFT:
 			entrepot.getCase(ligne, colonne - 1).setContent(content);
 			break;
-		case DROITE:
+		case RIGHT:
 			entrepot.getCase(ligne, colonne + 1).setContent(content);
 			break;
 	}
@@ -44,13 +44,13 @@ public class Case {
 
     public ContenuCase getContentVoisine(Direction direction) {
     	switch (direction) {
-			case HAUT:
+			case UP:
 				return entrepot.getCase(ligne - 1, colonne).getContent();
-			case BAS:
+			case DOWN:
 				return entrepot.getCase(ligne + 1, colonne).getContent();
-			case GAUCHE:
+			case LEFT:
 				return entrepot.getCase(ligne, colonne - 1).getContent();
-			case DROITE:
+			case RIGHT:
 				return entrepot.getCase(ligne, colonne + 1).getContent();
     	}
 		return content;
@@ -64,22 +64,22 @@ public class Case {
     			return false;
     		case CAISSE:
     			switch(direction) {
-    				case HAUT:
+    				case UP:
     					if (this.ligne == 0) {
     						return false;
     					}
     					break;
-    				case BAS:
+    				case DOWN:
     					if (this.ligne == entrepot.getNbLignes() - 1) {
     						return false;
     					}
     					break;
-    				case GAUCHE:
+    				case LEFT:
     					if (this.colonne == 0) {
     						return false;
     					}
     					break;
-    				case DROITE:
+    				case RIGHT:
     					if (this.colonne == entrepot.getNbColonnes() - 1) {
     						return false;
     					}
@@ -109,22 +109,22 @@ public class Case {
     			break;
     		case CAISSE_RANGEE:
     			switch(direction) {
-				case HAUT:
+				case UP:
 					if (this.ligne == 0) {
 						return false;
 					}
 					break;
-				case BAS:
+				case DOWN:
 					if (this.ligne == entrepot.getNbLignes() - 1) {
 						return false;
 					}
 					break;
-				case GAUCHE:
+				case LEFT:
 					if (this.colonne == 0) {
 						return false;
 					}
 					break;
-				case DROITE:
+				case RIGHT:
 					if (this.colonne == entrepot.getNbColonnes() - 1) {
 						return false;
 					}
