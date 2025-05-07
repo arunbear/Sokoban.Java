@@ -26,7 +26,7 @@ public class Controller {
     		this.level = customLevel;
     	}
     	this.pathToLevel = path_to_level;
-    	this.worker = new Worker(0,0);
+    	this.worker = new Worker();
 
     	this.entrepot = new Entrepot(path_to_level ,this.level, this);
     }
@@ -84,7 +84,7 @@ public class Controller {
     }
 
 	public void restart() throws IOException {
-		this.worker = new Worker(0,0);
+		this.worker = new Worker();
     	this.entrepot = new Entrepot(this.pathToLevel, this.level, this);
 	}
 

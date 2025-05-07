@@ -11,10 +11,6 @@ public class Worker {
     private int line;
     private int column;
 
-    public Worker(int line, int column) {
-        this.line = line;
-        this.column = column;
-    }
 
     public void set_pos(int line, int column) {
         this.line = line;
