@@ -2,32 +2,32 @@ package logic;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 public class Controller {
-    private int level;
+
+	private static final int customLevel = 99;
+
+	private int level = customLevel;
     private final String pathToLevel;
     public Entrepot entrepot;
     public Worker worker;
 
-	private static final int customLevel = 99;
-
-    public Controller(String path_to_level) throws IOException {
+    public Controller(String pathToLevel) throws IOException {
 		var levelsPath = "levels%slevel".formatted(FileSystems.getDefault().getSeparator());
-    	if (path_to_level.contains(levelsPath)) {
-    		int pos = path_to_level.length() - 5;
-    		this.level = Integer.parseInt(path_to_level.substring(pos, pos + 1));
-    		if (level == 0) {
-    			level = 10;
-    		}
+
+		if (pathToLevel.contains(levelsPath)) {
+			Optional<Integer> levels = parseLevel(pathToLevel);
+			this.level = levels.orElse(customLevel);
     	}
-    	else {
-    		this.level = customLevel;
-    	}
-    	this.pathToLevel = path_to_level;
+
+    	this.pathToLevel = pathToLevel;
     	this.worker = new Worker();
 
-    	this.entrepot = new Entrepot(path_to_level ,this.level, this);
+    	this.entrepot = new Entrepot(pathToLevel ,this.level, this);
     }
 
     public void action(Direction direction) {
@@ -84,6 +84,18 @@ public class Controller {
 	public void restart() throws IOException {
 		this.worker = new Worker();
     	this.entrepot = new Entrepot(this.pathToLevel, this.level, this);
+	}
+
+	/**
+	 * Parse the level number from the given path.
+	 *
+	 * @param path The path to parse, e.g. "levels/level2.txt"
+	 * @return The level number as an {@link Optional} or an empty {@link Optional} if it cannot be parsed.
+	 */
+	Optional<Integer> parseLevel(String path) {
+		final Pattern pattern = Pattern.compile("\\d+");
+		final Matcher matcher = pattern.matcher(path);
+		return matcher.find() ? Optional.of(Integer.parseInt(matcher.group())) : Optional.empty();
 	}
 
 }
