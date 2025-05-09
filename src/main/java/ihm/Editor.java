@@ -284,7 +284,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	 	this.add(quit);
 	 	this.add(back);
 	 	this.add(invalid_level);
-        this.add( new PaneauSokoban( controleur ));
+        this.add( new SokobanPanel( controleur ));
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
         this.pack();

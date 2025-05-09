@@ -41,7 +41,7 @@ public class SokobanWindow extends JFrame implements KeyListener{
         }
         this.setResizable(false);
 
-        this.add( new PaneauSokoban( controleur ));
+        this.add( new SokobanPanel( controleur ));
         this.addKeyListener( this );
         this.pack();
         this.setLocationRelativeTo( null );
