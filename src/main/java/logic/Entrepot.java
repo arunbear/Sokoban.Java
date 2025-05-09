@@ -9,9 +9,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Entrepot {
-    private int nbLignes;
+    private final int nbLignes;
 
-    private int nbColonnes;
+    private final int columns;
     
 
     private List<Case> case_tableau = new ArrayList<Case> ();
@@ -27,9 +27,9 @@ public class Entrepot {
 		lines = Files.readAllLines(file, StandardCharsets.UTF_8);
 		
 		this.nbLignes = lines.size();
-		this.nbColonnes = lines.get(0).length();
+		this.columns = lines.get(0).length();
 		for (int i=0; i<this.nbLignes; i++) {
-			for(int j=0; j<this.nbColonnes; j++) {
+			for(int j = 0; j<this.columns; j++) {
 				
 				switch (Character.toString(lines.get(i).charAt(j))) {
 					case "_":
@@ -74,7 +74,7 @@ public class Entrepot {
     
     
     public Case getCase(int l, int c) {
-    	return case_tableau.get(l*this.nbColonnes + c);
+    	return case_tableau.get(l*this.columns + c);
     }
     
 
@@ -91,8 +91,8 @@ public class Entrepot {
     	return nbLignes;
     }
     
-    public int getNbColonnes() {
-    	return nbColonnes;
+    public int getColumns() {
+    	return columns;
     }
     
 }

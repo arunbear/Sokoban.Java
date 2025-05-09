@@ -80,7 +80,7 @@ public class Case {
     					}
     					break;
     				case RIGHT:
-    					if (this.colonne == entrepot.getNbColonnes() - 1) {
+    					if (this.colonne == entrepot.getColumns() - 1) {
     						return false;
     					}
     					break;
@@ -125,7 +125,7 @@ public class Case {
 					}
 					break;
 				case RIGHT:
-					if (this.colonne == entrepot.getNbColonnes() - 1) {
+					if (this.colonne == entrepot.getColumns() - 1) {
 						return false;
 					}
 					break;

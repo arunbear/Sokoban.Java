@@ -56,7 +56,7 @@ public class Controller {
                 }
                 break;
     		case RIGHT:
-    			if (c != entrepot.getNbColonnes() - 1) {
+    			if (c != entrepot.getColumns() - 1) {
     				if (entrepot.getCase(l, c + 1).acceptGardian(direction)) {
     					worker.moveRight();
     				}

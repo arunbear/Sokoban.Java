@@ -27,7 +27,7 @@ public class SokobanWindow extends JFrame implements KeyListener{
     public SokobanWindow(Controller controller) {
         this.controller = controller;
 
-        int IMAGE_WIDTH = controller.entrepot.getNbColonnes() * IMAGE_SIZE;
+        int IMAGE_WIDTH = controller.entrepot.getColumns() * IMAGE_SIZE;
         int IMAGE_HEIGHT = controller.entrepot.getNbLignes() * IMAGE_SIZE;
 
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );

@@ -44,7 +44,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 		levelWriter.close();
 		
 		controleur = new Controller(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt").getPath());
-		LARGEUR_FENETRE = controleur.entrepot.getNbColonnes() * TAILLE_IMAGE;
+		LARGEUR_FENETRE = controleur.entrepot.getColumns() * TAILLE_IMAGE;
         HAUTEUR_FENETRE = controleur.entrepot.getNbLignes() * TAILLE_IMAGE;
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         this.setTitle("Sokoban v1.0 par Gabriel FARAGO");
