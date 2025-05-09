@@ -50,7 +50,7 @@ public class SokobanPanel extends JPanel {
         // Le côté métier raisonne en [ligne, colonne]
         // Le côté IHM raisonne en [x, y]
         // Donc x <=> colonne et y <=> ligne
-        for(int l = 0; l < controller.entrepot.getNbLignes(); l++ ) {
+        for(int l = 0; l < controller.entrepot.getLines(); l++ ) {
             for(int c = 0; c < controller.entrepot.getColumns(); c++ ) {
                 g.drawImage( images.get( controller.entrepot.getCase( l, c).getContent()), c * IMAGE_SIZE, l * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, null );
             }

@@ -42,7 +42,7 @@ public class Controller {
                 }
                 break;
     		case DOWN:
-    			if (l != entrepot.getNbLignes() - 1) {
+    			if (l != entrepot.getLines() - 1) {
     				if (entrepot.getCase((l + 1), c).acceptGardian(direction)) {
     					worker.moveDown();
     				}

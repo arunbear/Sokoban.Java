@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Entrepot {
-    private final int nbLignes;
+    private final int lines;
 
     private final int columns;
     
@@ -26,9 +26,9 @@ public class Entrepot {
 		List<String> lines = Collections.emptyList();
 		lines = Files.readAllLines(file, StandardCharsets.UTF_8);
 		
-		this.nbLignes = lines.size();
+		this.lines = lines.size();
 		this.columns = lines.get(0).length();
-		for (int i=0; i<this.nbLignes; i++) {
+		for (int i = 0; i<this.lines; i++) {
 			for(int j = 0; j<this.columns; j++) {
 				
 				switch (Character.toString(lines.get(i).charAt(j))) {
@@ -87,8 +87,8 @@ public class Entrepot {
     	return true;
     }
     
-    public int getNbLignes() {
-    	return nbLignes;
+    public int getLines() {
+    	return lines;
     }
     
     public int getColumns() {

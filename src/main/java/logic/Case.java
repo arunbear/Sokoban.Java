@@ -70,7 +70,7 @@ public class Case {
     					}
     					break;
     				case DOWN:
-    					if (this.ligne == entrepot.getNbLignes() - 1) {
+    					if (this.ligne == entrepot.getLines() - 1) {
     						return false;
     					}
     					break;
@@ -115,7 +115,7 @@ public class Case {
 					}
 					break;
 				case DOWN:
-					if (this.ligne == entrepot.getNbLignes() - 1) {
+					if (this.ligne == entrepot.getLines() - 1) {
 						return false;
 					}
 					break;
