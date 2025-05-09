@@ -6,13 +6,13 @@ public class Case {
     private int ligne;
     private int colonne;
     private ContenuCase content;
-    public Entrepot entrepot;
+    public Warehouse warehouse;
     
-    public Case (int ligne, int colonne, ContenuCase content, Entrepot entrepot) {
+    public Case (int ligne, int colonne, ContenuCase content, Warehouse warehouse) {
     	this.ligne = ligne;
     	this.colonne = colonne;
     	this.content = content;
-    	this.entrepot = entrepot;
+    	this.warehouse = warehouse;
     }
     
     public ContenuCase getContent() {
@@ -26,16 +26,16 @@ public class Case {
     public void setContentVoisine(Direction direction, ContenuCase content) {
     	switch (direction) {
 		case UP:
-			entrepot.getCase(ligne - 1, colonne).setContent(content);
+			warehouse.getCase(ligne - 1, colonne).setContent(content);
 			break;
 		case DOWN:
-			entrepot.getCase(ligne + 1, colonne).setContent(content);
+			warehouse.getCase(ligne + 1, colonne).setContent(content);
 			break;
 		case LEFT:
-			entrepot.getCase(ligne, colonne - 1).setContent(content);
+			warehouse.getCase(ligne, colonne - 1).setContent(content);
 			break;
 		case RIGHT:
-			entrepot.getCase(ligne, colonne + 1).setContent(content);
+			warehouse.getCase(ligne, colonne + 1).setContent(content);
 			break;
 	}
     }
@@ -45,13 +45,13 @@ public class Case {
     public ContenuCase getContentVoisine(Direction direction) {
     	switch (direction) {
 			case UP:
-				return entrepot.getCase(ligne - 1, colonne).getContent();
+				return warehouse.getCase(ligne - 1, colonne).getContent();
 			case DOWN:
-				return entrepot.getCase(ligne + 1, colonne).getContent();
+				return warehouse.getCase(ligne + 1, colonne).getContent();
 			case LEFT:
-				return entrepot.getCase(ligne, colonne - 1).getContent();
+				return warehouse.getCase(ligne, colonne - 1).getContent();
 			case RIGHT:
-				return entrepot.getCase(ligne, colonne + 1).getContent();
+				return warehouse.getCase(ligne, colonne + 1).getContent();
     	}
 		return content;
     }
@@ -70,7 +70,7 @@ public class Case {
     					}
     					break;
     				case DOWN:
-    					if (this.ligne == entrepot.getLines() - 1) {
+    					if (this.ligne == warehouse.getLines() - 1) {
     						return false;
     					}
     					break;
@@ -80,7 +80,7 @@ public class Case {
     					}
     					break;
     				case RIGHT:
-    					if (this.colonne == entrepot.getColumns() - 1) {
+    					if (this.colonne == warehouse.getColumns() - 1) {
     						return false;
     					}
     					break;
@@ -115,7 +115,7 @@ public class Case {
 					}
 					break;
 				case DOWN:
-					if (this.ligne == entrepot.getLines() - 1) {
+					if (this.ligne == warehouse.getLines() - 1) {
 						return false;
 					}
 					break;
@@ -125,7 +125,7 @@ public class Case {
 					}
 					break;
 				case RIGHT:
-					if (this.colonne == entrepot.getColumns() - 1) {
+					if (this.colonne == warehouse.getColumns() - 1) {
 						return false;
 					}
 					break;

@@ -13,7 +13,7 @@ public class Controller {
 
 	private int level = customLevel;
     private final String pathToLevel;
-    public Entrepot entrepot;
+    public Warehouse warehouse;
     public Worker worker;
 
     public Controller(String pathToLevel) throws IOException {
@@ -27,7 +27,7 @@ public class Controller {
     	this.pathToLevel = pathToLevel;
     	this.worker = new Worker();
 
-    	this.entrepot = new Entrepot(pathToLevel ,this.level, this);
+    	this.warehouse = new Warehouse(pathToLevel ,this.level, this);
     }
 
     public void action(Direction direction) {
@@ -36,28 +36,28 @@ public class Controller {
     	switch (direction) {
     		case UP:
     			if (l != 0) {
-    				if (entrepot.getCase((l - 1), c).acceptGardian(direction)) {
+    				if (warehouse.getCase((l - 1), c).acceptGardian(direction)) {
 						worker.moveUp();
     				}
                 }
                 break;
     		case DOWN:
-    			if (l != entrepot.getLines() - 1) {
-    				if (entrepot.getCase((l + 1), c).acceptGardian(direction)) {
+    			if (l != warehouse.getLines() - 1) {
+    				if (warehouse.getCase((l + 1), c).acceptGardian(direction)) {
     					worker.moveDown();
     				}
                 }
                 break;
     		case LEFT:
     			if (c != 0) {
-    				if (entrepot.getCase(l, c - 1).acceptGardian(direction)) {
+    				if (warehouse.getCase(l, c - 1).acceptGardian(direction)) {
     					worker.moveLeft();
     				}
                 }
                 break;
     		case RIGHT:
-    			if (c != entrepot.getColumns() - 1) {
-    				if (entrepot.getCase(l, c + 1).acceptGardian(direction)) {
+    			if (c != warehouse.getColumns() - 1) {
+    				if (warehouse.getCase(l, c + 1).acceptGardian(direction)) {
     					worker.moveRight();
     				}
                 }
@@ -66,7 +66,7 @@ public class Controller {
     }
 
     public boolean levelEnd() {
-    	return entrepot.checkVictory();
+    	return warehouse.checkVictory();
     }
 
     public int getLevel() {
@@ -83,7 +83,7 @@ public class Controller {
 
 	public void restart() throws IOException {
 		this.worker = new Worker();
-    	this.entrepot = new Entrepot(this.pathToLevel, this.level, this);
+    	this.warehouse = new Warehouse(this.pathToLevel, this.level, this);
 	}
 
 	/**

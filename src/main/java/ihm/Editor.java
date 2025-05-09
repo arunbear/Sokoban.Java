@@ -44,8 +44,8 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 		levelWriter.close();
 		
 		controleur = new Controller(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt").getPath());
-		LARGEUR_FENETRE = controleur.entrepot.getColumns() * TAILLE_IMAGE;
-        HAUTEUR_FENETRE = controleur.entrepot.getLines() * TAILLE_IMAGE;
+		LARGEUR_FENETRE = controleur.warehouse.getColumns() * TAILLE_IMAGE;
+        HAUTEUR_FENETRE = controleur.warehouse.getLines() * TAILLE_IMAGE;
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         this.setTitle("Sokoban v1.0 par Gabriel FARAGO");
         this.setPreferredSize(new Dimension(LARGEUR_FENETRE + 150, Math.max(HAUTEUR_FENETRE + 150, 330)));
@@ -140,7 +140,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 				for (int i = 0; i < nbLignes * nbColonnes; i++) {
 					int c = i / nbColonnes;
 					int l = i % nbColonnes;
-					ContenuCase end_content = controleur.entrepot.getCase(c, l).getContent();
+					ContenuCase end_content = controleur.warehouse.getCase(c, l).getContent();
 					if (end_content == ContenuCase.JOUEUR || end_content == ContenuCase.JOUEUR_RANGEMENT) {
 						gardien ++;
 					}
@@ -158,7 +158,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 						
 						int c = i / nbColonnes;
 						int l = i % nbColonnes;
-						ContenuCase end_content = controleur.entrepot.getCase(c, l).getContent();
+						ContenuCase end_content = controleur.warehouse.getCase(c, l).getContent();
 						switch (end_content) {
 							case JOUEUR:
 								ligne += "G";
@@ -313,7 +313,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 		if (e.getX() < LARGEUR_FENETRE + 31 && e.getY() < HAUTEUR_FENETRE + 31) {
 			int l = Math.max((e.getX() - 10) / 32, 0);
 			int c = Math.max((e.getY() - 32) / 32, 0);
-			controleur.entrepot.getCase(c, l).setContent(content);
+			controleur.warehouse.getCase(c, l).setContent(content);
 			repaint();
 		}
 	}
