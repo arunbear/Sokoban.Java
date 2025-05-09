@@ -14,13 +14,13 @@ public class Entrepot {
     private final int columns;
     
 
-    private List<Case> case_tableau = new ArrayList<Case> ();
+    private final List<Case> case_tableau = new ArrayList<Case> ();
     
-    public Controller controleur;
+    public Controller controller;
     
     
-    public Entrepot(String path_to_level, int level, Controller controleur) throws IOException {
-    	this.controleur = controleur;
+    public Entrepot(String path_to_level, int level, Controller controller) throws IOException {
+    	this.controller = controller;
     	    	
     	Path file = Paths.get(path_to_level);
 		List<String> lines = Collections.emptyList();
@@ -51,7 +51,7 @@ public class Entrepot {
 					case "G":
 						// Case joueur
 						case_tableau.add(new Case(i, j, ContenuCase.JOUEUR, this));
-						controleur.worker.moveTo(i, j);
+						controller.worker.moveTo(i, j);
 						break;
 					case "C":
 						// Case Caisse
@@ -60,7 +60,7 @@ public class Entrepot {
 					case "B":
 						// Case joueur sur une cible
 						case_tableau.add(new Case(i, j, ContenuCase.JOUEUR_RANGEMENT, this));
-						controleur.worker.moveTo(i, j);
+						controller.worker.moveTo(i, j);
 						break;
 					case "V":
 						// Case caisse déjà validée
