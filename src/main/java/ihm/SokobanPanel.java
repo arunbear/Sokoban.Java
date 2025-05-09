@@ -14,18 +14,18 @@ import javax.swing.JPanel;
 import logic.ContenuCase;
 import logic.Controller;
 
+import static ihm.SokobanWindow.IMAGE_SIZE;
+
 
 @SuppressWarnings("serial")
 public class SokobanPanel extends JPanel {
 
-    private static final int TAILLE_IMAGE = SokobanWindow.TAILLE_IMAGE;
-
     private static EnumMap< ContenuCase, Image > images;
 
-    private Controller controleur;
+    private final Controller controller;
 
-    public SokobanPanel(Controller controleur ) {
-        this.controleur = controleur;
+    public SokobanPanel(Controller controller) {
+        this.controller = controller;
         try {
             images = new EnumMap< ContenuCase, Image >(
                 Map.of(
@@ -50,9 +50,9 @@ public class SokobanPanel extends JPanel {
         // Le côté métier raisonne en [ligne, colonne]
         // Le côté IHM raisonne en [x, y]
         // Donc x <=> colonne et y <=> ligne
-        for( int l = 0; l < controleur.entrepot.getNbLignes(); l++ ) {
-            for( int c = 0; c < controleur.entrepot.getNbColonnes(); c++ ) {
-                g.drawImage( images.get( controleur.entrepot.getCase( l, c).getContent()), c * TAILLE_IMAGE, l * TAILLE_IMAGE, TAILLE_IMAGE, TAILLE_IMAGE, null );
+        for(int l = 0; l < controller.entrepot.getNbLignes(); l++ ) {
+            for(int c = 0; c < controller.entrepot.getNbColonnes(); c++ ) {
+                g.drawImage( images.get( controller.entrepot.getCase( l, c).getContent()), c * IMAGE_SIZE, l * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, null );
             }
         }
     }

@@ -19,29 +19,28 @@ import logic.Game_Managers;
 
 public class SokobanWindow extends JFrame implements KeyListener{
 
-    static final int TAILLE_IMAGE = 32;
-    
-    private int LARGEUR_FENETRE = 25 * TAILLE_IMAGE;
-	private int HAUTEUR_FENETRE = 15 * TAILLE_IMAGE;
-    private Controller controleur;
+    public static final int IMAGE_SIZE = 32;
+
+    private final Controller controller;
     private List<Direction> previousActions = new ArrayList<Direction> ();
 
-    public SokobanWindow(Controller controleur ) {
-        this.controleur = controleur;
-        
-        LARGEUR_FENETRE = controleur.entrepot.getNbColonnes() * TAILLE_IMAGE;
-        HAUTEUR_FENETRE = controleur.entrepot.getNbLignes() * TAILLE_IMAGE;
+    public SokobanWindow(Controller controller) {
+        this.controller = controller;
+
+        int IMAGE_WIDTH = controller.entrepot.getNbColonnes() * IMAGE_SIZE;
+        int IMAGE_HEIGHT = controller.entrepot.getNbLignes() * IMAGE_SIZE;
+
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        this.setPreferredSize( new Dimension( LARGEUR_FENETRE + 16, HAUTEUR_FENETRE + 39 ));
-        if (controleur.isOnCustomLevel()) {
+        this.setPreferredSize( new Dimension( IMAGE_WIDTH + 16, IMAGE_HEIGHT + 39 ));
+        if (controller.isOnCustomLevel()) {
             this.setTitle( "Custom level");
         }
         else {
-            this.setTitle( "Level %s".formatted(controleur.getLevel()));
+            this.setTitle( "Level %s".formatted(controller.getLevel()));
         }
         this.setResizable(false);
 
-        this.add( new SokobanPanel( controleur ));
+        this.add( new SokobanPanel(controller));
         this.addKeyListener( this );
         this.pack();
         this.setLocationRelativeTo( null );
@@ -72,12 +71,12 @@ public class SokobanWindow extends JFrame implements KeyListener{
         if( input == null ) return;
         else if (input == Game_Managers.STEP_BACK) {
         	try {
-				controleur.restart();
+				controller.restart();
 				List<Direction> New_previous_actions = new ArrayList<Direction> ();
 				for (int i = 0; i < previousActions.size() - 1; i++) {
 				    Direction element = previousActions.get(i);
 				    New_previous_actions.add(element);
-				    controleur.action(element);
+				    controller.action(element);
 				}
 				previousActions = New_previous_actions;
 			} catch (IOException e1) {
@@ -88,7 +87,7 @@ public class SokobanWindow extends JFrame implements KeyListener{
         else if (input == Game_Managers.RESTART) {
         	try {
         		previousActions = new ArrayList<Direction> (); 
-				controleur.restart();
+				controller.restart();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -99,10 +98,10 @@ public class SokobanWindow extends JFrame implements KeyListener{
         }
         else {
         	previousActions.add((Direction) input);
-        	controleur.action( (Direction) input );
+        	controller.action( (Direction) input );
         }
         repaint();
-        if( controleur.levelEnd() && (this.controleur.getLevel() + 1) < 10 && this.controleur.getLevel() > 0 && controleur.getPathToLevel().contains("levels"))  {
+        if( controller.levelEnd() && (this.controller.getLevel() + 1) < 10 && this.controller.getLevel() > 0 && controller.getPathToLevel().contains("levels"))  {
         	Object[] options = {"Niveau suivant",
             "Quitter le jeu"};        	
         	 Image image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
@@ -110,8 +109,8 @@ public class SokobanWindow extends JFrame implements KeyListener{
         	 if (result == JOptionPane.YES_OPTION) {
         		 try {
         			this.dispose();
-        			String oldPath = this.controleur.getPathToLevel();
-        			new SokobanWindow(new Controller(oldPath.substring(0, oldPath.length() - 5) + Integer.toString(this.controleur.getLevel() + 1 ) + ".txt"));
+        			String oldPath = this.controller.getPathToLevel();
+        			new SokobanWindow(new Controller(oldPath.substring(0, oldPath.length() - 5) + Integer.toString(this.controller.getLevel() + 1 ) + ".txt"));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -122,7 +121,7 @@ public class SokobanWindow extends JFrame implements KeyListener{
         	 }
         	 System.exit( 0 );
         } 
-        else if (controleur.levelEnd()){
+        else if (controller.levelEnd()){
         	JOptionPane.showMessageDialog( this, "Bravo, vous avez fini le niveau !" );
             System.exit( 0 );
         }
