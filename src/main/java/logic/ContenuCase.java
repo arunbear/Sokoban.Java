@@ -2,7 +2,7 @@ package logic;
 
 public enum ContenuCase {
     CASE_VIDE,
-    MUR,
+    WALL,
     CAISSE,
     CAISSE_RANGEE,
     RANGEMENT,

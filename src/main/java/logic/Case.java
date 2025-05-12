@@ -58,7 +58,7 @@ public class Case {
 
     public boolean acceptGardian(Direction direction) {
     	switch (this.content) {
-    		case MUR: 
+    		case WALL:
     			return false;
     		case ARRIERE_PLAN:
     			return false;
@@ -91,7 +91,7 @@ public class Case {
     					return false;
     				case CAISSE_RANGEE:
     					return false;
-    				case MUR:
+    				case WALL:
     					return false;
     				case ARRIERE_PLAN:
     					return false;
@@ -134,7 +134,7 @@ public class Case {
     			switch(this.getContentVoisine(direction)) {
 					case CAISSE:
 						return false;
-					case MUR:
+					case WALL:
 						return false;
 					case CAISSE_RANGEE:
 						return false;

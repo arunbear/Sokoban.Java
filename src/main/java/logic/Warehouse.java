@@ -37,7 +37,7 @@ public class Warehouse {
 						break;
 					case "M":
 						// Case mu
-						case_tableau.add(new Case(i, j, ContenuCase.MUR, this));
+						case_tableau.add(new Case(i, j, ContenuCase.WALL, this));
 						break;
 					case "#":
 						// Case vide

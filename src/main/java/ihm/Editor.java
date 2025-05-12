@@ -181,7 +181,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 							case ARRIERE_PLAN:
 								ligne += "_";
 								break;
-							case MUR:
+							case WALL:
 								ligne += "M";
 								break;
 						}
@@ -255,7 +255,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	 	mur.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content = ContenuCase.MUR;
+				content = ContenuCase.WALL;
 			}
 	    });
 	 	rangement.addActionListener(new ActionListener() {
