@@ -34,7 +34,7 @@ public class SokobanPanel extends JPanel {
                     ContenuCase.UNSTORED_BOX, ImageIO.read( new File( "img/Caisse.jpg" )),
                     ContenuCase.STORED_BOX, ImageIO.read( new File( "img/CaisseRangee.jpg" )),
                     ContenuCase.STORAGE_AREA, ImageIO.read( new File( "img/Rangement.jpg" )),
-                    ContenuCase.JOUEUR       , ImageIO.read( new File( "img/Joueur.jpg" )),
+                    ContenuCase.WORKER_ON_FLOOR, ImageIO.read( new File( "img/Joueur.jpg" )),
                     ContenuCase.OUTSIDE, ImageIO.read( new File( "img/Background.jpg" )),
                     ContenuCase.JOUEUR_RANGEMENT , ImageIO.read( new File( "img/JoueurRangement.jpg" ))
                 )

@@ -141,7 +141,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 					int c = i / nbColonnes;
 					int l = i % nbColonnes;
 					ContenuCase end_content = controleur.warehouse.getCase(c, l).getContent();
-					if (end_content == ContenuCase.JOUEUR || end_content == ContenuCase.JOUEUR_RANGEMENT) {
+					if (end_content == ContenuCase.WORKER_ON_FLOOR || end_content == ContenuCase.JOUEUR_RANGEMENT) {
 						gardien ++;
 					}
 					if (end_content == ContenuCase.UNSTORED_BOX || end_content == ContenuCase.STORED_BOX) {
@@ -160,7 +160,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 						int l = i % nbColonnes;
 						ContenuCase end_content = controleur.warehouse.getCase(c, l).getContent();
 						switch (end_content) {
-							case JOUEUR:
+							case WORKER_ON_FLOOR:
 								ligne += "G";
 								break;
 							case JOUEUR_RANGEMENT:
@@ -225,7 +225,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	 	gardien.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content = ContenuCase.JOUEUR;				
+				content = ContenuCase.WORKER_ON_FLOOR;
 			}
 	    });
 	 	background.addActionListener(new ActionListener() {

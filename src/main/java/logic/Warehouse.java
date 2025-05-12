@@ -49,7 +49,7 @@ public class Warehouse {
 						break;
 					case "G":
 						// Case joueur
-						case_tableau.add(new Case(i, j, ContenuCase.JOUEUR, this));
+						case_tableau.add(new Case(i, j, ContenuCase.WORKER_ON_FLOOR, this));
 						controller.worker.moveTo(i, j);
 						break;
 					case "C":

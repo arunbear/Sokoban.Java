@@ -96,11 +96,11 @@ public class Case {
     				case OUTSIDE:
     					return false;
     				case STORAGE_AREA:
-    					this.setContent(ContenuCase.JOUEUR);
+    					this.setContent(ContenuCase.WORKER_ON_FLOOR);
     					this.setContentVoisine(direction, ContenuCase.STORED_BOX);
     					break;
     				case FLOOR:
-    					this.setContent(ContenuCase.JOUEUR);
+    					this.setContent(ContenuCase.WORKER_ON_FLOOR);
     					this.setContentVoisine(direction, ContenuCase.UNSTORED_BOX);
     					break;
     				default:
@@ -151,7 +151,7 @@ public class Case {
     			}
     			break;
     		case FLOOR:
-    			this.setContent(ContenuCase.JOUEUR);
+    			this.setContent(ContenuCase.WORKER_ON_FLOOR);
     			break;
     		case STORAGE_AREA:
     			this.setContent(ContenuCase.JOUEUR_RANGEMENT);
@@ -161,7 +161,7 @@ public class Case {
     	}
     	Direction previous_player = direction.reverse();
     	switch(this.getContentVoisine(previous_player)) {
-    		case JOUEUR:
+    		case WORKER_ON_FLOOR:
     			this.setContentVoisine(previous_player, ContenuCase.FLOOR);
     			return true;
     		case JOUEUR_RANGEMENT:
