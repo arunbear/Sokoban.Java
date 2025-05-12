@@ -62,7 +62,7 @@ public class Case {
     			return false;
     		case OUTSIDE:
     			return false;
-    		case CAISSE:
+    		case UNSTORED_BOX:
     			switch(direction) {
     				case UP:
     					if (this.ligne == 0) {
@@ -87,7 +87,7 @@ public class Case {
 
     			}
     			switch(this.getContentVoisine(direction)) {
-    				case CAISSE:
+    				case UNSTORED_BOX:
     					return false;
     				case STORED_BOX:
     					return false;
@@ -101,7 +101,7 @@ public class Case {
     					break;
     				case FLOOR:
     					this.setContent(ContenuCase.JOUEUR);
-    					this.setContentVoisine(direction, ContenuCase.CAISSE);
+    					this.setContentVoisine(direction, ContenuCase.UNSTORED_BOX);
     					break;
     				default:
     					break;
@@ -132,7 +132,7 @@ public class Case {
 
     			}
     			switch(this.getContentVoisine(direction)) {
-					case CAISSE:
+					case UNSTORED_BOX:
 						return false;
 					case WALL:
 						return false;
@@ -144,7 +144,7 @@ public class Case {
     					break;
 					case FLOOR:
 						this.setContent(ContenuCase.JOUEUR_RANGEMENT);
-    					this.setContentVoisine(direction, ContenuCase.CAISSE);
+    					this.setContentVoisine(direction, ContenuCase.UNSTORED_BOX);
     					break;
 					default:
 						break;

@@ -31,7 +31,7 @@ public class SokobanPanel extends JPanel {
                 Map.of(
                     ContenuCase.FLOOR, ImageIO.read( new File( "img/Vide.jpg" )),
                     ContenuCase.WALL, ImageIO.read( new File( "img/Mur.jpg" )),
-                    ContenuCase.CAISSE       , ImageIO.read( new File( "img/Caisse.jpg" )),
+                    ContenuCase.UNSTORED_BOX, ImageIO.read( new File( "img/Caisse.jpg" )),
                     ContenuCase.STORED_BOX, ImageIO.read( new File( "img/CaisseRangee.jpg" )),
                     ContenuCase.STORAGE_AREA, ImageIO.read( new File( "img/Rangement.jpg" )),
                     ContenuCase.JOUEUR       , ImageIO.read( new File( "img/Joueur.jpg" )),

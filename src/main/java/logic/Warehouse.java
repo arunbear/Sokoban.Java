@@ -54,7 +54,7 @@ public class Warehouse {
 						break;
 					case "C":
 						// Case Caisse
-						case_tableau.add(new Case(i, j, ContenuCase.CAISSE, this));
+						case_tableau.add(new Case(i, j, ContenuCase.UNSTORED_BOX, this));
 						break;
 					case "B":
 						// Case joueur sur une cible
@@ -79,7 +79,7 @@ public class Warehouse {
 
     public boolean checkVictory() {
     	for (int i=0; i < case_tableau.size(); i++) {
-    		if (case_tableau.get(i).getContent() == ContenuCase.CAISSE) {
+    		if (case_tableau.get(i).getContent() == ContenuCase.UNSTORED_BOX) {
     			return false;
     		}
     	};

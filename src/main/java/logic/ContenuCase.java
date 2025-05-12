@@ -3,7 +3,7 @@ package logic;
 public enum ContenuCase {
     FLOOR,
     WALL,
-    CAISSE,
+    UNSTORED_BOX,
     STORED_BOX,
     STORAGE_AREA,
     JOUEUR,
