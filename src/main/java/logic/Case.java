@@ -99,7 +99,7 @@ public class Case {
     					this.setContent(ContenuCase.JOUEUR);
     					this.setContentVoisine(direction, ContenuCase.CAISSE_RANGEE);
     					break;
-    				case CASE_VIDE:
+    				case FLOOR:
     					this.setContent(ContenuCase.JOUEUR);
     					this.setContentVoisine(direction, ContenuCase.CAISSE);
     					break;
@@ -142,7 +142,7 @@ public class Case {
 						this.setContent(ContenuCase.JOUEUR_RANGEMENT);
     					this.setContentVoisine(direction, ContenuCase.CAISSE_RANGEE);
     					break;
-					case CASE_VIDE:
+					case FLOOR:
 						this.setContent(ContenuCase.JOUEUR_RANGEMENT);
     					this.setContentVoisine(direction, ContenuCase.CAISSE);
     					break;
@@ -150,7 +150,7 @@ public class Case {
 						break;
     			}
     			break;
-    		case CASE_VIDE:
+    		case FLOOR:
     			this.setContent(ContenuCase.JOUEUR);
     			break;
     		case STORAGE_AREA:
@@ -162,7 +162,7 @@ public class Case {
     	Direction previous_player = direction.reverse();
     	switch(this.getContentVoisine(previous_player)) {
     		case JOUEUR:
-    			this.setContentVoisine(previous_player, ContenuCase.CASE_VIDE);
+    			this.setContentVoisine(previous_player, ContenuCase.FLOOR);
     			return true;
     		case JOUEUR_RANGEMENT:
     			this.setContentVoisine(previous_player, ContenuCase.STORAGE_AREA);

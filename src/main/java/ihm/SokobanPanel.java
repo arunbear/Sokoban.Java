@@ -29,7 +29,7 @@ public class SokobanPanel extends JPanel {
         try {
             images = new EnumMap< ContenuCase, Image >(
                 Map.of(
-                    ContenuCase.CASE_VIDE    , ImageIO.read( new File( "img/Vide.jpg" )),
+                    ContenuCase.FLOOR, ImageIO.read( new File( "img/Vide.jpg" )),
                     ContenuCase.WALL, ImageIO.read( new File( "img/Mur.jpg" )),
                     ContenuCase.CAISSE       , ImageIO.read( new File( "img/Caisse.jpg" )),
                     ContenuCase.CAISSE_RANGEE, ImageIO.read( new File( "img/CaisseRangee.jpg" )),

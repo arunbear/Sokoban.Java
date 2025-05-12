@@ -1,7 +1,7 @@
 package logic;
 
 public enum ContenuCase {
-    CASE_VIDE,
+    FLOOR,
     WALL,
     CAISSE,
     CAISSE_RANGEE,

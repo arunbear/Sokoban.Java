@@ -172,7 +172,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 							case CAISSE_RANGEE:
 								ligne += "V";
 								break;
-							case CASE_VIDE:
+							case FLOOR:
 								ligne += "#";
 								break;
 							case STORAGE_AREA:
@@ -267,7 +267,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	 	vide.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content = ContenuCase.CASE_VIDE;
+				content = ContenuCase.FLOOR;
 			}
 	    });
 	 	

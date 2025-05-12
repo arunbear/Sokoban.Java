@@ -41,7 +41,7 @@ public class Warehouse {
 						break;
 					case "#":
 						// Case vide
-						case_tableau.add(new Case(i, j, ContenuCase.CASE_VIDE, this));
+						case_tableau.add(new Case(i, j, ContenuCase.FLOOR, this));
 						break;
 					case "T":
 						// Case cible
