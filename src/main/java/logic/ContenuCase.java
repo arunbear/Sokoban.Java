@@ -4,7 +4,7 @@ public enum ContenuCase {
     FLOOR,
     WALL,
     CAISSE,
-    CAISSE_RANGEE,
+    STORED_BOX,
     STORAGE_AREA,
     JOUEUR,
     JOUEUR_RANGEMENT,

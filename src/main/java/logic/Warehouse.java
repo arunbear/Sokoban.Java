@@ -63,7 +63,7 @@ public class Warehouse {
 						break;
 					case "V":
 						// Case caisse déjà validée
-						case_tableau.add(new Case(i, j, ContenuCase.CAISSE_RANGEE, this));
+						case_tableau.add(new Case(i, j, ContenuCase.STORED_BOX, this));
 						break;
 				}
 
