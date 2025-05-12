@@ -95,7 +95,7 @@ public class Case {
     					return false;
     				case OUTSIDE:
     					return false;
-    				case RANGEMENT:
+    				case STORAGE_AREA:
     					this.setContent(ContenuCase.JOUEUR);
     					this.setContentVoisine(direction, ContenuCase.CAISSE_RANGEE);
     					break;
@@ -138,7 +138,7 @@ public class Case {
 						return false;
 					case CAISSE_RANGEE:
 						return false;
-					case RANGEMENT:
+					case STORAGE_AREA:
 						this.setContent(ContenuCase.JOUEUR_RANGEMENT);
     					this.setContentVoisine(direction, ContenuCase.CAISSE_RANGEE);
     					break;
@@ -153,7 +153,7 @@ public class Case {
     		case CASE_VIDE:
     			this.setContent(ContenuCase.JOUEUR);
     			break;
-    		case RANGEMENT:
+    		case STORAGE_AREA:
     			this.setContent(ContenuCase.JOUEUR_RANGEMENT);
     			break;
     		default:
@@ -165,7 +165,7 @@ public class Case {
     			this.setContentVoisine(previous_player, ContenuCase.CASE_VIDE);
     			return true;
     		case JOUEUR_RANGEMENT:
-    			this.setContentVoisine(previous_player, ContenuCase.RANGEMENT);
+    			this.setContentVoisine(previous_player, ContenuCase.STORAGE_AREA);
     			return true;
     		default:
     			break;

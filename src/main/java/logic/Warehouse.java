@@ -45,7 +45,7 @@ public class Warehouse {
 						break;
 					case "T":
 						// Case cible
-						case_tableau.add(new Case(i, j, ContenuCase.RANGEMENT, this));
+						case_tableau.add(new Case(i, j, ContenuCase.STORAGE_AREA, this));
 						break;
 					case "G":
 						// Case joueur
