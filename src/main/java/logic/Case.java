@@ -60,7 +60,7 @@ public class Case {
     	switch (this.content) {
     		case WALL:
     			return false;
-    		case ARRIERE_PLAN:
+    		case OUTSIDE:
     			return false;
     		case CAISSE:
     			switch(direction) {
@@ -93,7 +93,7 @@ public class Case {
     					return false;
     				case WALL:
     					return false;
-    				case ARRIERE_PLAN:
+    				case OUTSIDE:
     					return false;
     				case RANGEMENT:
     					this.setContent(ContenuCase.JOUEUR);

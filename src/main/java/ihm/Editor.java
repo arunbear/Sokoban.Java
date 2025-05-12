@@ -30,7 +30,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	static int LARGEUR_FENETRE = 0;
 	static int HAUTEUR_FENETRE = 0;
 	static Controller controleur;
-	static ContenuCase content = ContenuCase.ARRIERE_PLAN;
+	static ContenuCase content = ContenuCase.OUTSIDE;
 
 	public Editor (int nbLignes, int nbColonnes, String name) throws IOException  {  
 		
@@ -178,7 +178,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 							case RANGEMENT:
 								ligne += "T";
 								break;
-							case ARRIERE_PLAN:
+							case OUTSIDE:
 								ligne += "_";
 								break;
 							case WALL:
@@ -231,7 +231,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	 	background.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content = ContenuCase.ARRIERE_PLAN;
+				content = ContenuCase.OUTSIDE;
 			}
 	    });
 	 	caisse.addActionListener(new ActionListener() {

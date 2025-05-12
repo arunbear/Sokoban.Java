@@ -8,5 +8,5 @@ public enum ContenuCase {
     RANGEMENT,
     JOUEUR,
     JOUEUR_RANGEMENT,
-    ARRIERE_PLAN
+    OUTSIDE
 }

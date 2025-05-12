@@ -33,7 +33,7 @@ public class Warehouse {
 				switch (Character.toString(lines.get(i).charAt(j))) {
 					case "_":
 						// Case arrière-plan
-						case_tableau.add(new Case(i, j, ContenuCase.ARRIERE_PLAN, this));
+						case_tableau.add(new Case(i, j, ContenuCase.OUTSIDE, this));
 						break;
 					case "M":
 						// Case mu
