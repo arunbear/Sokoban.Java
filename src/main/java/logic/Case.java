@@ -5,25 +5,25 @@ package logic;
 public class Case {
     private int ligne;
     private int colonne;
-    private ContenuCase content;
+    private TileType content;
     public Warehouse warehouse;
     
-    public Case (int ligne, int colonne, ContenuCase content, Warehouse warehouse) {
+    public Case (int ligne, int colonne, TileType content, Warehouse warehouse) {
     	this.ligne = ligne;
     	this.colonne = colonne;
     	this.content = content;
     	this.warehouse = warehouse;
     }
     
-    public ContenuCase getContent() {
+    public TileType getContent() {
     	return this.content;
     }
     
-    public void setContent (ContenuCase content) {
+    public void setContent (TileType content) {
     	this.content = content;
     }
     
-    public void setContentVoisine(Direction direction, ContenuCase content) {
+    public void setContentVoisine(Direction direction, TileType content) {
     	switch (direction) {
 		case UP:
 			warehouse.getCase(ligne - 1, colonne).setContent(content);
@@ -42,7 +42,7 @@ public class Case {
 
     
 
-    public ContenuCase getContentVoisine(Direction direction) {
+    public TileType getContentVoisine(Direction direction) {
     	switch (direction) {
 			case UP:
 				return warehouse.getCase(ligne - 1, colonne).getContent();
@@ -96,12 +96,12 @@ public class Case {
     				case OUTSIDE:
     					return false;
     				case STORAGE_AREA:
-    					this.setContent(ContenuCase.WORKER_ON_FLOOR);
-    					this.setContentVoisine(direction, ContenuCase.STORED_BOX);
+    					this.setContent(TileType.WORKER_ON_FLOOR);
+    					this.setContentVoisine(direction, TileType.STORED_BOX);
     					break;
     				case FLOOR:
-    					this.setContent(ContenuCase.WORKER_ON_FLOOR);
-    					this.setContentVoisine(direction, ContenuCase.UNSTORED_BOX);
+    					this.setContent(TileType.WORKER_ON_FLOOR);
+    					this.setContentVoisine(direction, TileType.UNSTORED_BOX);
     					break;
     				default:
     					break;
@@ -139,22 +139,22 @@ public class Case {
 					case STORED_BOX:
 						return false;
 					case STORAGE_AREA:
-						this.setContent(ContenuCase.WORKER_IN_STORAGE_AREA);
-    					this.setContentVoisine(direction, ContenuCase.STORED_BOX);
+						this.setContent(TileType.WORKER_IN_STORAGE_AREA);
+    					this.setContentVoisine(direction, TileType.STORED_BOX);
     					break;
 					case FLOOR:
-						this.setContent(ContenuCase.WORKER_IN_STORAGE_AREA);
-    					this.setContentVoisine(direction, ContenuCase.UNSTORED_BOX);
+						this.setContent(TileType.WORKER_IN_STORAGE_AREA);
+    					this.setContentVoisine(direction, TileType.UNSTORED_BOX);
     					break;
 					default:
 						break;
     			}
     			break;
     		case FLOOR:
-    			this.setContent(ContenuCase.WORKER_ON_FLOOR);
+    			this.setContent(TileType.WORKER_ON_FLOOR);
     			break;
     		case STORAGE_AREA:
-    			this.setContent(ContenuCase.WORKER_IN_STORAGE_AREA);
+    			this.setContent(TileType.WORKER_IN_STORAGE_AREA);
     			break;
     		default:
     			break;
@@ -162,10 +162,10 @@ public class Case {
     	Direction previous_player = direction.reverse();
     	switch(this.getContentVoisine(previous_player)) {
     		case WORKER_ON_FLOOR:
-    			this.setContentVoisine(previous_player, ContenuCase.FLOOR);
+    			this.setContentVoisine(previous_player, TileType.FLOOR);
     			return true;
     		case WORKER_IN_STORAGE_AREA:
-    			this.setContentVoisine(previous_player, ContenuCase.STORAGE_AREA);
+    			this.setContentVoisine(previous_player, TileType.STORAGE_AREA);
     			return true;
     		default:
     			break;

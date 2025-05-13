@@ -33,37 +33,37 @@ public class Warehouse {
 				switch (Character.toString(lines.get(i).charAt(j))) {
 					case "_":
 						// Case arrière-plan
-						case_tableau.add(new Case(i, j, ContenuCase.OUTSIDE, this));
+						case_tableau.add(new Case(i, j, TileType.OUTSIDE, this));
 						break;
 					case "M":
 						// Case mu
-						case_tableau.add(new Case(i, j, ContenuCase.WALL, this));
+						case_tableau.add(new Case(i, j, TileType.WALL, this));
 						break;
 					case "#":
 						// Case vide
-						case_tableau.add(new Case(i, j, ContenuCase.FLOOR, this));
+						case_tableau.add(new Case(i, j, TileType.FLOOR, this));
 						break;
 					case "T":
 						// Case cible
-						case_tableau.add(new Case(i, j, ContenuCase.STORAGE_AREA, this));
+						case_tableau.add(new Case(i, j, TileType.STORAGE_AREA, this));
 						break;
 					case "G":
 						// Case joueur
-						case_tableau.add(new Case(i, j, ContenuCase.WORKER_ON_FLOOR, this));
+						case_tableau.add(new Case(i, j, TileType.WORKER_ON_FLOOR, this));
 						controller.worker.moveTo(i, j);
 						break;
 					case "C":
 						// Case Caisse
-						case_tableau.add(new Case(i, j, ContenuCase.UNSTORED_BOX, this));
+						case_tableau.add(new Case(i, j, TileType.UNSTORED_BOX, this));
 						break;
 					case "B":
 						// Case joueur sur une cible
-						case_tableau.add(new Case(i, j, ContenuCase.WORKER_IN_STORAGE_AREA, this));
+						case_tableau.add(new Case(i, j, TileType.WORKER_IN_STORAGE_AREA, this));
 						controller.worker.moveTo(i, j);
 						break;
 					case "V":
 						// Case caisse déjà validée
-						case_tableau.add(new Case(i, j, ContenuCase.STORED_BOX, this));
+						case_tableau.add(new Case(i, j, TileType.STORED_BOX, this));
 						break;
 				}
 
@@ -79,7 +79,7 @@ public class Warehouse {
 
     public boolean checkVictory() {
     	for (int i=0; i < case_tableau.size(); i++) {
-    		if (case_tableau.get(i).getContent() == ContenuCase.UNSTORED_BOX) {
+    		if (case_tableau.get(i).getContent() == TileType.UNSTORED_BOX) {
     			return false;
     		}
     	};

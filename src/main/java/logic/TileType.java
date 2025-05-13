@@ -1,6 +1,6 @@
 package logic;
 
-public enum ContenuCase {
+public enum TileType {
     FLOOR,
     WALL,
     UNSTORED_BOX,

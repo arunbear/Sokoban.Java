@@ -11,7 +11,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import logic.ContenuCase;
+import logic.TileType;
 import logic.Controller;
 
 import static ihm.SokobanWindow.IMAGE_SIZE;
@@ -20,23 +20,23 @@ import static ihm.SokobanWindow.IMAGE_SIZE;
 @SuppressWarnings("serial")
 public class SokobanPanel extends JPanel {
 
-    private static EnumMap< ContenuCase, Image > images;
+    private static EnumMap<TileType, Image > images;
 
     private final Controller controller;
 
     public SokobanPanel(Controller controller) {
         this.controller = controller;
         try {
-            images = new EnumMap< ContenuCase, Image >(
+            images = new EnumMap<TileType, Image >(
                 Map.of(
-                    ContenuCase.FLOOR, ImageIO.read( new File( "img/Vide.jpg" )),
-                    ContenuCase.WALL, ImageIO.read( new File( "img/Mur.jpg" )),
-                    ContenuCase.UNSTORED_BOX, ImageIO.read( new File( "img/Caisse.jpg" )),
-                    ContenuCase.STORED_BOX, ImageIO.read( new File( "img/CaisseRangee.jpg" )),
-                    ContenuCase.STORAGE_AREA, ImageIO.read( new File( "img/Rangement.jpg" )),
-                    ContenuCase.WORKER_ON_FLOOR, ImageIO.read( new File( "img/Joueur.jpg" )),
-                    ContenuCase.OUTSIDE, ImageIO.read( new File( "img/Background.jpg" )),
-                    ContenuCase.WORKER_IN_STORAGE_AREA, ImageIO.read( new File( "img/JoueurRangement.jpg" ))
+                    TileType.FLOOR, ImageIO.read( new File( "img/Vide.jpg" )),
+                    TileType.WALL, ImageIO.read( new File( "img/Mur.jpg" )),
+                    TileType.UNSTORED_BOX, ImageIO.read( new File( "img/Caisse.jpg" )),
+                    TileType.STORED_BOX, ImageIO.read( new File( "img/CaisseRangee.jpg" )),
+                    TileType.STORAGE_AREA, ImageIO.read( new File( "img/Rangement.jpg" )),
+                    TileType.WORKER_ON_FLOOR, ImageIO.read( new File( "img/Joueur.jpg" )),
+                    TileType.OUTSIDE, ImageIO.read( new File( "img/Background.jpg" )),
+                    TileType.WORKER_IN_STORAGE_AREA, ImageIO.read( new File( "img/JoueurRangement.jpg" ))
                 )
             );
         }

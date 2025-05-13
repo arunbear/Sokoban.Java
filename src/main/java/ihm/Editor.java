@@ -20,7 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import logic.ContenuCase;
+import logic.TileType;
 import logic.Controller;
 
 @SuppressWarnings("serial")
@@ -30,7 +30,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	static int LARGEUR_FENETRE = 0;
 	static int HAUTEUR_FENETRE = 0;
 	static Controller controleur;
-	static ContenuCase content = ContenuCase.OUTSIDE;
+	static TileType content = TileType.OUTSIDE;
 
 	public Editor (int nbLignes, int nbColonnes, String name) throws IOException  {  
 		
@@ -140,14 +140,14 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 				for (int i = 0; i < nbLignes * nbColonnes; i++) {
 					int c = i / nbColonnes;
 					int l = i % nbColonnes;
-					ContenuCase end_content = controleur.warehouse.getCase(c, l).getContent();
-					if (end_content == ContenuCase.WORKER_ON_FLOOR || end_content == ContenuCase.WORKER_IN_STORAGE_AREA) {
+					TileType end_content = controleur.warehouse.getCase(c, l).getContent();
+					if (end_content == TileType.WORKER_ON_FLOOR || end_content == TileType.WORKER_IN_STORAGE_AREA) {
 						gardien ++;
 					}
-					if (end_content == ContenuCase.UNSTORED_BOX || end_content == ContenuCase.STORED_BOX) {
+					if (end_content == TileType.UNSTORED_BOX || end_content == TileType.STORED_BOX) {
 						nb_caisse ++;
 					}
-					if (end_content == ContenuCase.WORKER_IN_STORAGE_AREA || end_content == ContenuCase.STORAGE_AREA || end_content == ContenuCase.STORED_BOX) {
+					if (end_content == TileType.WORKER_IN_STORAGE_AREA || end_content == TileType.STORAGE_AREA || end_content == TileType.STORED_BOX) {
 						nb_target ++;
 					}
 					
@@ -158,7 +158,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 						
 						int c = i / nbColonnes;
 						int l = i % nbColonnes;
-						ContenuCase end_content = controleur.warehouse.getCase(c, l).getContent();
+						TileType end_content = controleur.warehouse.getCase(c, l).getContent();
 						switch (end_content) {
 							case WORKER_ON_FLOOR:
 								ligne += "G";
@@ -225,49 +225,49 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	 	gardien.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content = ContenuCase.WORKER_ON_FLOOR;
+				content = TileType.WORKER_ON_FLOOR;
 			}
 	    });
 	 	background.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content = ContenuCase.OUTSIDE;
+				content = TileType.OUTSIDE;
 			}
 	    });
 	 	caisse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content = ContenuCase.UNSTORED_BOX;
+				content = TileType.UNSTORED_BOX;
 			}
 	    });
 	 	caisse_rangee.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content = ContenuCase.STORED_BOX;
+				content = TileType.STORED_BOX;
 			}
 	    });
 	 	gardien_rangement.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content = ContenuCase.WORKER_IN_STORAGE_AREA;
+				content = TileType.WORKER_IN_STORAGE_AREA;
 			}
 	    });
 	 	mur.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content = ContenuCase.WALL;
+				content = TileType.WALL;
 			}
 	    });
 	 	rangement.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content = ContenuCase.STORAGE_AREA;
+				content = TileType.STORAGE_AREA;
 			}
 	    });
 	 	vide.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content = ContenuCase.FLOOR;
+				content = TileType.FLOOR;
 			}
 	    });
 	 	
