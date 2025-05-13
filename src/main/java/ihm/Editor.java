@@ -141,13 +141,13 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 					int c = i / nbColonnes;
 					int l = i % nbColonnes;
 					ContenuCase end_content = controleur.warehouse.getCase(c, l).getContent();
-					if (end_content == ContenuCase.WORKER_ON_FLOOR || end_content == ContenuCase.JOUEUR_RANGEMENT) {
+					if (end_content == ContenuCase.WORKER_ON_FLOOR || end_content == ContenuCase.WORKER_IN_STORAGE_AREA) {
 						gardien ++;
 					}
 					if (end_content == ContenuCase.UNSTORED_BOX || end_content == ContenuCase.STORED_BOX) {
 						nb_caisse ++;
 					}
-					if (end_content == ContenuCase.JOUEUR_RANGEMENT || end_content == ContenuCase.STORAGE_AREA || end_content == ContenuCase.STORED_BOX) {
+					if (end_content == ContenuCase.WORKER_IN_STORAGE_AREA || end_content == ContenuCase.STORAGE_AREA || end_content == ContenuCase.STORED_BOX) {
 						nb_target ++;
 					}
 					
@@ -163,7 +163,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 							case WORKER_ON_FLOOR:
 								ligne += "G";
 								break;
-							case JOUEUR_RANGEMENT:
+							case WORKER_IN_STORAGE_AREA:
 								ligne += "B";
 								break;
 							case UNSTORED_BOX:
@@ -249,7 +249,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	 	gardien_rangement.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				content = ContenuCase.JOUEUR_RANGEMENT;
+				content = ContenuCase.WORKER_IN_STORAGE_AREA;
 			}
 	    });
 	 	mur.addActionListener(new ActionListener() {

@@ -7,6 +7,6 @@ public enum ContenuCase {
     STORED_BOX,
     STORAGE_AREA,
     WORKER_ON_FLOOR,
-    JOUEUR_RANGEMENT,
+    WORKER_IN_STORAGE_AREA,
     OUTSIDE
 }

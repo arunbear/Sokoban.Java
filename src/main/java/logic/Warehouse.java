@@ -58,7 +58,7 @@ public class Warehouse {
 						break;
 					case "B":
 						// Case joueur sur une cible
-						case_tableau.add(new Case(i, j, ContenuCase.JOUEUR_RANGEMENT, this));
+						case_tableau.add(new Case(i, j, ContenuCase.WORKER_IN_STORAGE_AREA, this));
 						controller.worker.moveTo(i, j);
 						break;
 					case "V":
