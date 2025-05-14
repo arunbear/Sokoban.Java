@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Warehouse {
@@ -22,15 +21,15 @@ public class Warehouse {
     	this.controller = controller;
 
     	Path file = Paths.get(path_to_level);
-		List<String> lines = Collections.emptyList();
-		lines = Files.readAllLines(file, StandardCharsets.UTF_8);
+        List<String> linesFromFile = Files.readAllLines(file, StandardCharsets.UTF_8);
 
-		this.lines = lines.size();
-		this.columns = lines.get(0).length();
+		this.lines = linesFromFile.size();
+		this.columns = linesFromFile.getFirst().length();
+
 		for (int i = 0; i<this.lines; i++) {
 			for(int j = 0; j<this.columns; j++) {
 
-				switch (Character.toString(lines.get(i).charAt(j))) {
+				switch (Character.toString(linesFromFile.get(i).charAt(j))) {
 					case "_":
 						// Case arrière-plan
 						case_tableau.add(new Case(i, j, TileType.OUTSIDE, this));
