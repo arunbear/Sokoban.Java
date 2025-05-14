@@ -62,12 +62,12 @@ public class Warehouse {
 
 
     public boolean checkVictory() {
-    	for (int i=0; i < case_tableau.size(); i++) {
-    		if (case_tableau.get(i).getContent() == TileType.UNSTORED_BOX) {
-    			return false;
-    		}
-    	};
-    	return true;
+        for (Case caseTableau : case_tableau) {
+            if (caseTableau.getContent() == TileType.UNSTORED_BOX) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public int getLines() {
