@@ -17,7 +17,7 @@ public class Warehouse {
     public Controller controller;
 
 
-    public Warehouse(String path_to_level, int level, Controller controller) throws IOException {
+    public Warehouse(String path_to_level, Controller controller) throws IOException {
     	this.controller = controller;
 
     	Path file = Paths.get(path_to_level);
