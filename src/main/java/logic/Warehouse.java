@@ -28,42 +28,28 @@ public class Warehouse {
 		for (int i = 0; i<this.lines; i++) {
 			for(int j = 0; j<this.columns; j++) {
 
-				switch (Character.toString(linesFromFile.get(i).charAt(j))) {
-					case "_":
-						// Case arrière-plan
-						case_tableau.add(new Case(i, j, TileType.OUTSIDE, this));
-						break;
-					case "M":
-						// Case mu
-						case_tableau.add(new Case(i, j, TileType.WALL, this));
-						break;
-					case "#":
-						// Case vide
-						case_tableau.add(new Case(i, j, TileType.FLOOR, this));
-						break;
-					case "T":
-						// Case cible
-						case_tableau.add(new Case(i, j, TileType.STORAGE_AREA, this));
-						break;
-					case "G":
-						// Case joueur
-						case_tableau.add(new Case(i, j, TileType.WORKER_ON_FLOOR, this));
-						worker.moveTo(i, j);
-						break;
-					case "C":
-						// Case Caisse
-						case_tableau.add(new Case(i, j, TileType.UNSTORED_BOX, this));
-						break;
-					case "B":
-						// Case joueur sur une cible
-						case_tableau.add(new Case(i, j, TileType.WORKER_IN_STORAGE_AREA, this));
-						worker.moveTo(i, j);
-						break;
-					case "V":
-						// Case caisse déjà validée
-						case_tableau.add(new Case(i, j, TileType.STORED_BOX, this));
-						break;
-				}
+                switch (Character.toString(linesFromFile.get(i).charAt(j))) {
+                    case "_" ->
+                            case_tableau.add(new Case(i, j, TileType.OUTSIDE, this));
+                    case "M" ->
+                            case_tableau.add(new Case(i, j, TileType.WALL, this));
+                    case "#" ->
+                            case_tableau.add(new Case(i, j, TileType.FLOOR, this));
+                    case "T" ->
+                            case_tableau.add(new Case(i, j, TileType.STORAGE_AREA, this));
+                    case "G" -> {
+                        case_tableau.add(new Case(i, j, TileType.WORKER_ON_FLOOR, this));
+                        worker.moveTo(i, j);
+                    }
+                    case "C" ->
+                            case_tableau.add(new Case(i, j, TileType.UNSTORED_BOX, this));
+                    case "B" -> {
+                        case_tableau.add(new Case(i, j, TileType.WORKER_IN_STORAGE_AREA, this));
+                        worker.moveTo(i, j);
+                    }
+                    case "V" ->
+                            case_tableau.add(new Case(i, j, TileType.STORED_BOX, this));
+                }
 
 			}
 		}
