@@ -9,16 +9,11 @@ import java.util.List;
 
 public class Warehouse {
     private final int lines;
-
     private final int columns;
 
-    private final List<Case> case_tableau = new ArrayList<Case> ();
+    private final List<Case> case_tableau = new ArrayList<>();
 
-    public Controller controller;
-
-
-    public Warehouse(String path_to_level, Controller controller) throws IOException {
-    	this.controller = controller;
+	public Warehouse(String path_to_level, Worker worker) throws IOException {
 
     	Path file = Paths.get(path_to_level);
         List<String> linesFromFile = Files.readAllLines(file, StandardCharsets.UTF_8);
@@ -49,7 +44,7 @@ public class Warehouse {
 					case "G":
 						// Case joueur
 						case_tableau.add(new Case(i, j, TileType.WORKER_ON_FLOOR, this));
-						controller.worker.moveTo(i, j);
+						worker.moveTo(i, j);
 						break;
 					case "C":
 						// Case Caisse
@@ -58,7 +53,7 @@ public class Warehouse {
 					case "B":
 						// Case joueur sur une cible
 						case_tableau.add(new Case(i, j, TileType.WORKER_IN_STORAGE_AREA, this));
-						controller.worker.moveTo(i, j);
+						worker.moveTo(i, j);
 						break;
 					case "V":
 						// Case caisse déjà validée

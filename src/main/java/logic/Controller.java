@@ -27,7 +27,7 @@ public class Controller {
     	this.pathToLevel = pathToLevel;
     	this.worker = new Worker();
 
-    	this.warehouse = new Warehouse(pathToLevel, this);
+    	this.warehouse = new Warehouse(pathToLevel, this.worker);
     }
 
     public void action(Direction direction) {
@@ -83,7 +83,7 @@ public class Controller {
 
 	public void restart() throws IOException {
 		this.worker = new Worker();
-    	this.warehouse = new Warehouse(this.pathToLevel, this);
+    	this.warehouse = new Warehouse(this.pathToLevel, this.worker);
 	}
 
 	/**
