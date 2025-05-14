@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import logic.Controller;
 import logic.Direction;
-import logic.Game_Managers;
+import logic.GameAction;
 
 
 public class SokobanWindow extends JFrame implements KeyListener{
@@ -63,13 +63,13 @@ public class SokobanWindow extends JFrame implements KeyListener{
             case KeyEvent.VK_Q -> Direction.LEFT;
             case KeyEvent.VK_RIGHT -> Direction.RIGHT;
             case KeyEvent.VK_D -> Direction.RIGHT;
-            case KeyEvent.VK_BACK_SPACE -> Game_Managers.RESTART;
-            case KeyEvent.VK_SPACE -> Game_Managers.STEP_BACK;
-            case KeyEvent.VK_ESCAPE -> Game_Managers.STOP;
+            case KeyEvent.VK_BACK_SPACE -> GameAction.RESTART;
+            case KeyEvent.VK_SPACE -> GameAction.STEP_BACK;
+            case KeyEvent.VK_ESCAPE -> GameAction.STOP;
             default                -> null;
         };
         if( input == null ) return;
-        else if (input == Game_Managers.STEP_BACK) {
+        else if (input == GameAction.STEP_BACK) {
         	try {
 				controller.restart();
 				List<Direction> New_previous_actions = new ArrayList<Direction> ();
@@ -84,7 +84,7 @@ public class SokobanWindow extends JFrame implements KeyListener{
 				e1.printStackTrace();
 			}
         }
-        else if (input == Game_Managers.RESTART) {
+        else if (input == GameAction.RESTART) {
         	try {
         		previousActions = new ArrayList<Direction> (); 
 				controller.restart();
@@ -93,7 +93,7 @@ public class SokobanWindow extends JFrame implements KeyListener{
 				e1.printStackTrace();
 			}
         }
-        else if (input == Game_Managers.STOP) {
+        else if (input == GameAction.STOP) {
         	System.exit( 0 );
         }
         else {
