@@ -21,6 +21,10 @@ public class Warehouse {
 		this.lines = linesFromFile.size();
 		this.columns = linesFromFile.getFirst().length();
 
+		parseLevel(worker, linesFromFile);
+	}
+
+	private void parseLevel(Worker worker, List<String> linesFromFile) {
 		for (int i = 0; i<this.lines; i++) {
 			for(int j = 0; j<this.columns; j++) {
 
@@ -66,7 +70,7 @@ public class Warehouse {
 	}
 
 
-    public Case getCase(int l, int c) {
+	public Case getCase(int l, int c) {
     	return case_tableau.get(l*this.columns + c);
     }
 
