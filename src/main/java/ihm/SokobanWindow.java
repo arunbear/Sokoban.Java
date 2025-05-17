@@ -100,28 +100,37 @@ public class SokobanWindow extends JFrame implements KeyListener{
         }
 
         repaint();
-        if( controller.levelEnd() && (this.controller.getLevel() + 1) < 10 && this.controller.getLevel() > 0 && controller.getPathToLevel().contains("levels"))  {
-        	Object[] options = {"Niveau suivant",
-            "Quitter le jeu"};        	
-        	 Image image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-        	 int result = JOptionPane.showOptionDialog(this, "Vous avez gagné !", "Fin du niveau", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon(image), options, options[0]);
-        	 if (result == JOptionPane.YES_OPTION) {
-        		 try {
-        			this.dispose();
-        			String oldPath = this.controller.getPathToLevel();
-        			new SokobanWindow(new Controller(oldPath.substring(0, oldPath.length() - 5) + Integer.toString(this.controller.getLevel() + 1 ) + ".txt"));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-        		return;
-        	 }
-        	 else if (result == JOptionPane.NO_OPTION) {
-                 exitGame();
-             }
+        if (! controller.levelEnd())
+            return;
+
+        if (controller.isOnCustomLevel()) {
+            JOptionPane.showMessageDialog( this, "Bravo, vous avez fini le niveau !" );
             exitGame();
-        } 
-        else if (controller.levelEnd()){
-        	JOptionPane.showMessageDialog( this, "Bravo, vous avez fini le niveau !" );
+        }
+        else {
+            Object[] options = {"Next level", "Quit"};
+            Image image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+            int result = JOptionPane.showOptionDialog(this,
+                    "You won!",
+                    "End of level",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    new ImageIcon(image),
+                    options,
+                    options[0]);
+            if (result == JOptionPane.YES_OPTION) {
+                try {
+                    this.dispose();
+                    String oldPath = this.controller.getPathToLevel();
+                    new SokobanWindow(new Controller(oldPath.substring(0, oldPath.length() - 5) + Integer.toString(this.controller.getLevel() + 1 ) + ".txt"));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                return;
+            }
+            else if (result == JOptionPane.NO_OPTION) {
+                exitGame();
+            }
             exitGame();
         }
     }
