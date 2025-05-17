@@ -121,8 +121,7 @@ public class SokobanWindow extends JFrame implements KeyListener{
             if (result == JOptionPane.YES_OPTION) {
                 try {
                     this.dispose();
-                    String oldPath = this.controller.getPathToLevel();
-                    new SokobanWindow(new Controller(oldPath.substring(0, oldPath.length() - 5) + Integer.toString(this.controller.getLevel() + 1 ) + ".txt"));
+                    new SokobanWindow(this.controller.nextLevel());
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }

@@ -17,7 +17,7 @@ public class Controller {
     public Worker worker;
 
     public Controller(String pathToLevel) throws IOException {
-		var levelsPath = "levels%slevel".formatted(FileSystems.getDefault().getSeparator());
+		var levelsPath = pathToLevels();
 
 		if (pathToLevel.contains(levelsPath)) {
 			Optional<Integer> levels = parseLevel(pathToLevel);
@@ -29,6 +29,15 @@ public class Controller {
 
     	this.warehouse = new Warehouse(pathToLevel, this.worker);
     }
+
+	private static String pathToLevels() {
+        return "levels%slevel".formatted(FileSystems.getDefault().getSeparator());
+	}
+
+	public Controller nextLevel() throws IOException {
+		int nextLevel = this.level + 1;
+		return new Controller("%s%s.txt".formatted(pathToLevels(), nextLevel));
+	}
 
     public void action(Direction direction) {
     	int l = worker.getLine();
