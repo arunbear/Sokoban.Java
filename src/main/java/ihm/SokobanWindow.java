@@ -22,7 +22,7 @@ public class SokobanWindow extends JFrame implements KeyListener{
     public static final int IMAGE_SIZE = 32;
 
     private final Controller controller;
-    private List<Direction> previousActions = new ArrayList<Direction> ();
+    private final List<Direction> previousActions = new ArrayList<>();
 
     public SokobanWindow(Controller controller) {
         this.controller = controller;
@@ -71,24 +71,22 @@ public class SokobanWindow extends JFrame implements KeyListener{
             previousActions.add(direction);
             controller.action(direction);
         }
-        else if (input == GameAction.STEP_BACK) {
+        else if (input == GameAction.STEP_BACK && !previousActions.isEmpty()) {
         	try {
 				controller.restart();
-				List<Direction> New_previous_actions = new ArrayList<>();
-				for (int i = 0; i < previousActions.size() - 1; i++) {
-				    Direction element = previousActions.get(i);
-				    New_previous_actions.add(element);
-				    controller.action(element);
-				}
-				previousActions = New_previous_actions;
+
+                // replay all but the last move
+                previousActions.removeLast();
+                for (var direction : previousActions) {
+                    controller.action(direction);
+                }
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
         }
         else if (input == GameAction.RESTART) {
         	try {
-        		previousActions = new ArrayList<>();
+        		previousActions.clear();
 				controller.restart();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
