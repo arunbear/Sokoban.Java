@@ -98,36 +98,41 @@ public class SokobanWindow extends JFrame implements KeyListener{
         }
 
         repaint();
-        if (! controller.levelEnd())
-            return;
+        if (controller.levelEnd()) {
+            handleEndOfLevel();
+        }
+    }
 
+    private void handleEndOfLevel() {
         if (controller.isOnCustomLevel()) {
             JOptionPane.showMessageDialog( this, "Bravo, vous avez fini le niveau !" );
             exitGame();
         }
         else {
-            Object[] options = {"Next level", "Quit"};
-            Image image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-            int result = JOptionPane.showOptionDialog(this,
-                    "You won!",
-                    "End of level",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    new ImageIcon(image),
-                    options,
-                    options[0]);
-            if (result == JOptionPane.YES_OPTION) {
-                try {
-                    this.dispose();
-                    new SokobanWindow(this.controller.nextLevel());
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-                return;
+            handleNextLevel();
+        }
+    }
+
+    private void handleNextLevel() {
+        Object[] options = {"Next level", "Quit"};
+        Image image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+        int result = JOptionPane.showOptionDialog(this,
+                "You won!",
+                "End of level",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                new ImageIcon(image),
+                options,
+                options[0]);
+        if (result == JOptionPane.YES_OPTION) {
+            try {
+                this.dispose();
+                new SokobanWindow(this.controller.nextLevel());
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
-            else if (result == JOptionPane.NO_OPTION) {
-                exitGame();
-            }
+        }
+        else if (result == JOptionPane.NO_OPTION) {
             exitGame();
         }
     }
