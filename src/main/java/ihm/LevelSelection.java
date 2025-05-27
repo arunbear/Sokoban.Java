@@ -109,12 +109,7 @@ public class LevelSelection {
         play.setBounds(75, 225, 250, 50);
         play.addActionListener(e -> {
             frame.dispose();
-            try {
-                new SokobanWindow(new Controller(selectedLevelFile.getPath()));
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+            new SokobanWindow(new Controller(selectedLevelFile.getPath()));
         });
         return play;
     }

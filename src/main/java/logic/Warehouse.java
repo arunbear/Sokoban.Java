@@ -7,19 +7,29 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkState;
+
 public class Warehouse {
     private final int lines;
     private final int columns;
 
     private final List<Case> case_tableau = new ArrayList<>();
 
-	public Warehouse(String path_to_level, Worker worker) throws IOException {
+	public Warehouse(String path_to_level, Worker worker)  {
 
     	Path file = Paths.get(path_to_level);
-        List<String> linesFromFile = Files.readAllLines(file, StandardCharsets.UTF_8);
+        List<String> linesFromFile;
+        try {
+            linesFromFile = Files.readAllLines(file, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-		this.lines = linesFromFile.size();
-		this.columns = linesFromFile.getFirst().length();
+        this.lines = linesFromFile.size();
+        checkState(this.lines >= 7);
+
+        this.columns = linesFromFile.getFirst().length();
+        checkState(this.columns >= 5);
 
 		parseLevel(worker, linesFromFile);
 	}

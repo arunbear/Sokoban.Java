@@ -72,26 +72,17 @@ public class SokobanWindow extends JFrame implements KeyListener{
             controller.action(direction);
         }
         else if (input == GameAction.STEP_BACK && !previousActions.isEmpty()) {
-        	try {
-				controller.restart();
+            controller.restart();
 
-                // replay all but the last move
-                previousActions.removeLast();
-                for (var direction : previousActions) {
-                    controller.action(direction);
-                }
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+            // replay all but the last move
+            previousActions.removeLast();
+            for (var direction : previousActions) {
+                controller.action(direction);
+            }
         }
         else if (input == GameAction.RESTART) {
-        	try {
-        		previousActions.clear();
-				controller.restart();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+            previousActions.clear();
+            controller.restart();
         }
         else if (input == GameAction.STOP) {
             exitGame();
@@ -125,12 +116,8 @@ public class SokobanWindow extends JFrame implements KeyListener{
                 options,
                 options[0]);
         if (result == JOptionPane.YES_OPTION) {
-            try {
-                this.dispose();
-                new SokobanWindow(this.controller.nextLevel());
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            this.dispose();
+            new SokobanWindow(this.controller.nextLevel());
         }
         else if (result == JOptionPane.NO_OPTION) {
             exitGame();
