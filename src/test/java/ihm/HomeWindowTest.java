@@ -1,6 +1,7 @@
 package ihm;
 
 import org.junit.jupiter.api.Test;
+import swing.ComponentFinder;
 
 import javax.swing.*;
 
@@ -20,6 +21,15 @@ class HomeWindowTest {
         then(frame.getSize()).isEqualTo(new Dimension(400, 400));
         then(frame.getLayout()).isNotNull();
         then(frame.isVisible()).isTrue();
+    }
+
+    @Test void a_HomeWindow_has_a_title() {
+        HomeWindow homeWindow = new HomeWindow();
+        JFrame frame = homeWindow.getFrame();
+
+        JLabel title = ComponentFinder.findComponentByNameAsType(frame, "HomeWindow.title", JLabel.class);
+        then(title).isNotNull();
+        then(title.getText()).isEqualTo("SOKOBAN");
     }
 
 }

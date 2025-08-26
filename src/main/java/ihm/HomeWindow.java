@@ -77,6 +77,7 @@ public class HomeWindow {
 
     private static JLabel createTitle() {
         JLabel title = new JLabel("SOKOBAN", SwingConstants.CENTER);
+        title.setName("HomeWindow.title");
         title.setFont(new Font(Font.SERIF, Font.BOLD, 70));
         title.setBounds(0, 50, 400, 100);
         return title;
