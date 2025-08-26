@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import swing.ComponentFinder;
 
 import javax.swing.*;
-
 import java.awt.*;
 
 import static org.assertj.core.api.BDDAssertions.then;
@@ -55,4 +54,34 @@ class HomeWindowTest {
         then(edit.getText()).isEqualTo("Edit levels");
     }
 
+    @Test
+    void quitButton_calls_ExitHandler() {
+        // Arrange
+        TestExitHandler testExitHandler = new TestExitHandler();
+        HomeWindow homeWindow = new HomeWindow(testExitHandler);
+        JButton quit = ComponentFinder.findComponentByNameAsType(homeWindow, "HomeWindow.quit", JButton.class);
+        
+        // Get the action listeners
+        var listeners = quit.getActionListeners();
+        then(listeners).hasSize(1);
+        
+        // Act - Execute the action listener
+        listeners[0].actionPerformed(null);
+        
+        // Assert - Verify exit handler was called with status 0
+        then(testExitHandler.exitCalled).isTrue();
+        then(testExitHandler.lastExitStatus).isEqualTo(0);
+    }
+    
+    // Test implementation of ExitHandler
+    private static class TestExitHandler implements ExitHandler {
+        boolean exitCalled = false;
+        int lastExitStatus = -1;
+        
+        @Override
+        public void exit(int status) {
+            exitCalled = true;
+            lastExitStatus = status;
+        }
+    }
 }

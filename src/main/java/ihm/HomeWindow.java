@@ -11,8 +11,15 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class HomeWindow extends JFrame {
+    private final ExitHandler exitHandler;
+    
     public HomeWindow() {
+        this(new SystemExitHandler());
+    }
+    
+    public HomeWindow(ExitHandler exitHandler) {
         super("Sokoban v1.0 par Gabriel FARAGO");
+        this.exitHandler = exitHandler != null ? exitHandler : new SystemExitHandler();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         
@@ -68,11 +75,11 @@ public class HomeWindow extends JFrame {
         return play;
     }
 
-    private static JButton createQuitButton() {
+    private JButton createQuitButton() {
         JButton quit = new JButton("Quit");
         quit.setName("HomeWindow.quit");
         quit.setBounds(225, 300, 150, 50);
-        quit.addActionListener(_ -> System.exit(0));
+        quit.addActionListener(_ -> exitHandler.exit(0));
         return quit;
     }
 
