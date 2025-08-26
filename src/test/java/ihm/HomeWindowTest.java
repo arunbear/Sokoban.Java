@@ -41,4 +41,13 @@ class HomeWindowTest {
         then(play.getText()).isEqualTo("Play");
     }
 
+    @Test void a_HomeWindow_has_a_quit_button() {
+        HomeWindow homeWindow = new HomeWindow();
+        JFrame frame = homeWindow.getFrame();
+
+        JButton quit = ComponentFinder.findComponentByNameAsType(frame, "HomeWindow.quit", JButton.class);
+        then(quit).isNotNull();
+        then(quit.getText()).isEqualTo("Quit");
+    }
+
 }

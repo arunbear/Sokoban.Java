@@ -71,6 +71,7 @@ public class HomeWindow {
 
     private static JButton createQuitButton() {
         JButton quit = new JButton("Quit");
+        quit.setName("HomeWindow.quit");
         quit.setBounds(225, 300, 150, 50);
         quit.addActionListener(_ -> System.exit(0));
         return quit;
