@@ -32,4 +32,13 @@ class HomeWindowTest {
         then(title.getText()).isEqualTo("SOKOBAN");
     }
 
+    @Test void a_HomeWindow_has_a_play_button() {
+        HomeWindow homeWindow = new HomeWindow();
+        JFrame frame = homeWindow.getFrame();
+
+        JButton play = ComponentFinder.findComponentByNameAsType(frame, "HomeWindow.play", JButton.class);
+        then(play).isNotNull();
+        then(play.getText()).isEqualTo("Play");
+    }
+
 }

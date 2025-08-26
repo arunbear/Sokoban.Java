@@ -55,6 +55,7 @@ public class HomeWindow {
 
     private static JButton createPlayButton(JFrame frame) {
         JButton play = new JButton("Play");
+        play.setName("HomeWindow.play");
         play.setBounds(75, 225, 250, 50);
         play.addActionListener(_ -> {
             frame.dispose();
