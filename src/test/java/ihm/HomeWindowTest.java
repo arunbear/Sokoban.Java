@@ -50,4 +50,13 @@ class HomeWindowTest {
         then(quit.getText()).isEqualTo("Quit");
     }
 
+    @Test void a_HomeWindow_has_an_edit_button() {
+        HomeWindow homeWindow = new HomeWindow();
+        JFrame frame = homeWindow.getFrame();
+
+        JButton edit = ComponentFinder.findComponentByNameAsType(frame, "HomeWindow.edit", JButton.class);
+        then(edit).isNotNull();
+        then(edit.getText()).isEqualTo("Edit levels");
+    }
+
 }

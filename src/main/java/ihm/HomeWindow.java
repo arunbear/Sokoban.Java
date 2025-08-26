@@ -40,7 +40,9 @@ public class HomeWindow {
 
     private static JButton createEditButton(JFrame frame) {
         JButton edit = new JButton("Edit levels");
+        edit.setName("HomeWindow.edit");
         edit.setBounds(25, 300, 150, 50);
+
         edit.addActionListener(_ -> {
             frame.dispose();
             try {
