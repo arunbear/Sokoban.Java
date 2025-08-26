@@ -11,8 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class HomeWindow {
+    private final JFrame frame;
+
     public HomeWindow() {
-        JFrame frame = createFrame();
+        this.frame = createFrame();
         JLabel title = createTitle();
 
         // Create buttons
@@ -23,6 +25,10 @@ public class HomeWindow {
         List.of(play, edit, quit, title).forEach(frame::add);
 
         configureFrame(frame);
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 
     private static void configureFrame(JFrame frame) {
