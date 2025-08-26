@@ -68,9 +68,9 @@ class HomeWindowTest {
         // Act - Execute the action listener
         listeners[0].actionPerformed(null);
         
-        // Assert - Verify exit handler was called with status 0
+        // Assert - Verify exit handler was called with SUCCESS status
         then(testExitHandler.exitCalled).isTrue();
-        then(testExitHandler.lastExitStatus).isEqualTo(0);
+        then(testExitHandler.lastExitStatus).isEqualTo(ExitHandler.SUCCESS);
     }
     
     // Test implementation of ExitHandler

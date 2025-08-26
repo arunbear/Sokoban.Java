@@ -79,7 +79,7 @@ public class HomeWindow extends JFrame {
         JButton quit = new JButton("Quit");
         quit.setName("HomeWindow.quit");
         quit.setBounds(225, 300, 150, 50);
-        quit.addActionListener(_ -> exitHandler.exit(0));
+        quit.addActionListener(_ -> exitHandler.exit(ExitHandler.SUCCESS));
         return quit;
     }
 
