@@ -10,32 +10,29 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class HomeWindow {
-    private final JFrame frame;
-
+public class HomeWindow extends JFrame {
     public HomeWindow() {
-        this.frame = createFrame();
+        super("Sokoban v1.0 par Gabriel FARAGO");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        
         JLabel title = createTitle();
-
+        
         // Create buttons
         JButton quit = createQuitButton();
-        JButton play = createPlayButton(frame);
-        JButton edit = createEditButton(frame);
-
-        List.of(play, edit, quit, title).forEach(frame::add);
-
-        configureFrame(frame);
+        JButton play = createPlayButton(this);
+        JButton edit = createEditButton(this);
+        
+        List.of(play, edit, quit, title).forEach(this::add);
+        
+        configureFrame();
     }
 
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    private static void configureFrame(JFrame frame) {
-        frame.setSize(400, 400);
-        frame.setLayout(null);
-        frame.setLocationRelativeTo(null); // center the window
-        frame.setVisible(true);
+    private void configureFrame() {
+        setSize(400, 400);
+        setLayout(null);
+        setLocationRelativeTo(null); // center the window
+        setVisible(true);
     }
 
     private static JButton createEditButton(JFrame frame) {
@@ -87,11 +84,5 @@ public class HomeWindow {
         return title;
     }
 
-    private static JFrame createFrame() {
-        JFrame frame = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        return frame;
-    }
 }
 

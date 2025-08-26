@@ -10,51 +10,47 @@ import java.awt.*;
 import static org.assertj.core.api.BDDAssertions.then;
 
 class HomeWindowTest {
-    @Test void a_HomeWindow_has_a_frame() {
+    @Test void a_HomeWindow_is_a_frame() {
         HomeWindow homeWindow = new HomeWindow();
-        JFrame frame = homeWindow.getFrame();
 
-        then(frame).isNotNull();
-        then(frame.getTitle()).isEqualTo("Sokoban v1.0 par Gabriel FARAGO");
-        then(frame.getDefaultCloseOperation()).isEqualTo(JFrame.EXIT_ON_CLOSE);
+        then(homeWindow).isInstanceOf(JFrame.class);
+        then(homeWindow.getTitle()).isEqualTo("Sokoban v1.0 par Gabriel FARAGO");
+        then(homeWindow.getDefaultCloseOperation()).isEqualTo(JFrame.EXIT_ON_CLOSE);
 
-        then(frame.getSize()).isEqualTo(new Dimension(400, 400));
-        then(frame.getLayout()).isNotNull();
-        then(frame.isVisible()).isTrue();
+        then(homeWindow.getSize()).isEqualTo(new Dimension(400, 400));
+        then(homeWindow.getLayout()).isNotNull();
+        then(homeWindow.isVisible()).isTrue();
+        then(homeWindow.isResizable()).isFalse();
     }
 
     @Test void a_HomeWindow_has_a_title() {
         HomeWindow homeWindow = new HomeWindow();
-        JFrame frame = homeWindow.getFrame();
 
-        JLabel title = ComponentFinder.findComponentByNameAsType(frame, "HomeWindow.title", JLabel.class);
+        JLabel title = ComponentFinder.findComponentByNameAsType(homeWindow, "HomeWindow.title", JLabel.class);
         then(title).isNotNull();
         then(title.getText()).isEqualTo("SOKOBAN");
     }
 
     @Test void a_HomeWindow_has_a_play_button() {
         HomeWindow homeWindow = new HomeWindow();
-        JFrame frame = homeWindow.getFrame();
 
-        JButton play = ComponentFinder.findComponentByNameAsType(frame, "HomeWindow.play", JButton.class);
+        JButton play = ComponentFinder.findComponentByNameAsType(homeWindow, "HomeWindow.play", JButton.class);
         then(play).isNotNull();
         then(play.getText()).isEqualTo("Play");
     }
 
     @Test void a_HomeWindow_has_a_quit_button() {
         HomeWindow homeWindow = new HomeWindow();
-        JFrame frame = homeWindow.getFrame();
 
-        JButton quit = ComponentFinder.findComponentByNameAsType(frame, "HomeWindow.quit", JButton.class);
+        JButton quit = ComponentFinder.findComponentByNameAsType(homeWindow, "HomeWindow.quit", JButton.class);
         then(quit).isNotNull();
         then(quit.getText()).isEqualTo("Quit");
     }
 
     @Test void a_HomeWindow_has_an_edit_button() {
         HomeWindow homeWindow = new HomeWindow();
-        JFrame frame = homeWindow.getFrame();
 
-        JButton edit = ComponentFinder.findComponentByNameAsType(frame, "HomeWindow.edit", JButton.class);
+        JButton edit = ComponentFinder.findComponentByNameAsType(homeWindow, "HomeWindow.edit", JButton.class);
         then(edit).isNotNull();
         then(edit.getText()).isEqualTo("Edit levels");
     }
