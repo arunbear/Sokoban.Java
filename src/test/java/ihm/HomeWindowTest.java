@@ -58,9 +58,8 @@ class HomeWindowTest {
     @Test
     void playButton_triggers_playHandler() {
         // Arrange
-        ExitHandler exitHandler = new TestExitHandler();
         PlayHandler mockPlayHandler = Mockito.mock(PlayHandler.class);
-        HomeWindow homeWindow = new HomeWindow(exitHandler, mockPlayHandler);
+        HomeWindow homeWindow = new HomeWindow(mockPlayHandler);
         
         JButton play = ComponentFinder.findComponentByNameAsType(homeWindow, "HomeWindow.play", JButton.class);
         var listeners = play.getActionListeners();

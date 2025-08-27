@@ -22,16 +22,22 @@ public class HomeWindow extends JFrame {
         this(exitHandler, new DefaultPlayHandler());
     }
     
+    public HomeWindow(PlayHandler playHandler) {
+        this(new SystemExitHandler(), playHandler);
+    }
+    
     public HomeWindow(ExitHandler exitHandler, PlayHandler playHandler) {
         super("Sokoban v1.0 par Gabriel FARAGO");
         this.exitHandler = exitHandler != null ? exitHandler : new SystemExitHandler();
         this.playHandler = playHandler != null ? playHandler : new DefaultPlayHandler();
+        
+        initializeUI();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        
+    }
+    
+    private void initializeUI() {
         JLabel title = createTitle();
-        
-        // Create buttons
         JButton quit = createQuitButton();
         JButton play = createPlayButton(this);
         JButton edit = createEditButton(this);
