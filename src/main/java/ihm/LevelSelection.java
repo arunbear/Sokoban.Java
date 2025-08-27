@@ -91,7 +91,7 @@ public class LevelSelection {
         levelList.setSelectedIndex(0);
         levelList.setBounds(50, 100, 100, 50);
 
-        levelList.addActionListener(_ -> {
+        levelList.addActionListener(e -> {
             var fileName = "level%d.txt".formatted(levelList.getSelectedIndex() + 1);
             levelFileLabel.setText(fileName);
             try {
@@ -117,7 +117,7 @@ public class LevelSelection {
     private JButton aBackButton() {
         JButton back = new JButton("Back");
         back.setBounds(25, 300, 150, 50);
-        back.addActionListener(_ -> {
+        back.addActionListener(e -> {
             frame.dispose();
             new HomeWindow();
         });
@@ -128,7 +128,7 @@ public class LevelSelection {
         JButton quit = new JButton("Quit");
         quit.setBounds(225, 300, 150, 50);
 
-        quit.addActionListener(_ -> System.exit(0));
+        quit.addActionListener(e -> System.exit(0));
         return quit;
     }
 

@@ -1,6 +1,7 @@
 package ihm;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import swing.ComponentFinder;
 
 import javax.swing.*;
@@ -54,6 +55,25 @@ class HomeWindowTest {
         then(edit.getText()).isEqualTo("Edit levels");
     }
 
+    @Test
+    void playButton_triggers_playHandler() {
+        // Arrange
+        ExitHandler exitHandler = new TestExitHandler();
+        PlayHandler mockPlayHandler = Mockito.mock(PlayHandler.class);
+        HomeWindow homeWindow = new HomeWindow(exitHandler, mockPlayHandler);
+        
+        JButton play = ComponentFinder.findComponentByNameAsType(homeWindow, "HomeWindow.play", JButton.class);
+        var listeners = play.getActionListeners();
+        then(listeners).hasSize(1);
+        
+        // Act - Execute the action listener
+        listeners[0].actionPerformed(null);
+        
+        // Assert - Verify the play handler was called and window is disposed
+        Mockito.verify(mockPlayHandler).handlePlay();
+        then(homeWindow.isDisplayable()).isFalse(); // Verify window is disposed
+    }
+    
     @Test
     void quitButton_calls_ExitHandler() {
         // Arrange

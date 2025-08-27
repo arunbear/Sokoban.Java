@@ -12,14 +12,20 @@ import javax.swing.SwingConstants;
 
 public class HomeWindow extends JFrame {
     private final ExitHandler exitHandler;
+    private final PlayHandler playHandler;
     
     public HomeWindow() {
-        this(new SystemExitHandler());
+        this(new SystemExitHandler(), new DefaultPlayHandler());
     }
     
     public HomeWindow(ExitHandler exitHandler) {
+        this(exitHandler, new DefaultPlayHandler());
+    }
+    
+    public HomeWindow(ExitHandler exitHandler, PlayHandler playHandler) {
         super("Sokoban v1.0 par Gabriel FARAGO");
         this.exitHandler = exitHandler != null ? exitHandler : new SystemExitHandler();
+        this.playHandler = playHandler != null ? playHandler : new DefaultPlayHandler();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         
@@ -47,7 +53,7 @@ public class HomeWindow extends JFrame {
         edit.setName("HomeWindow.edit");
         edit.setBounds(25, 300, 150, 50);
 
-        edit.addActionListener(_ -> {
+        edit.addActionListener(e -> {
             frame.dispose();
             try {
                 new LevelEditorSetup();
@@ -59,18 +65,13 @@ public class HomeWindow extends JFrame {
         return edit;
     }
 
-    private static JButton createPlayButton(JFrame frame) {
+    private JButton createPlayButton(JFrame frame) {
         JButton play = new JButton("Play");
         play.setName("HomeWindow.play");
         play.setBounds(75, 225, 250, 50);
-        play.addActionListener(_ -> {
+        play.addActionListener(e -> {
             frame.dispose();
-            try {
-                new LevelSelection();
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+            playHandler.handlePlay();
         });
         return play;
     }
@@ -79,7 +80,7 @@ public class HomeWindow extends JFrame {
         JButton quit = new JButton("Quit");
         quit.setName("HomeWindow.quit");
         quit.setBounds(225, 300, 150, 50);
-        quit.addActionListener(_ -> exitHandler.exit(ExitHandler.SUCCESS));
+        quit.addActionListener(e -> exitHandler.exit(ExitHandler.SUCCESS));
         return quit;
     }
 
