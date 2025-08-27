@@ -54,6 +54,24 @@ class HomeWindowTest {
         then(edit).isNotNull();
         then(edit.getText()).isEqualTo("Edit levels");
     }
+    
+    @Test
+    void editButton_triggers_EditHandler() {
+        // Arrange
+        EditHandler mockEditHandler = Mockito.mock(EditHandler.class);
+        HomeWindow homeWindow = new HomeWindow(mockEditHandler);
+        
+        JButton edit = ComponentFinder.findComponentByNameAsType(homeWindow, "HomeWindow.edit", JButton.class);
+        var listeners = edit.getActionListeners();
+        then(listeners).hasSize(1);
+        
+        // Act - Execute the action listener
+        listeners[0].actionPerformed(null);
+        
+        // Assert - Verify the edit handler was called and window is disposed
+        Mockito.verify(mockEditHandler).handleEdit();
+        then(homeWindow.isDisplayable()).isFalse(); // Verify window is disposed
+    }
 
     @Test
     void playButton_triggers_playHandler() {

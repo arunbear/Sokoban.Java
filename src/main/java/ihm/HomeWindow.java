@@ -1,8 +1,6 @@
 package ihm;
 
 import java.awt.Font;
-import java.awt.FontFormatException;
-import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -10,26 +8,33 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+
 public class HomeWindow extends JFrame {
     private final ExitHandler exitHandler;
     private final PlayHandler playHandler;
+    private final EditHandler editHandler;
     
     public HomeWindow() {
-        this(new SystemExitHandler(), new DefaultPlayHandler());
+        this(new SystemExitHandler(), new DefaultPlayHandler(), new EditHandler.Default());
     }
     
     public HomeWindow(ExitHandler exitHandler) {
-        this(exitHandler, new DefaultPlayHandler());
+        this(exitHandler, new DefaultPlayHandler(), new EditHandler.Default());
     }
     
     public HomeWindow(PlayHandler playHandler) {
-        this(new SystemExitHandler(), playHandler);
+        this(new SystemExitHandler(), playHandler, new EditHandler.Default());
     }
-    
-    public HomeWindow(ExitHandler exitHandler, PlayHandler playHandler) {
+
+    public HomeWindow(EditHandler editHandler) {
+        this(new SystemExitHandler(), new DefaultPlayHandler(), editHandler);
+    }
+
+    public HomeWindow(ExitHandler exitHandler, PlayHandler playHandler, EditHandler editHandler) {
         super("Sokoban v1.0 par Gabriel FARAGO");
         this.exitHandler = exitHandler != null ? exitHandler : new SystemExitHandler();
         this.playHandler = playHandler != null ? playHandler : new DefaultPlayHandler();
+        this.editHandler = editHandler != null ? editHandler : new EditHandler.Default();
         
         initializeUI();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,19 +59,14 @@ public class HomeWindow extends JFrame {
         setVisible(true);
     }
 
-    private static JButton createEditButton(JFrame frame) {
+    private JButton createEditButton(JFrame frame) {
         JButton edit = new JButton("Edit levels");
         edit.setName("HomeWindow.edit");
         edit.setBounds(25, 300, 150, 50);
 
         edit.addActionListener(e -> {
             frame.dispose();
-            try {
-                new LevelEditorSetup();
-            } catch (FontFormatException | IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+            editHandler.handleEdit();
         });
         return edit;
     }
