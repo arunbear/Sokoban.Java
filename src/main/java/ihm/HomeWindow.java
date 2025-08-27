@@ -4,11 +4,14 @@ import java.awt.Font;
 import java.util.List;
 
 import javax.swing.JButton;
+
+import org.jspecify.annotations.NullMarked;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 
+@NullMarked
 public class HomeWindow extends JFrame {
     private final ExitHandler exitHandler;
     private final PlayHandler playHandler;
@@ -32,9 +35,9 @@ public class HomeWindow extends JFrame {
 
     public HomeWindow(ExitHandler exitHandler, PlayHandler playHandler, EditHandler editHandler) {
         super("Sokoban v1.0 par Gabriel FARAGO");
-        this.exitHandler = exitHandler != null ? exitHandler : new SystemExitHandler();
-        this.playHandler = playHandler != null ? playHandler : new DefaultPlayHandler();
-        this.editHandler = editHandler != null ? editHandler : new EditHandler.Default();
+        this.exitHandler = exitHandler;
+        this.playHandler = playHandler;
+        this.editHandler = editHandler;
         
         initializeUI();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
