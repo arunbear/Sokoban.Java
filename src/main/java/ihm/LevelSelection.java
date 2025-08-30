@@ -23,7 +23,7 @@ import org.jspecify.annotations.NullMarked;
 @NullMarked
 public class LevelSelection extends JFrame {
     private static final String defaultFileName = "level1.txt";
-    private static File selectedLevelFile;
+    private File selectedLevelFile;
     private final ExitHandler exitHandler;
 
     // Frame title
