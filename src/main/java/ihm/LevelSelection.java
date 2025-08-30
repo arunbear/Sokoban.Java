@@ -18,7 +18,9 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import logic.Controller;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class LevelSelection extends JFrame {
     private static final String defaultFileName = "level1.txt";
     private static File selectedLevelFile;
@@ -54,12 +56,14 @@ public class LevelSelection extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
         setVisible(true);
+        setResizable(false);
     }
 
     private JButton aBrowseButton() {
         Icon browse_icon = new ImageIcon("img/browser.png");
 
         JButton browse = new JButton(browse_icon);
+        browse.setName("LevelSelection.browse");
         browse.setToolTipText("Browse for a level file");
         browse.setOpaque(false);
         browse.setContentAreaFilled(false);
@@ -90,6 +94,7 @@ public class LevelSelection extends JFrame {
             .toArray(String[]::new);
 
         JComboBox<String> levelList = new JComboBox<>(existingLevels);
+        levelList.setName("LevelSelection.levelList");
         levelList.setSelectedIndex(0);
         levelList.setBounds(50, 100, 100, 50);
 
@@ -107,6 +112,7 @@ public class LevelSelection extends JFrame {
 
     private JButton aPlayButton() {
         JButton play = new JButton("Play");
+        play.setName("LevelSelection.play");
 
         play.setBounds(75, 225, 250, 50);
         play.addActionListener(e -> {
@@ -118,6 +124,7 @@ public class LevelSelection extends JFrame {
 
     private JButton aBackButton() {
         JButton back = new JButton("Back");
+        back.setName("LevelSelection.back");
         back.setBounds(25, 300, 150, 50);
         back.addActionListener(e -> {
             dispose();
@@ -126,16 +133,18 @@ public class LevelSelection extends JFrame {
         return back;
     }
 
-    private static JButton aQuitButton() {
+    private JButton aQuitButton() {
         JButton quit = new JButton("Quit");
+        quit.setName("LevelSelection.quit");
         quit.setBounds(225, 300, 150, 50);
 
         quit.addActionListener(e -> System.exit(0));
         return quit;
     }
 
-    private static JLabel aTitle() {
-        JLabel title = new JLabel("CHOOSE A LEVEL", SwingConstants.CENTER);
+    private JLabel aTitle() {
+        JLabel title = new JLabel("Select Level", SwingConstants.CENTER);
+        title.setName("LevelSelection.title");
         title.setFont(new Font(Font.SERIF, Font.BOLD, 40));
         title.setBounds(0, 20, 400, 50);
         return title;
