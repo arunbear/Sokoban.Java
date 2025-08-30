@@ -19,9 +19,30 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import logic.Controller;
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 @NullMarked
 public class LevelSelection extends JFrame {
+
+    public static class Builder {
+        @Nullable
+        private ExitHandler exitHandler;
+
+        public Builder() {}
+
+        public Builder withExitHandler(ExitHandler exitHandler) {
+            this.exitHandler = exitHandler;
+            return this;
+        }
+
+        public LevelSelection build() throws IOException {
+            if (exitHandler == null) {
+                exitHandler = new SystemExitHandler();
+            }
+            return new LevelSelection(exitHandler);
+        }
+    }
+
     private static final String defaultFileName = "level1.txt";
     private File selectedLevelFile;
     private final ExitHandler exitHandler;
