@@ -19,11 +19,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import logic.Controller;
 
-public class LevelSelection {
+public class LevelSelection extends JFrame {
     private static final String defaultFileName = "level1.txt";
     private static File selectedLevelFile;
 
-    private final JFrame frame = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
+    // Frame title
+    private static final String FRAME_TITLE = "Sokoban v1.0 par Gabriel FARAGO";
     private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
 
     public LevelSelection() throws IOException {
@@ -35,23 +36,24 @@ public class LevelSelection {
 
         levelFileLabel.setBounds(50, 150, 300, 50);
 
-        frame.add(aPlayButton());
-        frame.add(aBackButton());
-        frame.add(aQuitButton());
-        frame.add(aTitle());
-        frame.add(aListOfLevels());
-        frame.add(aBrowseButton());
-        frame.add(levelFileLabel);
+        setTitle(FRAME_TITLE);
+        add(aPlayButton());
+        add(aBackButton());
+        add(aQuitButton());
+        add(aTitle());
+        add(aListOfLevels());
+        add(aBrowseButton());
+        add(levelFileLabel);
 
         configureFrame();
     }
 
     private void configureFrame() {
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
-        frame.setLayout(null);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400, 400);
+        setLayout(null);
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
     private JButton aBrowseButton() {
@@ -108,7 +110,7 @@ public class LevelSelection {
 
         play.setBounds(75, 225, 250, 50);
         play.addActionListener(e -> {
-            frame.dispose();
+            dispose();
             new SokobanWindow(new Controller(selectedLevelFile.getPath()));
         });
         return play;
@@ -118,7 +120,7 @@ public class LevelSelection {
         JButton back = new JButton("Back");
         back.setBounds(25, 300, 150, 50);
         back.addActionListener(e -> {
-            frame.dispose();
+            dispose();
             new HomeWindow();
         });
         return back;
