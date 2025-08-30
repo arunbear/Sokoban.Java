@@ -24,6 +24,10 @@ import org.jspecify.annotations.Nullable;
 @NullMarked
 public class LevelSelection extends JFrame {
 
+    public static LevelSelection create() throws IOException {
+        return new Builder().build();
+    }
+
     public static class Builder {
         @Nullable
         private ExitHandler exitHandler;
@@ -51,10 +55,6 @@ public class LevelSelection extends JFrame {
     private static final String FRAME_TITLE = "Sokoban v1.0 par Gabriel FARAGO";
     private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
 
-    public LevelSelection() throws IOException {
-        this(new SystemExitHandler());
-    }
-    
     public LevelSelection(ExitHandler exitHandler) throws IOException {
         this.exitHandler = exitHandler;
 

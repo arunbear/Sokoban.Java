@@ -12,7 +12,7 @@ import static swing.ComponentFinder.findComponentByNameAsType;
 class LevelSelectionTest {
     @Test 
     void a_LevelSelection_is_a_frame() throws IOException {
-        LevelSelection levelSelection = new LevelSelection();
+        LevelSelection levelSelection = LevelSelection.create();
 
         then(levelSelection).isInstanceOf(JFrame.class);
         then(levelSelection.getTitle()).isEqualTo("Sokoban v1.0 par Gabriel FARAGO");
@@ -26,7 +26,7 @@ class LevelSelectionTest {
 
     @Test
     void a_LevelSelection_has_a_title() throws IOException {
-        LevelSelection levelSelection = new LevelSelection();
+        LevelSelection levelSelection = LevelSelection.create();
 
         JLabel title = findComponentByNameAsType(levelSelection, "LevelSelection.title", JLabel.class);
         then(title).isNotNull();
@@ -35,7 +35,7 @@ class LevelSelectionTest {
 
     @Test
     void a_LevelSelection_has_a_play_button() throws IOException {
-        LevelSelection levelSelection = new LevelSelection();
+        LevelSelection levelSelection = LevelSelection.create();
 
         JButton play = findComponentByNameAsType(levelSelection, "LevelSelection.play", JButton.class);
         then(play).isNotNull();
@@ -44,7 +44,7 @@ class LevelSelectionTest {
 
     @Test
     void a_LevelSelection_has_a_back_button() throws IOException {
-        LevelSelection levelSelection = new LevelSelection();
+        LevelSelection levelSelection = LevelSelection.create();
 
         JButton back = findComponentByNameAsType(levelSelection, "LevelSelection.back", JButton.class);
         then(back).isNotNull();
@@ -53,7 +53,7 @@ class LevelSelectionTest {
 
     @Test
     void a_LevelSelection_has_a_quit_button() throws IOException {
-        LevelSelection levelSelection = new LevelSelection();
+        LevelSelection levelSelection = LevelSelection.create();
 
         JButton quit = findComponentByNameAsType(levelSelection, "LevelSelection.quit", JButton.class);
         then(quit).isNotNull();
@@ -62,7 +62,7 @@ class LevelSelectionTest {
 
     @Test
     void a_LevelSelection_has_a_level_selector() throws IOException {
-        LevelSelection levelSelection = new LevelSelection();
+        LevelSelection levelSelection = LevelSelection.create();
 
         JComboBox<?> levelList = findComponentByNameAsType(levelSelection, "LevelSelection.levelList", JComboBox.class);
         then(levelList).isNotNull();
@@ -71,7 +71,7 @@ class LevelSelectionTest {
 
     @Test
     void a_LevelSelection_has_a_browse_button() throws IOException {
-        LevelSelection levelSelection = new LevelSelection();
+        LevelSelection levelSelection = LevelSelection.create();
 
         JButton browse = findComponentByNameAsType(levelSelection, "LevelSelection.browse", JButton.class);
         then(browse).isNotNull();

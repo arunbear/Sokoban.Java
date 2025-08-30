@@ -17,7 +17,7 @@ class DefaultPlayHandler implements PlayHandler {
     @Override
     public void handlePlay() {
         try {
-            new LevelSelection();
+            LevelSelection.create();
         } catch (Exception e) {
             e.printStackTrace();
         }
