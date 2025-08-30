@@ -77,4 +77,35 @@ class LevelSelectionTest {
         then(browse).isNotNull();
         then(browse.getToolTipText()).isEqualTo("Browse for a level file");
     }
+    
+    @Test
+    void quitButton_calls_ExitHandler() throws IOException {
+        // Arrange
+        TestExitHandler testExitHandler = new TestExitHandler();
+        LevelSelection levelSelection = new LevelSelection(testExitHandler);
+        JButton quit = findComponentByNameAsType(levelSelection, "LevelSelection.quit", JButton.class);
+        
+        // Get the action listeners
+        var listeners = quit.getActionListeners();
+        then(listeners).hasSize(1);
+        
+        // Act - Execute the action listener
+        listeners[0].actionPerformed(null);
+        
+        // Assert - Verify exit handler was called with SUCCESS status
+        then(testExitHandler.exitCalled).isTrue();
+        then(testExitHandler.lastExitStatus).isEqualTo(ExitHandler.SUCCESS);
+    }
+    
+    // Test implementation of ExitHandler
+    private static class TestExitHandler implements ExitHandler {
+        boolean exitCalled = false;
+        int lastExitStatus = -1;
+        
+        @Override
+        public void exit(int status) {
+            exitCalled = true;
+            lastExitStatus = status;
+        }
+    }
 }

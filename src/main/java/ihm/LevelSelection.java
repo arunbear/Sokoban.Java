@@ -24,12 +24,18 @@ import org.jspecify.annotations.NullMarked;
 public class LevelSelection extends JFrame {
     private static final String defaultFileName = "level1.txt";
     private static File selectedLevelFile;
+    private final ExitHandler exitHandler;
 
     // Frame title
     private static final String FRAME_TITLE = "Sokoban v1.0 par Gabriel FARAGO";
     private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
 
     public LevelSelection() throws IOException {
+        this(new SystemExitHandler());
+    }
+    
+    public LevelSelection(ExitHandler exitHandler) throws IOException {
+        this.exitHandler = exitHandler;
 
         selectedLevelFile = new File("%s/levels/%s".formatted(
             new File(".").getCanonicalPath(),
@@ -138,7 +144,7 @@ public class LevelSelection extends JFrame {
         quit.setName("LevelSelection.quit");
         quit.setBounds(225, 300, 150, 50);
 
-        quit.addActionListener(e -> System.exit(0));
+        quit.addActionListener(e -> exitHandler.exit(ExitHandler.SUCCESS));
         return quit;
     }
 
