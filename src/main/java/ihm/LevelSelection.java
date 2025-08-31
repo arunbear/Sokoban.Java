@@ -55,7 +55,7 @@ public class LevelSelection extends JFrame {
     private static final String FRAME_TITLE = "Sokoban v1.0 par Gabriel FARAGO";
     private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
 
-    public LevelSelection(ExitHandler exitHandler) throws IOException {
+    private LevelSelection(ExitHandler exitHandler) throws IOException {
         this.exitHandler = exitHandler;
 
         selectedLevelFile = new File("%s/levels/%s".formatted(

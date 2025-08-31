@@ -82,7 +82,9 @@ class LevelSelectionTest {
     void quitButton_calls_ExitHandler() throws IOException {
         // Arrange
         TestExitHandler testExitHandler = new TestExitHandler();
-        LevelSelection levelSelection = new LevelSelection(testExitHandler);
+        LevelSelection levelSelection = new LevelSelection.Builder()
+            .withExitHandler(testExitHandler)
+            .build();
         JButton quit = findComponentByNameAsType(levelSelection, "LevelSelection.quit", JButton.class);
         
         // Get the action listeners
