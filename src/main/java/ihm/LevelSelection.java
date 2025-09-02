@@ -47,13 +47,12 @@ public class LevelSelection extends JFrame {
         }
     }
 
-    private static final String defaultFileName = "level1.txt";
-    private File selectedLevelFile;
-    private final ExitHandler exitHandler;
-
-    // Frame title
     private static final String FRAME_TITLE = "Sokoban v1.0 par Gabriel FARAGO";
+    private static final String defaultFileName = "level1.txt";
+
     private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
+    private final ExitHandler exitHandler;
+    private File selectedLevelFile;
 
     private LevelSelection(ExitHandler exitHandler) throws IOException {
         this.exitHandler = exitHandler;
@@ -63,21 +62,25 @@ public class LevelSelection extends JFrame {
             defaultFileName)
         );
 
-        levelFileLabel.setBounds(50, 150, 300, 50);
+        initializeUI();
+    }
 
-        setTitle(FRAME_TITLE);
+    private void initializeUI() {
         add(aPlayButton());
         add(aBackButton());
         add(aQuitButton());
         add(aTitle());
         add(aListOfLevels());
         add(aBrowseButton());
+
+        levelFileLabel.setBounds(50, 150, 300, 50);
         add(levelFileLabel);
 
         configureFrame();
     }
 
     private void configureFrame() {
+        setTitle(FRAME_TITLE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 400);
         setLayout(null);
