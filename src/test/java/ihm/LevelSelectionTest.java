@@ -1,5 +1,6 @@
 package ihm;
 
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import static org.assertj.core.api.BDDAssertions.then;
 import static swing.ComponentFinder.findComponentByNameAsType;
 
+@NullMarked
 class LevelSelectionTest {
     @Test 
     void a_LevelSelection_is_a_frame() throws IOException {
