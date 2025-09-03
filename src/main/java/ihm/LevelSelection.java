@@ -28,9 +28,18 @@ public class LevelSelection extends JFrame {
         return new Builder().build();
     }
 
+    private static class DefaultPlayLevelHandler implements PlayLevelHandler {
+        @Override
+        public void playLevel(JFrame parent, String levelPath) {
+            parent.dispose();
+            new SokobanWindow(new Controller(levelPath));
+        }
+    }
+
     public static class Builder {
         @Nullable
         private ExitHandler exitHandler;
+        private PlayLevelHandler playLevelHandler = new DefaultPlayLevelHandler();
 
         public Builder() {}
 
@@ -39,11 +48,16 @@ public class LevelSelection extends JFrame {
             return this;
         }
 
+        public Builder withPlayLevelHandler(PlayLevelHandler playLevelHandler) {
+            this.playLevelHandler = playLevelHandler;
+            return this;
+        }
+
         public LevelSelection build() throws IOException {
             if (exitHandler == null) {
                 exitHandler = new SystemExitHandler();
             }
-            return new LevelSelection(exitHandler);
+            return new LevelSelection(exitHandler, playLevelHandler);
         }
     }
 
@@ -52,10 +66,12 @@ public class LevelSelection extends JFrame {
 
     private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
     private final ExitHandler exitHandler;
+    private final PlayLevelHandler playLevelHandler;
     private File selectedLevelFile;
 
-    private LevelSelection(ExitHandler exitHandler) throws IOException {
+    private LevelSelection(ExitHandler exitHandler, PlayLevelHandler playLevelHandler) throws IOException {
         this.exitHandler = exitHandler;
+        this.playLevelHandler = playLevelHandler;
 
         selectedLevelFile = new File("%s/levels/%s".formatted(
             new File(".").getCanonicalPath(),
@@ -145,10 +161,7 @@ public class LevelSelection extends JFrame {
         play.setName("LevelSelection.play");
 
         play.setBounds(75, 225, 250, 50);
-        play.addActionListener(e -> {
-            dispose();
-            new SokobanWindow(new Controller(selectedLevelFile.getPath()));
-        });
+        play.addActionListener(e -> playLevelHandler.playLevel(LevelSelection.this, selectedLevelFile.getPath()));
         return play;
     }
 

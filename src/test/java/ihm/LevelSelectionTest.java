@@ -101,6 +101,29 @@ class LevelSelectionTest {
         then(testExitHandler.lastExitStatus).isEqualTo(ExitHandler.SUCCESS);
     }
     
+    @Test
+    void playButton_calls_PlayLevelHandler() throws IOException {
+        // Arrange
+        TestPlayLevelHandler testHandler = new TestPlayLevelHandler();
+        LevelSelection levelSelection = new LevelSelection.Builder()
+            .withPlayLevelHandler(testHandler)
+            .build();
+            
+        JButton play = findComponentByNameAsType(levelSelection, "LevelSelection.play", JButton.class);
+        
+        // Get the action listeners
+        var listeners = play.getActionListeners();
+        then(listeners).hasSize(1);
+        
+        // Act - Execute the action listener
+        listeners[0].actionPerformed(null);
+        
+        // Assert - Verify play level was called with the correct parameters
+        then(testHandler.playLevelCalled).isTrue();
+        then(testHandler.parentFrame).isSameAs(levelSelection);
+        then(testHandler.levelPath).endsWith("level1.txt");
+    }
+    
     // Test implementation of ExitHandler
     private static class TestExitHandler implements ExitHandler {
         boolean exitCalled = false;
@@ -110,6 +133,20 @@ class LevelSelectionTest {
         public void exit(int status) {
             exitCalled = true;
             lastExitStatus = status;
+        }
+    }
+    
+    // Test implementation of PlayLevelHandler
+    private static class TestPlayLevelHandler implements PlayLevelHandler {
+        boolean playLevelCalled = false;
+        JFrame parentFrame = new JFrame();
+        String levelPath = "";
+
+        @Override
+        public void playLevel(JFrame parent, String levelPath) {
+            playLevelCalled = true;
+            this.parentFrame = parent;
+            this.levelPath = levelPath;
         }
     }
 }
