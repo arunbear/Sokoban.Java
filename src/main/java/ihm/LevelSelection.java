@@ -19,7 +19,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import logic.Controller;
 import org.jspecify.annotations.NullMarked;
-import org.jspecify.annotations.Nullable;
 
 @NullMarked
 public class LevelSelection extends JFrame {
@@ -29,8 +28,7 @@ public class LevelSelection extends JFrame {
     }
 
     public static class Builder {
-        @Nullable
-        private ExitHandler exitHandler;
+        private ExitHandler exitHandler = System::exit;
         private PlayLevelHandler playLevelHandler = (parent, levelPath) -> {
             parent.dispose();
             new SokobanWindow(new Controller(levelPath));
@@ -49,9 +47,6 @@ public class LevelSelection extends JFrame {
         }
 
         public LevelSelection build() throws IOException {
-            if (exitHandler == null) {
-                exitHandler = new SystemExitHandler();
-            }
             return new LevelSelection(exitHandler, playLevelHandler);
         }
     }
