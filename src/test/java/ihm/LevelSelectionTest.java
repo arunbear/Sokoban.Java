@@ -45,6 +45,50 @@ class LevelSelectionTest {
     }
 
     @Test
+    void a_LevelSelection_has_a_level_list_combo() throws IOException {
+        LevelSelection levelSelection = LevelSelection.create();
+
+        JComboBox<?> levelList = findComponentByNameAsType(levelSelection, "LevelSelection.levelList", JComboBox.class);
+        then(levelList).isNotNull();
+        then(levelList.getItemCount()).isEqualTo(10); // Should have 10 levels
+        then(levelList.getSelectedIndex()).isZero(); // First item should be selected by default
+        
+        // Verify the level list contains the expected level names
+        for (int i = 0; i < 10; i++) {
+            then(levelList.getItemAt(i)).isEqualTo("Level " + (i + 1));
+        }
+        
+        // Test selection change
+        levelList.setSelectedIndex(4); // Select level 5
+        then(levelList.getSelectedIndex()).isEqualTo(4);
+        then(levelList.getSelectedItem()).isEqualTo("Level 5");
+    }
+    
+    @Test
+    void selecting_level_in_combo_updates_selectedLevelFile() throws IOException {
+        // Create a spy to verify the file selection
+        LevelSelection levelSelection = LevelSelection.create();
+        
+        // Get the level list combo
+        JComboBox<?> levelList = findComponentByNameAsType(levelSelection, "LevelSelection.levelList", JComboBox.class);
+        
+        // Get the selected level file label
+        JLabel levelFileLabel = findComponentByNameAsType(levelSelection, "LevelSelection.levelFileLabel", JLabel.class);
+        
+        // Test selecting each level
+        for (int i = 0; i < levelList.getItemCount(); i++) {
+            // Select the level
+            levelList.setSelectedIndex(i);
+            
+            // Get the expected filename (1-based index)
+            String expectedFilename = String.format("level%d.txt", i + 1);
+            
+            // Verify the label is updated
+            then(levelFileLabel.getText()).isEqualTo(expectedFilename);
+        }
+    }
+    
+    @Test
     void a_LevelSelection_has_a_back_button() throws IOException {
         LevelSelection levelSelection = LevelSelection.create();
 

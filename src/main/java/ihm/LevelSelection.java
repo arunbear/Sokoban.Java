@@ -92,6 +92,7 @@ public class LevelSelection extends JFrame {
         add(aBrowseButton());
 
         levelFileLabel.setBounds(50, 150, 300, 50);
+        levelFileLabel.setName("LevelSelection.levelFileLabel");
         add(levelFileLabel);
 
         configureFrame();
