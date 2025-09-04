@@ -117,20 +117,16 @@ public class LevelSelection extends JFrame {
         browse.setContentAreaFilled(false);
         browse.setBounds(250, 100, 100, 50);
 
-        browse.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fileBrowser = makeFileChooser();
+        browse.addActionListener(e -> {
+            JFileChooser fileBrowser = makeFileChooser();
 
-                int returnVal = fileBrowser.showOpenDialog(null);
+            int returnVal = fileBrowser.showOpenDialog(null);
 
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    String browser_result = fileBrowser.getSelectedFile().getName();
-                    levelFileLabel.setText(browser_result);
-                    selectedLevelFile = fileBrowser.getSelectedFile();
-                }
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                String browser_result = fileBrowser.getSelectedFile().getName();
+                levelFileLabel.setText(browser_result);
+                selectedLevelFile = fileBrowser.getSelectedFile();
             }
-
         });
         return browse;
     }
