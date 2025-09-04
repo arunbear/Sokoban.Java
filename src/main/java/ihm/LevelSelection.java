@@ -28,18 +28,13 @@ public class LevelSelection extends JFrame {
         return new Builder().build();
     }
 
-    private static class DefaultPlayLevelHandler implements PlayLevelHandler {
-        @Override
-        public void playLevel(JFrame parent, String levelPath) {
-            parent.dispose();
-            new SokobanWindow(new Controller(levelPath));
-        }
-    }
-
     public static class Builder {
         @Nullable
         private ExitHandler exitHandler;
-        private PlayLevelHandler playLevelHandler = new DefaultPlayLevelHandler();
+        private PlayLevelHandler playLevelHandler = (parent, levelPath) -> {
+            parent.dispose();
+            new SokobanWindow(new Controller(levelPath));
+        };
 
         public Builder() {}
 
