@@ -3,6 +3,7 @@ package ihm;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JFrame;
 import java.io.File;
 import java.io.IOException;
 import java.util.stream.IntStream;
@@ -12,7 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -33,6 +33,10 @@ public class LevelSelection extends JFrame {
             parent.dispose();
             new SokobanWindow(new Controller(levelPath));
         };
+        private BackToHomeHandler backHandler = currentWindow -> {
+            currentWindow.dispose();
+            new HomeWindow();
+        };
 
         public Builder() {}
 
@@ -46,22 +50,30 @@ public class LevelSelection extends JFrame {
             return this;
         }
 
+        public Builder withBackHandler(BackToHomeHandler backHandler) {
+            this.backHandler = backHandler;
+            return this;
+        }
+
         public LevelSelection build() throws IOException {
-            return new LevelSelection(exitHandler, playLevelHandler);
+            return new LevelSelection(exitHandler, playLevelHandler, backHandler);
         }
     }
 
     private static final String FRAME_TITLE = "Sokoban v1.0 par Gabriel FARAGO";
     private static final String defaultFileName = "level1.txt";
 
-    private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
     private final ExitHandler exitHandler;
     private final PlayLevelHandler playLevelHandler;
+    private final BackToHomeHandler backHandler;
+
+    private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
     private File selectedLevelFile;
 
-    private LevelSelection(ExitHandler exitHandler, PlayLevelHandler playLevelHandler) throws IOException {
+    private LevelSelection(ExitHandler exitHandler, PlayLevelHandler playLevelHandler, BackToHomeHandler backHandler) throws IOException {
         this.exitHandler = exitHandler;
         this.playLevelHandler = playLevelHandler;
+        this.backHandler = backHandler;
 
         selectedLevelFile = new File("%s/levels/%s".formatted(
             new File(".").getCanonicalPath(),
@@ -159,10 +171,7 @@ public class LevelSelection extends JFrame {
         JButton back = new JButton("Back");
         back.setName("LevelSelection.back");
         back.setBounds(25, 300, 150, 50);
-        back.addActionListener(e -> {
-            dispose();
-            new HomeWindow();
-        });
+        back.addActionListener(e -> backHandler.handleBack(LevelSelection.this));
         return back;
     }
 

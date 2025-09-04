@@ -124,6 +124,28 @@ class LevelSelectionTest {
         then(testHandler.levelPath).endsWith("level1.txt");
     }
     
+    @Test
+    void backButton_calls_BackToHomeHandler() throws IOException {
+        // Arrange
+        TestBackToHomeHandler testHandler = new TestBackToHomeHandler();
+        LevelSelection levelSelection = new LevelSelection.Builder()
+            .withBackHandler(testHandler)
+            .build();
+            
+        JButton back = findComponentByNameAsType(levelSelection, "LevelSelection.back", JButton.class);
+        
+        // Get the action listeners
+        var listeners = back.getActionListeners();
+        then(listeners).hasSize(1);
+        
+        // Act - Execute the action listener
+        listeners[0].actionPerformed(null);
+        
+        // Assert - Verify back handler was called with the correct window
+        then(testHandler.handleBackCalled).isTrue();
+        then(testHandler.lastWindow).isSameAs(levelSelection);
+    }
+    
     // Test implementation of ExitHandler
     private static class TestExitHandler implements ExitHandler {
         boolean exitCalled = false;
@@ -147,6 +169,18 @@ class LevelSelectionTest {
             playLevelCalled = true;
             this.parentFrame = parent;
             this.levelPath = levelPath;
+        }
+    }
+    
+    // Test implementation of BackToHomeHandler
+    private static class TestBackToHomeHandler implements BackToHomeHandler {
+        boolean handleBackCalled = false;
+        JFrame lastWindow = new JFrame();
+        
+        @Override
+        public void handleBack(JFrame currentWindow) {
+            handleBackCalled = true;
+            this.lastWindow = currentWindow;
         }
     }
 }
