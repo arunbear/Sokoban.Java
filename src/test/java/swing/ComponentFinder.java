@@ -36,8 +36,8 @@ public class ComponentFinder {
             if (name.equals(comp.getName())) {
                 return Optional.of(comp);
             }
-            if (comp instanceof Container) {
-                Optional<Component> result = findComponentByName((Container) comp, name);
+            if (comp instanceof Container container) {
+                Optional<Component> result = findComponentByName(container, name);
                 if (result.isPresent()) return result;
             }
         }
