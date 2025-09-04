@@ -15,14 +15,9 @@ public interface ExitHandler {
      * @param status exit status - should be 0 for normal termination
      */
     void exit(int status);
-}
-
-/**
- * Default implementation that delegates to System.exit()
- */
-class SystemExitHandler implements ExitHandler {
-    @Override
-    public void exit(int status) {
-        System.exit(status);
-    }
+    
+    /**
+     * Default implementation that delegates to System.exit()
+     */
+    public static final ExitHandler SYSTEM_EXIT_HANDLER = System::exit;
 }

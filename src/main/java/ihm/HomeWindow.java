@@ -18,7 +18,7 @@ public class HomeWindow extends JFrame {
     private final EditHandler editHandler;
     
     public HomeWindow() {
-        this(new SystemExitHandler(), new DefaultPlayHandler(), new EditHandler.Default());
+        this(ExitHandler.SYSTEM_EXIT_HANDLER, new DefaultPlayHandler(), new EditHandler.Default());
     }
     
     public HomeWindow(ExitHandler exitHandler) {
@@ -26,11 +26,11 @@ public class HomeWindow extends JFrame {
     }
     
     public HomeWindow(PlayHandler playHandler) {
-        this(new SystemExitHandler(), playHandler, new EditHandler.Default());
+        this(ExitHandler.SYSTEM_EXIT_HANDLER, playHandler, new EditHandler.Default());
     }
 
     public HomeWindow(EditHandler editHandler) {
-        this(new SystemExitHandler(), new DefaultPlayHandler(), editHandler);
+        this(ExitHandler.SYSTEM_EXIT_HANDLER, new DefaultPlayHandler(), editHandler);
     }
 
     public HomeWindow(ExitHandler exitHandler, PlayHandler playHandler, EditHandler editHandler) {
