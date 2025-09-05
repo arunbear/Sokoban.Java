@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static swing.ComponentFinder.findComponentByNameAsType;
@@ -68,24 +69,25 @@ class LevelSelectionTest {
     void selecting_level_in_combo_updates_selectedLevelFile() throws IOException {
         // Create a spy to verify the file selection
         LevelSelection levelSelection = LevelSelection.create();
-        
+
         // Get the level list combo
         JComboBox<?> levelList = findComponentByNameAsType(levelSelection, "LevelSelection.levelList", JComboBox.class);
-        
+
         // Get the selected level file label
         JLabel levelFileLabel = findComponentByNameAsType(levelSelection, "LevelSelection.levelFileLabel", JLabel.class);
-        
+
         // Test selecting each level
-        for (int i = 0; i < levelList.getItemCount(); i++) {
-            // Select the level
-            levelList.setSelectedIndex(i);
-            
-            // Get the expected filename (1-based index)
-            String expectedFilename = String.format("level%d.txt", i + 1);
-            
-            // Verify the label is updated
-            then(levelFileLabel.getText()).isEqualTo(expectedFilename);
-        }
+        IntStream.range(0, levelList.getItemCount())
+            .forEach(i -> {
+                // Select the level
+                levelList.setSelectedIndex(i);
+
+                // Get the expected filename (1-based index)
+                String expectedFilename = String.format("level%d.txt", i + 1);
+
+                // Verify the label is updated
+                then(levelFileLabel.getText()).isEqualTo(expectedFilename);
+            });
     }
     
     @Test
