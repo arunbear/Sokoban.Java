@@ -21,6 +21,16 @@ import org.jspecify.annotations.NullMarked;
 @NullMarked
 public class LevelSelection extends JFrame {
 
+    private static final String FRAME_TITLE = "Sokoban v1.0 par Gabriel FARAGO";
+    private static final String defaultFileName = "level1.txt";
+
+    private final ExitHandler exitHandler;
+    private final PlayLevelHandler playLevelHandler;
+    private final BackToHomeHandler backHandler;
+
+    private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
+    private File selectedLevelFile;
+
     public LevelSelection() throws IOException {
         this.exitHandler = defaultExitHandler();
         this.playLevelHandler = defaultPlayLevelHandler();
@@ -53,14 +63,6 @@ public class LevelSelection extends JFrame {
         initializeWithDefaultLevel();
     }
 
-    @Deprecated
-    public LevelSelection(ExitHandler exitHandler, PlayLevelHandler playLevelHandler, BackToHomeHandler backHandler) throws IOException {
-        this.exitHandler = exitHandler;
-        this.playLevelHandler = playLevelHandler;
-        this.backHandler = backHandler;
-        initializeWithDefaultLevel();
-    }
-
     private static PlayLevelHandler defaultPlayLevelHandler() {
         return (parent, levelPath) -> {
             parent.dispose();
@@ -87,50 +89,6 @@ public class LevelSelection extends JFrame {
         
         initializeUI();
     }
-
-    @Deprecated
-    public static class Builder {
-        private ExitHandler exitHandler = System::exit;
-        private PlayLevelHandler playLevelHandler = (parent, levelPath) -> {
-            parent.dispose();
-            new SokobanWindow(new Controller(levelPath));
-        };
-        private BackToHomeHandler backHandler = currentWindow -> {
-            currentWindow.dispose();
-            new HomeWindow();
-        };
-
-        public Builder() {}
-
-        public Builder withExitHandler(ExitHandler exitHandler) {
-            this.exitHandler = exitHandler;
-            return this;
-        }
-
-        public Builder withPlayLevelHandler(PlayLevelHandler playLevelHandler) {
-            this.playLevelHandler = playLevelHandler;
-            return this;
-        }
-
-        public Builder withBackHandler(BackToHomeHandler backHandler) {
-            this.backHandler = backHandler;
-            return this;
-        }
-
-        public LevelSelection build() throws IOException {
-            return new LevelSelection(exitHandler, playLevelHandler, backHandler);
-        }
-    }
-
-    private static final String FRAME_TITLE = "Sokoban v1.0 par Gabriel FARAGO";
-    private static final String defaultFileName = "level1.txt";
-
-    private final ExitHandler exitHandler;
-    private final PlayLevelHandler playLevelHandler;
-    private final BackToHomeHandler backHandler;
-
-    private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
-    private File selectedLevelFile;
 
     private void initializeUI() {
         add(aPlayButton());

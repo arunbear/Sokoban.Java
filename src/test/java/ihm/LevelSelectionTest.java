@@ -1,6 +1,5 @@
 package ihm;
 
-import one.util.streamex.EntryStream;
 import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import one.util.streamex.IntStreamEx;
-import java.util.stream.IntStream;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static swing.ComponentFinder.findComponentByNameAsType;
@@ -118,9 +116,7 @@ class LevelSelectionTest {
     void quitButton_calls_ExitHandler() throws IOException {
         // Arrange
         TestExitHandler testExitHandler = new TestExitHandler();
-        LevelSelection levelSelection = new LevelSelection.Builder()
-            .withExitHandler(testExitHandler)
-            .build();
+        LevelSelection levelSelection = new LevelSelection(testExitHandler);
         JButton quit = findComponentByNameAsType(levelSelection, "LevelSelection.quit", JButton.class);
         
         // Get the action listeners
@@ -139,9 +135,7 @@ class LevelSelectionTest {
     void playButton_calls_PlayLevelHandler() throws IOException {
         // Arrange
         TestPlayLevelHandler testHandler = new TestPlayLevelHandler();
-        LevelSelection levelSelection = new LevelSelection.Builder()
-            .withPlayLevelHandler(testHandler)
-            .build();
+        LevelSelection levelSelection = new LevelSelection(testHandler);
             
         JButton play = findComponentByNameAsType(levelSelection, "LevelSelection.play", JButton.class);
         
@@ -162,9 +156,7 @@ class LevelSelectionTest {
     void backButton_calls_BackToHomeHandler() throws IOException {
         // Arrange
         TestBackToHomeHandler testHandler = new TestBackToHomeHandler();
-        LevelSelection levelSelection = new LevelSelection.Builder()
-            .withBackHandler(testHandler)
-            .build();
+        LevelSelection levelSelection = new LevelSelection(testHandler);
             
         JButton back = findComponentByNameAsType(levelSelection, "LevelSelection.back", JButton.class);
         
