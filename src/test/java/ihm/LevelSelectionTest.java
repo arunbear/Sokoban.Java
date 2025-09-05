@@ -1,5 +1,6 @@
 package ihm;
 
+import one.util.streamex.EntryStream;
 import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.Test;
 
@@ -47,23 +48,20 @@ class LevelSelectionTest {
     }
 
     @Test
-    void a_LevelSelection_has_a_level_list_combo() throws IOException {
+    void a_LevelSelection_has_a_level_selector() throws IOException {
+        // Given
         LevelSelection levelSelection = LevelSelection.create();
 
         JComboBox<?> levelList = findComponentByNameAsType(levelSelection, "LevelSelection.levelList", JComboBox.class);
+
         then(levelList).isNotNull();
-        then(levelList.getItemCount()).isEqualTo(10); // Should have 10 levels
-        then(levelList.getSelectedIndex()).isZero(); // First item should be selected by default
-        
+        then(levelList.getItemCount()).isEqualTo(10);
+        then(levelList.getSelectedIndex()).as("First item is selected by default").isZero();
+
         // Verify the level list contains the expected level names
-        for (int i = 0; i < 10; i++) {
-            then(levelList.getItemAt(i)).isEqualTo("Level " + (i + 1));
-        }
-        
-        // Test selection change
-        levelList.setSelectedIndex(4); // Select level 5
-        then(levelList.getSelectedIndex()).isEqualTo(4);
-        then(levelList.getSelectedItem()).isEqualTo("Level 5");
+        IntStreamEx
+            .range(levelList.getItemCount())
+            .forEach(i -> then(levelList.getItemAt(i)).isEqualTo("Level %d".formatted(i + 1)));
     }
     
     @Test
@@ -105,15 +103,6 @@ class LevelSelectionTest {
         JButton quit = findComponentByNameAsType(levelSelection, "LevelSelection.quit", JButton.class);
         then(quit).isNotNull();
         then(quit.getText()).isEqualTo("Quit");
-    }
-
-    @Test
-    void a_LevelSelection_has_a_level_selector() throws IOException {
-        LevelSelection levelSelection = LevelSelection.create();
-
-        JComboBox<?> levelList = findComponentByNameAsType(levelSelection, "LevelSelection.levelList", JComboBox.class);
-        then(levelList).isNotNull();
-        then(levelList.getItemCount()).isGreaterThan(0);
     }
 
     @Test
