@@ -1,8 +1,6 @@
 package ihm;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import java.io.File;
 import java.io.IOException;
@@ -23,10 +21,74 @@ import org.jspecify.annotations.NullMarked;
 @NullMarked
 public class LevelSelection extends JFrame {
 
+    public LevelSelection() throws IOException {
+        this.exitHandler = defaultExitHandler();
+        this.playLevelHandler = defaultPlayLevelHandler();
+        this.backHandler = defaultBackHandler();
+        initializeWithDefaultLevel();
+    }
+    
     public static LevelSelection create() throws IOException {
-        return new Builder().build();
+        return new LevelSelection();
     }
 
+    public LevelSelection(ExitHandler exitHandler) throws IOException {
+        this.exitHandler = exitHandler;
+        this.playLevelHandler = defaultPlayLevelHandler();
+        this.backHandler = defaultBackHandler();
+        initializeWithDefaultLevel();
+    }
+    
+    public LevelSelection(PlayLevelHandler playLevelHandler) throws IOException {
+        this.exitHandler = defaultExitHandler();
+        this.playLevelHandler = playLevelHandler;
+        this.backHandler = defaultBackHandler();
+        initializeWithDefaultLevel();
+    }
+    
+    public LevelSelection(BackToHomeHandler backHandler) throws IOException {
+        this.exitHandler = defaultExitHandler();
+        this.playLevelHandler = defaultPlayLevelHandler();
+        this.backHandler = backHandler;
+        initializeWithDefaultLevel();
+    }
+
+    @Deprecated
+    public LevelSelection(ExitHandler exitHandler, PlayLevelHandler playLevelHandler, BackToHomeHandler backHandler) throws IOException {
+        this.exitHandler = exitHandler;
+        this.playLevelHandler = playLevelHandler;
+        this.backHandler = backHandler;
+        initializeWithDefaultLevel();
+    }
+
+    private static PlayLevelHandler defaultPlayLevelHandler() {
+        return (parent, levelPath) -> {
+            parent.dispose();
+            new SokobanWindow(new Controller(levelPath));
+        };
+    }
+
+    private static BackToHomeHandler defaultBackHandler() {
+        return currentWindow -> {
+            currentWindow.dispose();
+            new HomeWindow();
+        };
+    }
+
+    private static ExitHandler defaultExitHandler() {
+        return System::exit;
+    }
+
+    private void initializeWithDefaultLevel() throws IOException {
+        selectedLevelFile = new File("%s/levels/%s".formatted(
+            new File(".").getCanonicalPath(),
+            defaultFileName)
+        );
+        
+        initializeUI();
+    }
+
+    @Deprecated
     public static class Builder {
         private ExitHandler exitHandler = System::exit;
         private PlayLevelHandler playLevelHandler = (parent, levelPath) -> {
@@ -69,19 +131,6 @@ public class LevelSelection extends JFrame {
 
     private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
     private File selectedLevelFile;
-
-    private LevelSelection(ExitHandler exitHandler, PlayLevelHandler playLevelHandler, BackToHomeHandler backHandler) throws IOException {
-        this.exitHandler = exitHandler;
-        this.playLevelHandler = playLevelHandler;
-        this.backHandler = backHandler;
-
-        selectedLevelFile = new File("%s/levels/%s".formatted(
-            new File(".").getCanonicalPath(),
-            defaultFileName)
-        );
-
-        initializeUI();
-    }
 
     private void initializeUI() {
         add(aPlayButton());
