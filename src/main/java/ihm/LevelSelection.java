@@ -29,12 +29,14 @@ public class LevelSelection extends JFrame {
     private final BackToHomeHandler backHandler;
 
     private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
+    private final JFileChooser fileChooser;
     private File selectedLevelFile;
 
     public LevelSelection() throws IOException {
         this.exitHandler = defaultExitHandler();
         this.playLevelHandler = defaultPlayLevelHandler();
         this.backHandler = defaultBackHandler();
+        this.fileChooser = makeFileChooser();
         initializeWithDefaultLevel();
     }
     
@@ -46,6 +48,7 @@ public class LevelSelection extends JFrame {
         this.exitHandler = exitHandler;
         this.playLevelHandler = defaultPlayLevelHandler();
         this.backHandler = defaultBackHandler();
+        this.fileChooser = makeFileChooser();
         initializeWithDefaultLevel();
     }
     
@@ -53,6 +56,7 @@ public class LevelSelection extends JFrame {
         this.exitHandler = defaultExitHandler();
         this.playLevelHandler = playLevelHandler;
         this.backHandler = defaultBackHandler();
+        this.fileChooser = makeFileChooser();
         initializeWithDefaultLevel();
     }
     
@@ -60,6 +64,21 @@ public class LevelSelection extends JFrame {
         this.exitHandler = defaultExitHandler();
         this.playLevelHandler = defaultPlayLevelHandler();
         this.backHandler = backHandler;
+        this.fileChooser = makeFileChooser();
+        initializeWithDefaultLevel();
+    }
+    
+    /**
+     * Creates a LevelSelection with a custom file chooser. This is primarily for testing.
+     * 
+     * @param fileChooser the file chooser to use for browsing levels
+     * @throws IOException if there's an error initializing the default level
+     */
+    public LevelSelection(JFileChooser fileChooser) throws IOException {
+        this.exitHandler = defaultExitHandler();
+        this.playLevelHandler = defaultPlayLevelHandler();
+        this.backHandler = defaultBackHandler();
+        this.fileChooser = fileChooser;
         initializeWithDefaultLevel();
     }
 
@@ -126,14 +145,12 @@ public class LevelSelection extends JFrame {
         browse.setBounds(250, 100, 100, 50);
 
         browse.addActionListener(e -> {
-            JFileChooser fileBrowser = makeFileChooser();
-
-            int returnVal = fileBrowser.showOpenDialog(null);
+            int returnVal = fileChooser.showOpenDialog(null);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                String browser_result = fileBrowser.getSelectedFile().getName();
+                String browser_result = fileChooser.getSelectedFile().getName();
                 levelFileLabel.setText(browser_result);
-                selectedLevelFile = fileBrowser.getSelectedFile();
+                selectedLevelFile = fileChooser.getSelectedFile();
             }
         });
         return browse;
