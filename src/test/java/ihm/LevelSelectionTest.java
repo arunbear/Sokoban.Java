@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import one.util.streamex.IntStreamEx;
 
@@ -13,7 +17,7 @@ import static swing.ComponentFinder.findComponentByNameAsType;
 
 @NullMarked
 class LevelSelectionTest {
-    @Test 
+    @Test
     void a_LevelSelection_is_a_frame() throws IOException {
         LevelSelection levelSelection = LevelSelection.create();
 
@@ -61,7 +65,40 @@ class LevelSelectionTest {
             .range(levelList.getItemCount())
             .forEach(i -> then(levelList.getItemAt(i)).isEqualTo("Level %d".formatted(i + 1)));
     }
+
+    private static final String TEST_LEVEL_FILENAME = "test_level.txt";
     
+    @Test
+    void selecting_from_file_browser_updates_selectedLevelFile() throws IOException {
+
+        // Create a mock file chooser
+        JFileChooser mockFileChooser = new JFileChooser("levels") {
+            @Override
+            public int showOpenDialog(java.awt.Component parent) {
+                return JFileChooser.APPROVE_OPTION;
+            }
+            
+            @Override
+            public File getSelectedFile() {
+                return new File(TEST_LEVEL_FILENAME);
+            }
+        };
+        
+        // Create LevelSelection with our mock file chooser
+        LevelSelection levelSelection = new LevelSelection(mockFileChooser);
+        
+        // Get the browse button and level file label
+        JButton browse = findComponentByNameAsType(levelSelection, "LevelSelection.browse", JButton.class);
+        JLabel levelFileLabel = findComponentByNameAsType(levelSelection, "LevelSelection.levelFileLabel", JLabel.class);
+        
+        // When - Simulate button click
+        browse.doClick();
+        
+        // Then - Verify the selected file was updated
+        then(levelFileLabel.getText()).isEqualTo(TEST_LEVEL_FILENAME);
+        then(levelSelection.getSelectedLevelFilePath()).endsWith(TEST_LEVEL_FILENAME);
+    }
+
     @Test
     void selecting_level_in_combo_updates_selectedLevelFile() throws IOException {
         // Given
