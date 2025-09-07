@@ -81,6 +81,14 @@ public class LevelSelection extends JFrame {
         this.fileChooser = fileChooser;
         initializeWithDefaultLevel();
     }
+    
+    /**
+     * Gets the path of the currently selected level file.
+     * @return the path of the selected level file, or null if no file is selected
+     */
+    public String getSelectedLevelFilePath() {
+        return selectedLevelFile.getPath();
+    }
 
     private static PlayLevelHandler defaultPlayLevelHandler() {
         return (parent, levelPath) -> {
