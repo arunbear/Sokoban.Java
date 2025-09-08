@@ -19,7 +19,7 @@ import logic.Controller;
 import org.jspecify.annotations.NullMarked;
 
 @NullMarked
-public class LevelSelection extends JFrame {
+public abstract class LevelSelection extends JFrame {
 
     private static final String FRAME_TITLE = "Sokoban v1.0 par Gabriel FARAGO";
     private static final String defaultFileName = "level1.txt";
@@ -41,7 +41,7 @@ public class LevelSelection extends JFrame {
     }
     
     public static LevelSelection create() throws IOException {
-        return new LevelSelection();
+        return new LevelSelection() {};
     }
 
     public LevelSelection(ExitHandler exitHandler) throws IOException {

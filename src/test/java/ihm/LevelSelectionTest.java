@@ -84,8 +84,13 @@ class LevelSelectionTest {
             }
         };
         
-        // Create LevelSelection with our mock file chooser
-        LevelSelection levelSelection = new LevelSelection(mockFileChooser);
+        // Create an anonymous subclass of LevelSelection that uses our mock file chooser
+        LevelSelection levelSelection = new LevelSelection() {
+            @Override
+            JFileChooser makeFileChooser() {
+                return mockFileChooser;
+            }
+        };
         
         // Get the browse button and level file label
         JButton browse = findComponentByNameAsType(levelSelection, "LevelSelection.browse", JButton.class);
@@ -153,7 +158,12 @@ class LevelSelectionTest {
     void quitButton_calls_ExitHandler() throws IOException {
         // Arrange
         TestExitHandler testExitHandler = new TestExitHandler();
-        LevelSelection levelSelection = new LevelSelection(testExitHandler);
+        LevelSelection levelSelection = new LevelSelection() {
+            @Override
+            protected ExitHandler defaultExitHandler() {
+                return testExitHandler;
+            }
+        };
         JButton quit = findComponentByNameAsType(levelSelection, "LevelSelection.quit", JButton.class);
         
         // Get the action listeners
@@ -172,7 +182,12 @@ class LevelSelectionTest {
     void playButton_calls_PlayLevelHandler() throws IOException {
         // Arrange
         TestPlayLevelHandler testHandler = new TestPlayLevelHandler();
-        LevelSelection levelSelection = new LevelSelection(testHandler);
+        LevelSelection levelSelection = new LevelSelection() {
+            @Override
+            protected PlayLevelHandler defaultPlayLevelHandler() {
+                return testHandler;
+            }
+        };
             
         JButton play = findComponentByNameAsType(levelSelection, "LevelSelection.play", JButton.class);
         
@@ -193,7 +208,12 @@ class LevelSelectionTest {
     void backButton_calls_BackToHomeHandler() throws IOException {
         // Arrange
         TestBackToHomeHandler testHandler = new TestBackToHomeHandler();
-        LevelSelection levelSelection = new LevelSelection(testHandler);
+        LevelSelection levelSelection = new LevelSelection() {
+            @Override
+            protected BackToHomeHandler defaultBackHandler() {
+                return testHandler;
+            }
+        };
             
         JButton back = findComponentByNameAsType(levelSelection, "LevelSelection.back", JButton.class);
         
