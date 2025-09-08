@@ -32,7 +32,7 @@ public abstract class LevelSelection extends JFrame {
     private final JFileChooser fileChooser;
     private File selectedLevelFile;
 
-    public LevelSelection() throws IOException {
+     LevelSelection() throws IOException {
         this.exitHandler = defaultExitHandler();
         this.playLevelHandler = defaultPlayLevelHandler();
         this.backHandler = defaultBackHandler();
@@ -43,44 +43,6 @@ public abstract class LevelSelection extends JFrame {
     public static LevelSelection create() throws IOException {
         return new LevelSelection() {};
     }
-
-    public LevelSelection(ExitHandler exitHandler) throws IOException {
-        this.exitHandler = exitHandler;
-        this.playLevelHandler = defaultPlayLevelHandler();
-        this.backHandler = defaultBackHandler();
-        this.fileChooser = makeFileChooser();
-        initializeWithDefaultLevel();
-    }
-    
-    public LevelSelection(PlayLevelHandler playLevelHandler) throws IOException {
-        this.exitHandler = defaultExitHandler();
-        this.playLevelHandler = playLevelHandler;
-        this.backHandler = defaultBackHandler();
-        this.fileChooser = makeFileChooser();
-        initializeWithDefaultLevel();
-    }
-    
-    public LevelSelection(BackToHomeHandler backHandler) throws IOException {
-        this.exitHandler = defaultExitHandler();
-        this.playLevelHandler = defaultPlayLevelHandler();
-        this.backHandler = backHandler;
-        this.fileChooser = makeFileChooser();
-        initializeWithDefaultLevel();
-    }
-    
-    /**
-     * Creates a LevelSelection with a custom file chooser. This is primarily for testing.
-     * 
-     * @param fileChooser the file chooser to use for browsing levels
-     * @throws IOException if there's an error initializing the default level
-     */
-    public LevelSelection(JFileChooser fileChooser) throws IOException {
-        this.exitHandler = defaultExitHandler();
-        this.playLevelHandler = defaultPlayLevelHandler();
-        this.backHandler = defaultBackHandler();
-        this.fileChooser = fileChooser;
-        initializeWithDefaultLevel();
-    }
     
     /**
      * Gets the path of the currently selected level file.
@@ -90,6 +52,9 @@ public abstract class LevelSelection extends JFrame {
         return selectedLevelFile.getPath();
     }
 
+    /**
+     * This method is package-private to allow testing by overriding it in test subclasses.
+     */
     PlayLevelHandler defaultPlayLevelHandler() {
         return (parent, levelPath) -> {
             parent.dispose();
@@ -97,6 +62,9 @@ public abstract class LevelSelection extends JFrame {
         };
     }
 
+    /**
+     * This method is package-private to allow testing by overriding it in test subclasses.
+     */
     BackToHomeHandler defaultBackHandler() {
         return currentWindow -> {
             currentWindow.dispose();
@@ -104,8 +72,30 @@ public abstract class LevelSelection extends JFrame {
         };
     }
 
+    /**
+     * This method is package-private to allow testing by overriding it in test subclasses.
+     */
     ExitHandler defaultExitHandler() {
         return System::exit;
+    }
+
+    /**
+     * This method is package-private to allow testing by overriding it in test subclasses.
+     */
+    JFileChooser makeFileChooser() {
+        JFileChooser fileBrowser = new JFileChooser();
+
+        File browseDirectory;
+        try {
+            browseDirectory = new File("%s/levels".formatted(new File(".").getCanonicalPath()));
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        fileBrowser.setCurrentDirectory(browseDirectory);
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+        fileBrowser.setFileFilter(filter);
+        return fileBrowser;
     }
 
     private void initializeWithDefaultLevel() throws IOException {
@@ -219,21 +209,5 @@ public abstract class LevelSelection extends JFrame {
         title.setFont(new Font(Font.SERIF, Font.BOLD, 40));
         title.setBounds(0, 20, 400, 50);
         return title;
-    }
-
-    JFileChooser makeFileChooser() {
-        JFileChooser fileBrowser = new JFileChooser();
-
-        File browseDirectory;
-        try {
-            browseDirectory = new File("%s/levels".formatted(new File(".").getCanonicalPath()));
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-        fileBrowser.setCurrentDirectory(browseDirectory);
-
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
-        fileBrowser.setFileFilter(filter);
-        return fileBrowser;
     }
 }
