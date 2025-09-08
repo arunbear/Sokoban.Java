@@ -90,21 +90,21 @@ public class LevelSelection extends JFrame {
         return selectedLevelFile.getPath();
     }
 
-    private static PlayLevelHandler defaultPlayLevelHandler() {
+    PlayLevelHandler defaultPlayLevelHandler() {
         return (parent, levelPath) -> {
             parent.dispose();
             new SokobanWindow(new Controller(levelPath));
         };
     }
 
-    private static BackToHomeHandler defaultBackHandler() {
+    BackToHomeHandler defaultBackHandler() {
         return currentWindow -> {
             currentWindow.dispose();
             new HomeWindow();
         };
     }
 
-    private static ExitHandler defaultExitHandler() {
+    ExitHandler defaultExitHandler() {
         return System::exit;
     }
 
@@ -221,7 +221,7 @@ public class LevelSelection extends JFrame {
         return title;
     }
 
-    private static JFileChooser makeFileChooser() {
+    JFileChooser makeFileChooser() {
         JFileChooser fileBrowser = new JFileChooser();
 
         File browseDirectory;
