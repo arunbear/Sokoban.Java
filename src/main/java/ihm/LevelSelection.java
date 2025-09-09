@@ -24,19 +24,10 @@ public abstract class LevelSelection extends JFrame {
     private static final String FRAME_TITLE = "Sokoban v1.0 par Gabriel FARAGO";
     private static final String defaultFileName = "level1.txt";
 
-    private final ExitHandler exitHandler;
-    private final PlayLevelHandler playLevelHandler;
-    private final BackToHomeHandler backHandler;
-
     private final JLabel levelFileLabel = new JLabel(defaultFileName, SwingConstants.CENTER);
-    private final JFileChooser fileChooser;
     private File selectedLevelFile;
 
-     LevelSelection() throws IOException {
-        this.exitHandler = defaultExitHandler();
-        this.playLevelHandler = defaultPlayLevelHandler();
-        this.backHandler = defaultBackHandler();
-        this.fileChooser = makeFileChooser();
+    LevelSelection() throws IOException {
         initializeWithDefaultLevel();
     }
     
@@ -143,6 +134,7 @@ public abstract class LevelSelection extends JFrame {
         browse.setBounds(250, 100, 100, 50);
 
         browse.addActionListener(e -> {
+            JFileChooser fileChooser = makeFileChooser();
             int returnVal = fileChooser.showOpenDialog(null);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -182,7 +174,7 @@ public abstract class LevelSelection extends JFrame {
         play.setName("LevelSelection.play");
 
         play.setBounds(75, 225, 250, 50);
-        play.addActionListener(e -> playLevelHandler.playLevel(LevelSelection.this, selectedLevelFile.getPath()));
+        play.addActionListener(e -> defaultPlayLevelHandler().playLevel(LevelSelection.this, selectedLevelFile.getPath()));
         return play;
     }
 
@@ -190,7 +182,7 @@ public abstract class LevelSelection extends JFrame {
         JButton back = new JButton("Back");
         back.setName("LevelSelection.back");
         back.setBounds(25, 300, 150, 50);
-        back.addActionListener(e -> backHandler.handleBack(LevelSelection.this));
+        back.addActionListener(e -> defaultBackHandler().handleBack(LevelSelection.this));
         return back;
     }
 
@@ -199,7 +191,7 @@ public abstract class LevelSelection extends JFrame {
         quit.setName("LevelSelection.quit");
         quit.setBounds(225, 300, 150, 50);
 
-        quit.addActionListener(e -> exitHandler.exit(ExitHandler.SUCCESS));
+        quit.addActionListener(e -> defaultExitHandler().exit(ExitHandler.SUCCESS));
         return quit;
     }
 
