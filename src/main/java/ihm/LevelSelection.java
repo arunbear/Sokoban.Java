@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import logic.Controller;
+import com.google.common.annotations.VisibleForTesting;
 import org.jspecify.annotations.NullMarked;
 
 @NullMarked
@@ -43,9 +44,7 @@ public abstract class LevelSelection extends JFrame {
         return selectedLevelFile.getPath();
     }
 
-    /**
-     * This method is package-private to allow testing by overriding it in test subclasses.
-     */
+    @VisibleForTesting
     PlayLevelHandler defaultPlayLevelHandler() {
         return (parent, levelPath) -> {
             parent.dispose();
@@ -53,9 +52,7 @@ public abstract class LevelSelection extends JFrame {
         };
     }
 
-    /**
-     * This method is package-private to allow testing by overriding it in test subclasses.
-     */
+    @VisibleForTesting
     BackToHomeHandler defaultBackHandler() {
         return currentWindow -> {
             currentWindow.dispose();
@@ -63,16 +60,12 @@ public abstract class LevelSelection extends JFrame {
         };
     }
 
-    /**
-     * This method is package-private to allow testing by overriding it in test subclasses.
-     */
+    @VisibleForTesting
     ExitHandler defaultExitHandler() {
         return System::exit;
     }
 
-    /**
-     * This method is package-private to allow testing by overriding it in test subclasses.
-     */
+    @VisibleForTesting
     JFileChooser makeFileChooser() {
         JFileChooser fileBrowser = new JFileChooser();
 
