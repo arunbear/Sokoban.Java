@@ -167,7 +167,9 @@ public abstract class LevelSelection extends JFrame {
         play.setName("LevelSelection.play");
 
         play.setBounds(75, 225, 250, 50);
-        play.addActionListener(e -> defaultPlayLevelHandler().playLevel(LevelSelection.this, selectedLevelFile.getPath()));
+        play.addActionListener(e -> {
+            defaultPlayLevelHandler().playLevel(LevelSelection.this, selectedLevelFile.getPath());
+        });
         return play;
     }
 
