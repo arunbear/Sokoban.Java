@@ -14,15 +14,15 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 
-public class LevelEditorSetup {
+public class LevelEditorSetup extends JFrame {
     private int lineCount;
     private int columnCount;
     private String levelName;
 
     public LevelEditorSetup() throws FontFormatException, IOException {
-        JFrame set_parameters = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
-        set_parameters.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        set_parameters.setResizable(false);
+        super("Sokoban v1.0 par Gabriel FARAGO");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
 
         Font font_title = Font.createFont(Font.TRUETYPE_FONT, new File("font/Lostar.ttf"));
         font_title = font_title.deriveFont(Font.BOLD, 35);
@@ -97,7 +97,7 @@ public class LevelEditorSetup {
                             lineCount = Integer.parseInt(nbLignesInput.getText());
                             columnCount = Integer.parseInt(nbColonnesInput.getText());
                             levelName = nameInput.getText();
-                            set_parameters.dispose();
+                            dispose();
                             new Editor(lineCount, columnCount, levelName);
                         } else {
                             input_error.setText("This name is already in use!");
@@ -117,25 +117,25 @@ public class LevelEditorSetup {
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                set_parameters.dispose();
+                dispose();
                 new HomeWindow();
             }
         });
 
-        set_parameters.add(edit);
-        set_parameters.add(back);
-        set_parameters.add(quit);
-        set_parameters.add(titre);
-        set_parameters.add(nbLignesInput);
-        set_parameters.add(nbColonnesInput);
-        set_parameters.add(ligne_display);
-        set_parameters.add(colonne_display);
-        set_parameters.add(input_error);
-        set_parameters.add(name_display);
-        set_parameters.add(nameInput);
-        set_parameters.setSize(400, 400);
-        set_parameters.setLayout(null);
-        set_parameters.setLocationRelativeTo(null);
-        set_parameters.setVisible(true);
+        add(edit);
+        add(back);
+        add(quit);
+        add(titre);
+        add(nbLignesInput);
+        add(nbColonnesInput);
+        add(ligne_display);
+        add(colonne_display);
+        add(input_error);
+        add(name_display);
+        add(nameInput);
+        setSize(400, 400);
+        setLayout(null);
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 }
