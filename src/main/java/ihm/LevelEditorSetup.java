@@ -36,6 +36,7 @@ public class LevelEditorSetup extends JFrame {
         edit.setName("LevelEditorSetup.edit");
 
         JButton back = new JButton("Back");
+        back.setName("LevelEditorSetup.back");
 
         JButton quit = new JButton("Quit");
 

@@ -51,4 +51,17 @@ class LevelEditorSetupTest {
         then(editButton).isNotNull();
         then(editButton.getText()).isEqualTo("Edit");
     }
+    
+    @Test
+    void a_LevelEditorSetup_has_a_back_button() throws Exception {
+        // Given
+        LevelEditorSetup editorSetup = new LevelEditorSetup();
+
+        // When
+        JButton backButton = findComponentByNameAsType(editorSetup, "LevelEditorSetup.back", JButton.class);
+
+        // Then
+        then(backButton).isNotNull();
+        then(backButton.getText()).isEqualTo("Back");
+    }
 }
