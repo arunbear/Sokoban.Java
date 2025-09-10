@@ -18,7 +18,6 @@ public class LevelEditorSetup {
     private static int nbLignes;
     private static int nbColonnes;
     private static String name;
-    private static JButton validate;
 
     public LevelEditorSetup() throws FontFormatException, IOException {
         JFrame set_parameters = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
@@ -32,7 +31,7 @@ public class LevelEditorSetup {
         titre.setFont(font_title);
         titre.setBounds(0, 0, 400, 50);
 
-        validate = new JButton("Validate");
+        JButton edit = new JButton("Edit");
         JButton back = new JButton("Back");
         JButton quit = new JButton("Quit");
 
@@ -57,7 +56,7 @@ public class LevelEditorSetup {
         input_error.setBounds(100, 175, 200, 50);
 
 
-        validate.setBounds(75, 225, 250, 50);
+        edit.setBounds(75, 225, 250, 50);
         back.setBounds(25, 300, 150, 50);
         quit.setBounds(225, 300, 150, 50);
 
@@ -68,7 +67,7 @@ public class LevelEditorSetup {
             }
         });
 
-        validate.addActionListener(new ActionListener() {
+        edit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Boolean inLigneCorrect = true;
@@ -123,7 +122,7 @@ public class LevelEditorSetup {
             }
         });
 
-        set_parameters.add(validate);
+        set_parameters.add(edit);
         set_parameters.add(back);
         set_parameters.add(quit);
         set_parameters.add(titre);
