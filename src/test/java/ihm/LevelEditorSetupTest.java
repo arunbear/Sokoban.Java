@@ -93,4 +93,38 @@ class LevelEditorSetupTest {
         then(nameInput).isNotNull();
         then(nameInput.getColumns()).isEqualTo(15);
     }
+    
+    @Test
+    void a_LevelEditorSetup_has_rows_input() throws Exception {
+        // Given
+        LevelEditorSetup editorSetup = new LevelEditorSetup();
+
+        // When
+        JLabel rowsLabel = findComponentByNameAsType(editorSetup, "LevelEditorSetup.rowsLabel", JLabel.class);
+        JTextField rowsInput = findComponentByNameAsType(editorSetup, "LevelEditorSetup.rowsInput", JTextField.class);
+
+        then(rowsLabel).isNotNull();
+        then(rowsLabel.getText()).isEqualTo("Number of rows:");
+        then(rowsLabel.getHorizontalAlignment()).isEqualTo(SwingConstants.CENTER);
+        
+        then(rowsInput).isNotNull();
+        then(rowsInput.getColumns()).isEqualTo(5);
+    }
+    
+    @Test
+    void a_LevelEditorSetup_has_columns_input() throws Exception {
+        // Given
+        LevelEditorSetup editorSetup = new LevelEditorSetup();
+
+        // When
+        JLabel columnsLabel = findComponentByNameAsType(editorSetup, "LevelEditorSetup.columnsLabel", JLabel.class);
+        JTextField columnsInput = findComponentByNameAsType(editorSetup, "LevelEditorSetup.columnsInput", JTextField.class);
+
+        then(columnsLabel).isNotNull();
+        then(columnsLabel.getText()).isEqualTo("Number of columns:");
+        then(columnsLabel.getHorizontalAlignment()).isEqualTo(SwingConstants.CENTER);
+        
+        then(columnsInput).isNotNull();
+        then(columnsInput.getColumns()).isEqualTo(5);
+    }
 }

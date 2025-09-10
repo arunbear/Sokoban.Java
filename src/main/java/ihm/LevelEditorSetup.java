@@ -49,14 +49,20 @@ public class LevelEditorSetup extends JFrame {
         nameInput.setName("LevelEditorSetup.nameInput");
         nameInput.setBounds(220, 90, 150, 30);
 
-
         JLabel ligne_display = new JLabel("Number of rows:", SwingConstants.CENTER);
+        ligne_display.setName("LevelEditorSetup.rowsLabel");
         ligne_display.setBounds(50, 130, 200, 30);
+
         JLabel colonne_display = new JLabel("Number of columns:", SwingConstants.CENTER);
+        colonne_display.setName("LevelEditorSetup.columnsLabel");
         colonne_display.setBounds(50, 160, 200, 30);
+
         JTextField nbLignesInput = new JTextField(5);
+        nbLignesInput.setName("LevelEditorSetup.rowsInput");
         nbLignesInput.setBounds(250, 130, 50, 30);
+
         JTextField nbColonnesInput = new JTextField(5);
+        nbColonnesInput.setName("LevelEditorSetup.columnsInput");
         nbColonnesInput.setBounds(250, 160, 50, 30);
 
         JLabel input_error = new JLabel("", SwingConstants.CENTER);
