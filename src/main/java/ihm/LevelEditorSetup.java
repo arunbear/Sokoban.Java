@@ -28,6 +28,7 @@ public class LevelEditorSetup extends JFrame {
         font_title = font_title.deriveFont(Font.BOLD, 35);
 
         JLabel titre = new JLabel("Level Editor", SwingConstants.CENTER);
+        titre.setName("LevelEditorSetup.title");
         titre.setFont(font_title);
         titre.setBounds(0, 0, 400, 50);
 
