@@ -127,4 +127,18 @@ class LevelEditorSetupTest {
         then(columnsInput).isNotNull();
         then(columnsInput.getColumns()).isEqualTo(5);
     }
+    
+    @Test
+    void a_LevelEditorSetup_has_an_error_label() throws Exception {
+        // Given
+        LevelEditorSetup editorSetup = new LevelEditorSetup();
+
+        // When
+        JLabel errorLabel = findComponentByNameAsType(editorSetup, "LevelEditorSetup.errorLabel", JLabel.class);
+
+        then(errorLabel).isNotNull();
+        then(errorLabel.getText()).isEmpty();
+        then(errorLabel.getForeground()).isEqualTo(Color.RED);
+        then(errorLabel.getHorizontalAlignment()).isEqualTo(SwingConstants.CENTER);
+    }
 }

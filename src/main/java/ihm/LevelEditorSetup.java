@@ -66,6 +66,7 @@ public class LevelEditorSetup extends JFrame {
         nbColonnesInput.setBounds(250, 160, 50, 30);
 
         JLabel input_error = new JLabel("", SwingConstants.CENTER);
+        input_error.setName("LevelEditorSetup.errorLabel");
         input_error.setForeground(Color.RED);
         input_error.setBounds(100, 175, 200, 50);
 
