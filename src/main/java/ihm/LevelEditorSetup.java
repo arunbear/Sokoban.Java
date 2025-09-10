@@ -15,9 +15,9 @@ import javax.swing.SwingConstants;
 
 
 public class LevelEditorSetup {
-    private static int nbLignes;
-    private static int nbColonnes;
-    private static String name;
+    private int lineCount;
+    private int columnCount;
+    private String levelName;
 
     public LevelEditorSetup() throws FontFormatException, IOException {
         JFrame set_parameters = new JFrame("Sokoban v1.0 par Gabriel FARAGO");
@@ -94,11 +94,11 @@ public class LevelEditorSetup {
                     }
                     try {
                         if (level.createNewFile()) {
-                            nbLignes = Integer.parseInt(nbLignesInput.getText());
-                            nbColonnes = Integer.parseInt(nbColonnesInput.getText());
-                            name = nameInput.getText();
+                            lineCount = Integer.parseInt(nbLignesInput.getText());
+                            columnCount = Integer.parseInt(nbColonnesInput.getText());
+                            levelName = nameInput.getText();
                             set_parameters.dispose();
-                            new Editor(nbLignes, nbColonnes, name);
+                            new Editor(lineCount, columnCount, levelName);
                         } else {
                             input_error.setText("This name is already in use!");
                         }
