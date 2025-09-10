@@ -42,9 +42,11 @@ public class LevelEditorSetup extends JFrame {
         quit.setName("LevelEditorSetup.quit");
 
         JLabel name_display = new JLabel("Level name:", SwingConstants.CENTER);
+        name_display.setName("LevelEditorSetup.nameLabel");
         name_display.setBounds(50, 90, 150, 30);
 
         JTextField nameInput = new JTextField(15);
+        nameInput.setName("LevelEditorSetup.nameInput");
         nameInput.setBounds(220, 90, 150, 30);
 
 

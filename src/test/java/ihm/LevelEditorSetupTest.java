@@ -76,4 +76,21 @@ class LevelEditorSetupTest {
         then(quitButton).isNotNull();
         then(quitButton.getText()).isEqualTo("Quit");
     }
+    
+    @Test
+    void a_LevelEditorSetup_has_level_name_input() throws Exception {
+        // Given
+        LevelEditorSetup editorSetup = new LevelEditorSetup();
+
+        // When
+        JLabel nameLabel = findComponentByNameAsType(editorSetup, "LevelEditorSetup.nameLabel", JLabel.class);
+        JTextField nameInput = findComponentByNameAsType(editorSetup, "LevelEditorSetup.nameInput", JTextField.class);
+
+        then(nameLabel).isNotNull();
+        then(nameLabel.getText()).isEqualTo("Level name:");
+        then(nameLabel.getHorizontalAlignment()).isEqualTo(SwingConstants.CENTER);
+        
+        then(nameInput).isNotNull();
+        then(nameInput.getColumns()).isEqualTo(15);
+    }
 }
