@@ -28,30 +28,45 @@ public class LevelEditorSetup extends JFrame {
         font_title = font_title.deriveFont(Font.BOLD, 35);
 
         JLabel titre = new JLabel("Level Editor", SwingConstants.CENTER);
+        titre.setName("LevelEditorSetup.title");
         titre.setFont(font_title);
         titre.setBounds(0, 0, 400, 50);
 
         JButton edit = new JButton("Edit");
-        JButton back = new JButton("Back");
-        JButton quit = new JButton("Quit");
+        edit.setName("LevelEditorSetup.edit");
 
+        JButton back = new JButton("Back");
+        back.setName("LevelEditorSetup.back");
+
+        JButton quit = new JButton("Quit");
+        quit.setName("LevelEditorSetup.quit");
 
         JLabel name_display = new JLabel("Level name:", SwingConstants.CENTER);
+        name_display.setName("LevelEditorSetup.nameLabel");
         name_display.setBounds(50, 90, 150, 30);
+
         JTextField nameInput = new JTextField(15);
+        nameInput.setName("LevelEditorSetup.nameInput");
         nameInput.setBounds(220, 90, 150, 30);
 
-
         JLabel ligne_display = new JLabel("Number of rows:", SwingConstants.CENTER);
+        ligne_display.setName("LevelEditorSetup.rowsLabel");
         ligne_display.setBounds(50, 130, 200, 30);
+
         JLabel colonne_display = new JLabel("Number of columns:", SwingConstants.CENTER);
+        colonne_display.setName("LevelEditorSetup.columnsLabel");
         colonne_display.setBounds(50, 160, 200, 30);
+
         JTextField nbLignesInput = new JTextField(5);
+        nbLignesInput.setName("LevelEditorSetup.rowsInput");
         nbLignesInput.setBounds(250, 130, 50, 30);
+
         JTextField nbColonnesInput = new JTextField(5);
+        nbColonnesInput.setName("LevelEditorSetup.columnsInput");
         nbColonnesInput.setBounds(250, 160, 50, 30);
 
         JLabel input_error = new JLabel("", SwingConstants.CENTER);
+        input_error.setName("LevelEditorSetup.errorLabel");
         input_error.setForeground(Color.RED);
         input_error.setBounds(100, 175, 200, 50);
 
