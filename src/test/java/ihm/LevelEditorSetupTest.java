@@ -38,4 +38,17 @@ class LevelEditorSetupTest {
         then(title.getText()).isEqualTo("Level Editor");
         then(title.getHorizontalAlignment()).isEqualTo(SwingConstants.CENTER);
     }
+    
+    @Test
+    void a_LevelEditorSetup_has_an_edit_button() throws Exception {
+        // Given
+        LevelEditorSetup editorSetup = new LevelEditorSetup();
+
+        // When
+        JButton editButton = findComponentByNameAsType(editorSetup, "LevelEditorSetup.edit", JButton.class);
+
+        // Then
+        then(editButton).isNotNull();
+        then(editButton.getText()).isEqualTo("Edit");
+    }
 }

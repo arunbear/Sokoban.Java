@@ -33,7 +33,10 @@ public class LevelEditorSetup extends JFrame {
         titre.setBounds(0, 0, 400, 50);
 
         JButton edit = new JButton("Edit");
+        edit.setName("LevelEditorSetup.edit");
+
         JButton back = new JButton("Back");
+
         JButton quit = new JButton("Quit");
 
 
