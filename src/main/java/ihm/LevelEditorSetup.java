@@ -28,24 +28,24 @@ public class LevelEditorSetup {
         Font font_title = Font.createFont(Font.TRUETYPE_FONT, new File("font/Lostar.ttf"));
         font_title = font_title.deriveFont(Font.BOLD, 35);
 
-        JLabel titre = new JLabel("Éditeur de niveau", SwingConstants.CENTER);
+        JLabel titre = new JLabel("Level Editor", SwingConstants.CENTER);
         titre.setFont(font_title);
         titre.setBounds(0, 0, 400, 50);
 
-        validate = new JButton("Valider");
-        JButton back = new JButton("Retour");
-        JButton quit = new JButton("Quitter");
+        validate = new JButton("Validate");
+        JButton back = new JButton("Back");
+        JButton quit = new JButton("Quit");
 
 
-        JLabel name_display = new JLabel("Nom du niveau :", SwingConstants.CENTER);
+        JLabel name_display = new JLabel("Level name:", SwingConstants.CENTER);
         name_display.setBounds(50, 90, 150, 30);
         JTextField nameInput = new JTextField(15);
         nameInput.setBounds(220, 90, 150, 30);
 
 
-        JLabel ligne_display = new JLabel("Nombre de lignes :", SwingConstants.CENTER);
+        JLabel ligne_display = new JLabel("Number of rows:", SwingConstants.CENTER);
         ligne_display.setBounds(50, 130, 200, 30);
-        JLabel colonne_display = new JLabel("Nombre de colonnes :", SwingConstants.CENTER);
+        JLabel colonne_display = new JLabel("Number of columns:", SwingConstants.CENTER);
         colonne_display.setBounds(50, 160, 200, 30);
         JTextField nbLignesInput = new JTextField(5);
         nbLignesInput.setBounds(250, 130, 50, 30);
@@ -101,17 +101,17 @@ public class LevelEditorSetup {
                             set_parameters.dispose();
                             new Editor(nbLignes, nbColonnes, name);
                         } else {
-                            input_error.setText("Ce nom est déjà utilisé !");
+                            input_error.setText("This name is already in use!");
                         }
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
                 } else if (!correctName) {
-                    input_error.setText("Nom incorrect !");
+                    input_error.setText("Incorrect name!");
                 } else {
 
-                    input_error.setText("Veuillez entrer des entiers !");
+                    input_error.setText("Please enter integers!");
                 }
             }
         });
