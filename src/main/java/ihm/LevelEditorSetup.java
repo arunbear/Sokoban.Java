@@ -77,7 +77,7 @@ public class LevelEditorSetup extends JFrame {
         back.setBounds(25, 300, 150, 50);
         quit.setBounds(225, 300, 150, 50);
 
-        quit.addActionListener(e -> handleQuit());
+        quit.addActionListener(e -> defaultExitHandler().exit(0));
 
         edit.addActionListener(new ActionListener() {
             @Override
@@ -152,7 +152,7 @@ public class LevelEditorSetup extends JFrame {
     }
 
     @VisibleForTesting
-    void handleQuit() {
-        System.exit(0);
+    ExitHandler defaultExitHandler() {
+        return System::exit;
     }
 }

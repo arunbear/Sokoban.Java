@@ -6,6 +6,8 @@ import org.jspecify.annotations.NullMarked;
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import ihm.ExitHandler;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static swing.ComponentFinder.findComponentByNameAsType;
@@ -82,16 +84,17 @@ class LevelEditorSetupTest {
     void quit_button_triggers_quit_handler() throws Exception {
         // Given
 
-        // We need to track if handleQuit() was called from the test
-        // Using AtomicBoolean because:
+        // We need to track if defaultExitHandler() was called from the test
+        // Using AtomicInteger because:
         // 1. It allows us to modify the value inside the callback while keeping the reference final
-        // 2. It's a clean way to work with the effectively final requirement for variables used in anonymous classes
-        final var handleQuitCalled = new AtomicBoolean(false);
+        // 2. It's a clean way to work with the effectively final requirement for variables used in lambdas
+        // 3. We use FAILURE as a sentinel value to detect if the handler was called
+        final var exitStatus = new AtomicInteger(ExitHandler.FAILURE);
 
         LevelEditorSetup editorSetup = new LevelEditorSetup() {
             @Override
-            protected void handleQuit() {
-                handleQuitCalled.set(true);
+            ExitHandler defaultExitHandler() {
+                return exitStatus::set;
             }
         };
         
@@ -100,8 +103,9 @@ class LevelEditorSetupTest {
         // When
         quitButton.doClick();
         
-        // Then
-        then(handleQuitCalled.get()).isTrue();
+        then(exitStatus.get())
+            .isNotEqualTo(ExitHandler.FAILURE)
+            .isEqualTo(ExitHandler.SUCCESS);
     }
     
     @Test
