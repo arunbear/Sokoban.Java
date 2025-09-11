@@ -30,7 +30,7 @@ jobs:
     - name: Install dependencies
       run: |
         apt-get update
-        apt-get install -y maven xvfb
+        apt-get install -y maven xvfb libxi6 libxrender1 libxtst6
         mvn --version
 
     - name: Run Tests with Xvfb
