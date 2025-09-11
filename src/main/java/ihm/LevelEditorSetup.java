@@ -1,5 +1,7 @@
 package ihm;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -75,12 +77,7 @@ public class LevelEditorSetup extends JFrame {
         back.setBounds(25, 300, 150, 50);
         quit.setBounds(225, 300, 150, 50);
 
-        quit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        quit.addActionListener(e -> handleQuit());
 
         edit.addActionListener(new ActionListener() {
             @Override
@@ -152,5 +149,10 @@ public class LevelEditorSetup extends JFrame {
         setLayout(null);
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    @VisibleForTesting
+    void handleQuit() {
+        System.exit(0);
     }
 }

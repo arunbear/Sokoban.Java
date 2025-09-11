@@ -5,6 +5,7 @@ import org.jspecify.annotations.NullMarked;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static swing.ComponentFinder.findComponentByNameAsType;
@@ -75,6 +76,32 @@ class LevelEditorSetupTest {
 
         then(quitButton).isNotNull();
         then(quitButton.getText()).isEqualTo("Quit");
+    }
+
+    @Test
+    void quit_button_triggers_quit_handler() throws Exception {
+        // Given
+
+        // We need to track if handleQuit() was called from the test
+        // Using AtomicBoolean because:
+        // 1. It allows us to modify the value inside the callback while keeping the reference final
+        // 2. It's a clean way to work with the effectively final requirement for variables used in anonymous classes
+        final var handleQuitCalled = new AtomicBoolean(false);
+
+        LevelEditorSetup editorSetup = new LevelEditorSetup() {
+            @Override
+            protected void handleQuit() {
+                handleQuitCalled.set(true);
+            }
+        };
+        
+        JButton quitButton = findComponentByNameAsType(editorSetup, "LevelEditorSetup.quit", JButton.class);
+        
+        // When
+        quitButton.doClick();
+        
+        // Then
+        then(handleQuitCalled.get()).isTrue();
     }
     
     @Test
