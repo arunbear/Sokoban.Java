@@ -23,21 +23,17 @@ jobs:
       options: --user root
       env:
         JAVA_HOME: /opt/java/openjdk
-
-    services:
-      xvfb:
-        image: docker.io/robvanderleek/xvfb:latest
-        options: >-
-          --name xvfb
-          -e DISPLAY=:99
-          -e SCREEN_WIDTH=1024
-          -e SCREEN_HEIGHT=768
-          -e SCREEN_DEPTH=16
-          --tmpfs /tmp
-
+    
     steps:
     - uses: actions/checkout@v4
-
+    
+    - name: Set up Xvfb
+      run: |
+        apt-get update
+        apt-get install -y xvfb
+        Xvfb :99 -screen 0 1024x768x16 &
+        export DISPLAY=:99
+        
     - name: Verify Java version
       run: |
         java -version
