@@ -34,9 +34,9 @@ jobs:
         Xvfb :99 -screen 0 1024x768x16 &
         export DISPLAY=:99
         
-    - name: Verify Java version
+    - name: Install Maven
       run: |
-        java -version
+        apt-get install -y maven
         mvn --version
 
     - name: Build with Maven
