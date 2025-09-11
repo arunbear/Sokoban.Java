@@ -19,7 +19,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: eclipse-temurin:24-jdk-jammy
+      image: eclipse-temurin:24-jdk
       options: --user root
       env:
         JAVA_HOME: /opt/java/openjdk
