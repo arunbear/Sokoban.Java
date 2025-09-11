@@ -27,20 +27,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Set up Xvfb
+    - name: Install dependencies
       run: |
         apt-get update
-        apt-get install -y xvfb
-        Xvfb :99 -screen 0 1024x768x16 &
-        export DISPLAY=:99
-        
-    - name: Install Maven
-      run: |
-        apt-get install -y maven
+        apt-get install -y maven xvfb
         mvn --version
 
-    - name: Build with Maven
-      run: |
-        mvn -B package --file pom.xml \
-          -Dmaven.compiler.source=24 \
-          -Dmaven.compiler.target=24
+    - name: Run Tests with Xvfb
+      run: xvfb-run -a -s "-screen 0 1024x768x16" mvn -B test
