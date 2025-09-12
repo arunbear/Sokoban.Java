@@ -1,19 +1,27 @@
 package ihm;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.jspecify.annotations.NullMarked;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import ihm.ExitHandler;
 
+import java.util.Arrays;
 import static org.assertj.core.api.BDDAssertions.then;
 import static swing.ComponentFinder.findComponentByNameAsType;
 
 @NullMarked
 class LevelEditorSetupTest {
+
+    @BeforeEach
+    void cleanupWindows() {
+        Arrays.stream(java.awt.Window.getWindows())
+            .filter(java.awt.Window::isDisplayable)
+            .forEach(java.awt.Window::dispose);
+    }
+
     @Test
     void a_LevelEditorSetup_is_a_frame() throws Exception {
         // Given
@@ -66,6 +74,33 @@ class LevelEditorSetupTest {
         // Then
         then(backButton).isNotNull();
         then(backButton.getText()).isEqualTo("Back");
+    }
+    
+    @Test
+    void back_button_when_clicked_disposes_current_window_and_shows_home_window() throws Exception {
+        // Given
+        LevelEditorSetup editorSetup = new LevelEditorSetup();
+        JButton backButton = findComponentByNameAsType(editorSetup, "LevelEditorSetup.back", JButton.class);
+        
+        // When
+        backButton.doClick();
+        
+        then(editorSetup.isDisplayable())
+            .as("Window is disposed when back button is clicked")
+            .isFalse();
+            
+        // Get all visible windows after clicking back
+        var visibleWindows = Arrays.stream(java.awt.Window.getWindows())
+            .filter(java.awt.Window::isVisible)
+            .toList();
+            
+        then(visibleWindows)
+            .as("Exactly one window is visible (the HomeWindow)")
+            .hasSize(1);
+            
+        then(visibleWindows.getFirst())
+            .as("The visible window is a HomeWindow")
+            .isInstanceOf(HomeWindow.class);
     }
     
     @Test
