@@ -3,6 +3,8 @@ package ihm;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.jspecify.annotations.NullMarked;
 
 import javax.swing.*;
@@ -95,7 +97,39 @@ class LevelEditorSetupTest {
         then(backButton).isNotNull();
         then(backButton.getText()).isEqualTo("Back");
     }
-    
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "testlevel1",    // contains 'level'
+        "my/level",      // contains '/'
+        "my\\level",     // contains '\'
+    })
+    void invalid_level_names_are_rejected_when_edit_button_is_clicked(String invalidName) throws Exception {
+        // Given
+        var editorSetup = new LevelEditorSetup();
+        var editButton = findComponentByNameAsType(editorSetup, "LevelEditorSetup.edit", JButton.class);
+        var nameInput = findComponentByNameAsType(editorSetup, "LevelEditorSetup.nameInput", JTextField.class);
+        var rowsInput = findComponentByNameAsType(editorSetup, "LevelEditorSetup.rowsInput", JTextField.class);
+        var columnsInput = findComponentByNameAsType(editorSetup, "LevelEditorSetup.columnsInput", JTextField.class);
+        var errorLabel = findComponentByNameAsType(editorSetup, "LevelEditorSetup.errorLabel", JLabel.class);
+
+        // Set invalid name and valid dimensions
+        nameInput.setText(invalidName);
+        rowsInput.setText(String.valueOf(MIN_ROWS));
+        columnsInput.setText(String.valueOf(MIN_COLUMNS));
+
+        // When
+        editButton.doClick();
+
+        then(errorLabel.getText())
+            .as("Error message is shown for invalid level name: " + invalidName)
+            .isEqualTo("Incorrect name!");
+
+        then(editorSetup.isVisible())
+            .as("Window remains open when validation fails for name: " + invalidName)
+            .isTrue();
+    }
+
     @Test
     void edit_button_when_clicked_with_valid_input_disposes_window_and_shows_editor() throws Exception {
         // Given
