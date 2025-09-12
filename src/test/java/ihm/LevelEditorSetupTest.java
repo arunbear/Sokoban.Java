@@ -1,25 +1,45 @@
 package ihm;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.jspecify.annotations.NullMarked;
 
 import javax.swing.*;
 import java.awt.*;
+import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import java.util.Arrays;
+
+import static java.nio.file.Files.deleteIfExists;
 import static org.assertj.core.api.BDDAssertions.then;
 import static swing.ComponentFinder.findComponentByNameAsType;
 
 @NullMarked
 class LevelEditorSetupTest {
 
+    private static final String TEST_LEVEL_NAME = "testLevel";
+    private static final Path TEST_LEVEL_PATH = Path.of("levels", TEST_LEVEL_NAME + ".txt");
+
+    private static final int MIN_ROWS = 7;  // Minimum rows required by Warehouse
+    private static final int MIN_COLUMNS = 5;  // Minimum columns required by Warehouse
+
     @BeforeEach
-    void cleanupWindows() {
+    void setUp() throws Exception {
+        // Clean up test file if it exists
+        deleteIfExists(TEST_LEVEL_PATH);
+
+        // Clean up windows
         Arrays.stream(java.awt.Window.getWindows())
             .filter(java.awt.Window::isDisplayable)
             .forEach(java.awt.Window::dispose);
+    }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        // Clean up test file after test
+        deleteIfExists(TEST_LEVEL_PATH);
     }
 
     @Test
@@ -76,6 +96,39 @@ class LevelEditorSetupTest {
         then(backButton.getText()).isEqualTo("Back");
     }
     
+    @Test
+    void edit_button_when_clicked_with_valid_input_disposes_window_and_shows_editor() throws Exception {
+        // Given
+        var editorSetup = new LevelEditorSetup();
+        var editButton   = findComponentByNameAsType(editorSetup, "LevelEditorSetup.edit",         JButton.class);
+        var nameInput    = findComponentByNameAsType(editorSetup, "LevelEditorSetup.nameInput",    JTextField.class);
+        var rowsInput    = findComponentByNameAsType(editorSetup, "LevelEditorSetup.rowsInput",    JTextField.class);
+        var columnsInput = findComponentByNameAsType(editorSetup, "LevelEditorSetup.columnsInput", JTextField.class);
+
+        // Set valid inputs
+        nameInput.setText(TEST_LEVEL_NAME);
+        rowsInput.setText(String.valueOf(MIN_ROWS));
+        columnsInput.setText(String.valueOf(MIN_COLUMNS));
+
+        // When
+        editButton.doClick();
+
+        then(editorSetup.isDisplayable())
+            .as("Window is disposed when edit button is clicked with valid input")
+            .isFalse();
+
+        var visibleWindows = Arrays.stream(java.awt.Window.getWindows())
+            .filter(java.awt.Window::isVisible)
+            .toList();
+
+        then(visibleWindows)
+            .as("Exactly one window is visible (the Editor)")
+            .hasSize(1);
+
+        then(visibleWindows.getFirst())
+            .isInstanceOf(ihm.Editor.class);
+    }
+
     @Test
     void back_button_when_clicked_disposes_current_window_and_shows_home_window() throws Exception {
         // Given
