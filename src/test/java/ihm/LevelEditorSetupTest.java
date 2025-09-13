@@ -9,6 +9,7 @@ import org.jspecify.annotations.NullMarked;
 
 import javax.swing.*;
 import java.awt.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -257,7 +258,38 @@ class LevelEditorSetupTest {
             .as("The visible window is a HomeWindow")
             .isInstanceOf(HomeWindow.class);
     }
-    
+
+    @Test
+    void existing_level_names_are_rejected_when_edit_button_is_clicked() throws Exception {
+        // Given
+        // Create a test level file first
+        Files.createDirectories(TEST_LEVEL_PATH.getParent());
+        Files.createFile(TEST_LEVEL_PATH);
+        
+        var editorSetup = new LevelEditorSetup();
+        var editButton   = findComponentByNameAsType(editorSetup, "LevelEditorSetup.edit",         JButton.class);
+        var nameInput    = findComponentByNameAsType(editorSetup, "LevelEditorSetup.nameInput",    JTextField.class);
+        var rowsInput    = findComponentByNameAsType(editorSetup, "LevelEditorSetup.rowsInput",    JTextField.class);
+        var columnsInput = findComponentByNameAsType(editorSetup, "LevelEditorSetup.columnsInput", JTextField.class);
+        var errorLabel   = findComponentByNameAsType(editorSetup, "LevelEditorSetup.errorLabel",   JLabel.class);
+
+        // Set valid inputs but with existing level name
+        nameInput.setText(TEST_LEVEL_NAME);
+        rowsInput.setText(String.valueOf(MIN_ROWS));
+        columnsInput.setText(String.valueOf(MIN_COLUMNS));
+
+        // When
+        editButton.doClick();
+
+        then(errorLabel.getText())
+            .as("Error message is shown for existing level name")
+            .isEqualTo("This name is already in use!");
+
+        then(editorSetup.isVisible())
+            .as("Window remains open when level name exists")
+            .isTrue();
+    }
+
     @Test
     void a_LevelEditorSetup_has_a_quit_button() throws Exception {
         // Given
