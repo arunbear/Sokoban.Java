@@ -164,6 +164,40 @@ class LevelEditorSetupTest {
             .isTrue();
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "abc",   // non-numeric
+        "1.5",    // decimal
+        "-5",     // negative
+        "",       // empty
+        " 5 "     // with spaces
+    })
+    void invalid_column_dimensions_are_rejected_when_edit_button_is_clicked(String invalidDimension) throws Exception {
+        // Given
+        var editorSetup = new LevelEditorSetup();
+        var editButton   = findComponentByNameAsType(editorSetup, "LevelEditorSetup.edit",         JButton.class);
+        var nameInput    = findComponentByNameAsType(editorSetup, "LevelEditorSetup.nameInput",    JTextField.class);
+        var rowsInput    = findComponentByNameAsType(editorSetup, "LevelEditorSetup.rowsInput",    JTextField.class);
+        var columnsInput = findComponentByNameAsType(editorSetup, "LevelEditorSetup.columnsInput", JTextField.class);
+        var errorLabel   = findComponentByNameAsType(editorSetup, "LevelEditorSetup.errorLabel",   JLabel.class);
+
+        // Set valid name and valid rows but invalid columns
+        nameInput.setText("validName");
+        rowsInput.setText(String.valueOf(MIN_ROWS));
+        columnsInput.setText(invalidDimension);
+
+        // When
+        editButton.doClick();
+
+        then(errorLabel.getText())
+            .as("Error message is shown for invalid column dimension: " + invalidDimension)
+            .isEqualTo("Please enter integers!");
+
+        then(editorSetup.isVisible())
+            .as("Window remains open when validation fails for column dimension: " + invalidDimension)
+            .isTrue();
+    }
+
     @Test
     void edit_button_when_clicked_with_valid_input_disposes_window_and_shows_editor() throws Exception {
         // Given
