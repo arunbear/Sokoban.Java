@@ -5,8 +5,6 @@ import com.google.common.annotations.VisibleForTesting;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JButton;
@@ -77,61 +75,55 @@ public class LevelEditorSetup extends JFrame {
         back.setBounds(25, 300, 150, 50);
         quit.setBounds(225, 300, 150, 50);
 
-        quit.addActionListener(e -> defaultExitHandler().exit(0));
+        quit.addActionListener(_ -> defaultExitHandler().exit(0));
 
-        edit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boolean inLigneCorrect = true;
-                boolean inColonneCorrect = true;
-                boolean correctName = !nameInput.getText().contains("level")
-                                   && !nameInput.getText().contains("/")
-                                   && !nameInput.getText().contains("\\");
+        edit.addActionListener(_ -> {
+            boolean inLigneCorrect = true;
+            boolean inColonneCorrect = true;
+            boolean correctName = !nameInput.getText().contains("level")
+                               && !nameInput.getText().contains("/")
+                               && !nameInput.getText().contains("\\");
 
-                for (int i = 0; i < nbLignesInput.getText().length(); i++) {
-                    inLigneCorrect = (inLigneCorrect && Character.isDigit(nbLignesInput.getText().charAt(i)));
+            for (int i = 0; i < nbLignesInput.getText().length(); i++) {
+                inLigneCorrect = (inLigneCorrect && Character.isDigit(nbLignesInput.getText().charAt(i)));
+            }
+            for (int i = 0; i < nbColonnesInput.getText().length(); i++) {
+                inColonneCorrect = (inColonneCorrect && Character.isDigit(nbColonnesInput.getText().charAt(i)));
+            }
+
+            if (inLigneCorrect && inColonneCorrect && correctName && !nbLignesInput.getText().isEmpty() && !nbColonnesInput.getText().isEmpty() && !nameInput.getText().isEmpty()) {
+
+                File level = null;
+                try {
+                    level = new File(new File(".").getCanonicalPath() + "/levels/" + nameInput.getText() + ".txt");
+                } catch (IOException e2) {
+                    // TODO Auto-generated catch block
+                    e2.printStackTrace();
                 }
-                for (int i = 0; i < nbColonnesInput.getText().length(); i++) {
-                    inColonneCorrect = (inColonneCorrect && Character.isDigit(nbColonnesInput.getText().charAt(i)));
-                }
-
-                if (inLigneCorrect && inColonneCorrect && correctName && !nbLignesInput.getText().isEmpty() && !nbColonnesInput.getText().isEmpty() && !nameInput.getText().isEmpty()) {
-
-                    File level = null;
-                    try {
-                        level = new File(new File(".").getCanonicalPath() + "/levels/" + nameInput.getText() + ".txt");
-                    } catch (IOException e2) {
-                        // TODO Auto-generated catch block
-                        e2.printStackTrace();
+                try {
+                    if (level.createNewFile()) {
+                        lineCount = Integer.parseInt(nbLignesInput.getText());
+                        columnCount = Integer.parseInt(nbColonnesInput.getText());
+                        levelName = nameInput.getText();
+                        dispose();
+                        new Editor(lineCount, columnCount, levelName);
+                    } else {
+                        input_error.setText("This name is already in use!");
                     }
-                    try {
-                        if (level.createNewFile()) {
-                            lineCount = Integer.parseInt(nbLignesInput.getText());
-                            columnCount = Integer.parseInt(nbColonnesInput.getText());
-                            levelName = nameInput.getText();
-                            dispose();
-                            new Editor(lineCount, columnCount, levelName);
-                        } else {
-                            input_error.setText("This name is already in use!");
-                        }
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
-                } else if (!correctName) {
-                    input_error.setText("Incorrect name!");
-                } else {
-
-                    input_error.setText("Please enter integers!");
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
                 }
+            } else if (!correctName) {
+                input_error.setText("Incorrect name!");
+            } else {
+
+                input_error.setText("Please enter integers!");
             }
         });
-        back.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                new HomeWindow();
-            }
+        back.addActionListener(_ -> {
+            dispose();
+            new HomeWindow();
         });
 
         add(edit);
