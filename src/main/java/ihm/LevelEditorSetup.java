@@ -82,12 +82,12 @@ public class LevelEditorSetup extends JFrame {
         edit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Boolean inLigneCorrect = true;
-                Boolean inColonneCorrect = true;
-                Boolean correctName = true;
-                if (nameInput.getText().contains("level") || nameInput.getText().contains("/") || nameInput.getText().contains("\\")) {
-                    correctName = false;
-                }
+                boolean inLigneCorrect = true;
+                boolean inColonneCorrect = true;
+                boolean correctName = !nameInput.getText().contains("level")
+                                   && !nameInput.getText().contains("/")
+                                   && !nameInput.getText().contains("\\");
+
                 for (int i = 0; i < nbLignesInput.getText().length(); i++) {
                     inLigneCorrect = (inLigneCorrect && Character.isDigit(nbLignesInput.getText().charAt(i)));
                 }
@@ -95,7 +95,7 @@ public class LevelEditorSetup extends JFrame {
                     inColonneCorrect = (inColonneCorrect && Character.isDigit(nbColonnesInput.getText().charAt(i)));
                 }
 
-                if (inLigneCorrect && inColonneCorrect && correctName && nbLignesInput.getText().length() > 0 && nbColonnesInput.getText().length() > 0 && nameInput.getText().length() > 0) {
+                if (inLigneCorrect && inColonneCorrect && correctName && !nbLignesInput.getText().isEmpty() && !nbColonnesInput.getText().isEmpty() && !nameInput.getText().isEmpty()) {
 
                     File level = null;
                     try {
