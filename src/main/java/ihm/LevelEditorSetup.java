@@ -70,7 +70,6 @@ public class LevelEditorSetup extends JFrame {
         errorLabel.setForeground(Color.RED);
         errorLabel.setBounds(100, 175, 200, 50);
 
-
         edit.setBounds(75, 225, 250, 50);
         back.setBounds(25, 300, 150, 50);
         quit.setBounds(225, 300, 150, 50);
@@ -78,20 +77,14 @@ public class LevelEditorSetup extends JFrame {
         quit.addActionListener(_ -> defaultExitHandler().exit(0));
 
         edit.addActionListener(_ -> {
-            boolean isValidRowInput = true;
-            boolean isValidColumnInput = true;
-            boolean correctName = !nameInput.getText().contains("level")
+            boolean isValidRowInput    = rowsInput.getText().matches(    "\\d+");
+            boolean isValidColumnInput = columnsInput.getText().matches( "\\d+");
+            boolean correctName = !nameInput.getText().isEmpty()
+                               && !nameInput.getText().contains("level")
                                && !nameInput.getText().contains("/")
                                && !nameInput.getText().contains("\\");
 
-            for (int i = 0; i < rowsInput.getText().length(); i++) {
-                isValidRowInput = (isValidRowInput && Character.isDigit(rowsInput.getText().charAt(i)));
-            }
-            for (int i = 0; i < columnsInput.getText().length(); i++) {
-                isValidColumnInput = (isValidColumnInput && Character.isDigit(columnsInput.getText().charAt(i)));
-            }
-
-            if (isValidRowInput && isValidColumnInput && correctName && !rowsInput.getText().isEmpty() && !columnsInput.getText().isEmpty() && !nameInput.getText().isEmpty()) {
+            if (isValidRowInput && isValidColumnInput && correctName) {
 
                 File level = null;
                 try {
