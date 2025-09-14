@@ -86,14 +86,8 @@ public class LevelEditorSetup extends JFrame {
 
             if (isValidRowInput && isValidColumnInput && correctName) {
 
-                File level = null;
                 try {
-                    level = new File(new File(".").getCanonicalPath() + "/levels/" + nameInput.getText() + ".txt");
-                } catch (IOException e2) {
-                    // TODO Auto-generated catch block
-                    e2.printStackTrace();
-                }
-                try {
+                    File level = new File(new File(".").getCanonicalPath() + "/levels/" + nameInput.getText() + ".txt");
                     if (level.createNewFile()) {
                         lineCount = Integer.parseInt(rowsInput.getText());
                         columnCount = Integer.parseInt(columnsInput.getText());
@@ -103,9 +97,9 @@ public class LevelEditorSetup extends JFrame {
                     } else {
                         errorLabel.setText("This name is already in use!");
                     }
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
                 }
             } else if (!correctName) {
                 errorLabel.setText("Incorrect name!");
