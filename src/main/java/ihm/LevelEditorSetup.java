@@ -7,12 +7,21 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+/**
+ * LevelEditorSetup is the first window that appears when the user wants to create a new level.
+ * It asks for the level's name, number of rows and columns.
+ * If the name is already in use, it will display an error message.
+ * If the number of rows and columns are not integers, it will display an error message.
+ * If the name is correct and the number of rows and columns are integers,
+ * it will create a new level and open the level editor.
+ */
 
 public class LevelEditorSetup extends JFrame {
     private int lineCount;
@@ -87,7 +96,10 @@ public class LevelEditorSetup extends JFrame {
             if (isValidRowInput && isValidColumnInput && correctName) {
 
                 try {
-                    File level = new File(new File(".").getCanonicalPath() + "/levels/" + nameInput.getText() + ".txt");
+                    File level = Paths.get(".").toRealPath()
+                            .resolve("levels")
+                            .resolve(nameInput.getText() + ".txt")
+                            .toFile();
                     if (level.createNewFile()) {
                         lineCount = Integer.parseInt(rowsInput.getText());
                         columnCount = Integer.parseInt(columnsInput.getText());
