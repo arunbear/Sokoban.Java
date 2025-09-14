@@ -8,6 +8,8 @@ import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,6 +26,8 @@ import javax.swing.SwingConstants;
  */
 
 public class LevelEditorSetup extends JFrame {
+    private static final Logger LOGGER = Logger.getLogger(LevelEditorSetup.class.getName());
+    
     private int lineCount;
     private int columnCount;
     private String levelName;
@@ -111,12 +115,12 @@ public class LevelEditorSetup extends JFrame {
                     }
                 }
                 catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.log(Level.SEVERE, "Failed to create level file", e);
                 }
             } else if (!correctName) {
                 errorLabel.setText("Incorrect name!");
-            } else {
-
+            }
+            else {
                 errorLabel.setText("Please enter integers!");
             }
         });
