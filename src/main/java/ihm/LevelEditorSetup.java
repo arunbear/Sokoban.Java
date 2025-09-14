@@ -27,10 +27,10 @@ public class LevelEditorSetup extends JFrame {
         Font font_title = Font.createFont(Font.TRUETYPE_FONT, new File("font/Lostar.ttf"));
         font_title = font_title.deriveFont(Font.BOLD, 35);
 
-        JLabel titre = new JLabel("Level Editor", SwingConstants.CENTER);
-        titre.setName("LevelEditorSetup.title");
-        titre.setFont(font_title);
-        titre.setBounds(0, 0, 400, 50);
+        JLabel titleLabel = new JLabel("Level Editor", SwingConstants.CENTER);
+        titleLabel.setName("LevelEditorSetup.title");
+        titleLabel.setFont(font_title);
+        titleLabel.setBounds(0, 0, 400, 50);
 
         JButton edit = new JButton("Edit");
         edit.setName("LevelEditorSetup.edit");
@@ -49,26 +49,26 @@ public class LevelEditorSetup extends JFrame {
         nameInput.setName("LevelEditorSetup.nameInput");
         nameInput.setBounds(220, 90, 150, 30);
 
-        JLabel ligne_display = new JLabel("Number of rows:", SwingConstants.CENTER);
-        ligne_display.setName("LevelEditorSetup.rowsLabel");
-        ligne_display.setBounds(50, 130, 200, 30);
+        JLabel rowsLabel = new JLabel("Number of rows:", SwingConstants.CENTER);
+        rowsLabel.setName("LevelEditorSetup.rowsLabel");
+        rowsLabel.setBounds(50, 130, 200, 30);
 
-        JLabel colonne_display = new JLabel("Number of columns:", SwingConstants.CENTER);
-        colonne_display.setName("LevelEditorSetup.columnsLabel");
-        colonne_display.setBounds(50, 160, 200, 30);
+        JLabel columnsLabel = new JLabel("Number of columns:", SwingConstants.CENTER);
+        columnsLabel.setName("LevelEditorSetup.columnsLabel");
+        columnsLabel.setBounds(50, 160, 200, 30);
 
-        JTextField nbLignesInput = new JTextField(5);
-        nbLignesInput.setName("LevelEditorSetup.rowsInput");
-        nbLignesInput.setBounds(250, 130, 50, 30);
+        JTextField rowsInput = new JTextField(5);
+        rowsInput.setName("LevelEditorSetup.rowsInput");
+        rowsInput.setBounds(250, 130, 50, 30);
 
-        JTextField nbColonnesInput = new JTextField(5);
-        nbColonnesInput.setName("LevelEditorSetup.columnsInput");
-        nbColonnesInput.setBounds(250, 160, 50, 30);
+        JTextField columnsInput = new JTextField(5);
+        columnsInput.setName("LevelEditorSetup.columnsInput");
+        columnsInput.setBounds(250, 160, 50, 30);
 
-        JLabel input_error = new JLabel("", SwingConstants.CENTER);
-        input_error.setName("LevelEditorSetup.errorLabel");
-        input_error.setForeground(Color.RED);
-        input_error.setBounds(100, 175, 200, 50);
+        JLabel errorLabel = new JLabel("", SwingConstants.CENTER);
+        errorLabel.setName("LevelEditorSetup.errorLabel");
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setBounds(100, 175, 200, 50);
 
 
         edit.setBounds(75, 225, 250, 50);
@@ -78,20 +78,20 @@ public class LevelEditorSetup extends JFrame {
         quit.addActionListener(_ -> defaultExitHandler().exit(0));
 
         edit.addActionListener(_ -> {
-            boolean inLigneCorrect = true;
-            boolean inColonneCorrect = true;
+            boolean isValidRowInput = true;
+            boolean isValidColumnInput = true;
             boolean correctName = !nameInput.getText().contains("level")
                                && !nameInput.getText().contains("/")
                                && !nameInput.getText().contains("\\");
 
-            for (int i = 0; i < nbLignesInput.getText().length(); i++) {
-                inLigneCorrect = (inLigneCorrect && Character.isDigit(nbLignesInput.getText().charAt(i)));
+            for (int i = 0; i < rowsInput.getText().length(); i++) {
+                isValidRowInput = (isValidRowInput && Character.isDigit(rowsInput.getText().charAt(i)));
             }
-            for (int i = 0; i < nbColonnesInput.getText().length(); i++) {
-                inColonneCorrect = (inColonneCorrect && Character.isDigit(nbColonnesInput.getText().charAt(i)));
+            for (int i = 0; i < columnsInput.getText().length(); i++) {
+                isValidColumnInput = (isValidColumnInput && Character.isDigit(columnsInput.getText().charAt(i)));
             }
 
-            if (inLigneCorrect && inColonneCorrect && correctName && !nbLignesInput.getText().isEmpty() && !nbColonnesInput.getText().isEmpty() && !nameInput.getText().isEmpty()) {
+            if (isValidRowInput && isValidColumnInput && correctName && !rowsInput.getText().isEmpty() && !columnsInput.getText().isEmpty() && !nameInput.getText().isEmpty()) {
 
                 File level = null;
                 try {
@@ -102,23 +102,23 @@ public class LevelEditorSetup extends JFrame {
                 }
                 try {
                     if (level.createNewFile()) {
-                        lineCount = Integer.parseInt(nbLignesInput.getText());
-                        columnCount = Integer.parseInt(nbColonnesInput.getText());
+                        lineCount = Integer.parseInt(rowsInput.getText());
+                        columnCount = Integer.parseInt(columnsInput.getText());
                         levelName = nameInput.getText();
                         dispose();
                         new Editor(lineCount, columnCount, levelName);
                     } else {
-                        input_error.setText("This name is already in use!");
+                        errorLabel.setText("This name is already in use!");
                     }
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
             } else if (!correctName) {
-                input_error.setText("Incorrect name!");
+                errorLabel.setText("Incorrect name!");
             } else {
 
-                input_error.setText("Please enter integers!");
+                errorLabel.setText("Please enter integers!");
             }
         });
         back.addActionListener(_ -> {
@@ -129,12 +129,12 @@ public class LevelEditorSetup extends JFrame {
         add(edit);
         add(back);
         add(quit);
-        add(titre);
-        add(nbLignesInput);
-        add(nbColonnesInput);
-        add(ligne_display);
-        add(colonne_display);
-        add(input_error);
+        add(titleLabel);
+        add(rowsInput);
+        add(columnsInput);
+        add(rowsLabel);
+        add(columnsLabel);
+        add(errorLabel);
         add(name_display);
         add(nameInput);
         setSize(400, 400);
