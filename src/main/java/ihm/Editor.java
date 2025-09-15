@@ -28,11 +28,12 @@ import logic.Controller;
 public class Editor extends JFrame implements MouseListener, MouseMotionListener {
     private static final Logger LOGGER = Logger.getLogger(Editor.class.getName());
 
-	static final int TAILLE_IMAGE = 32;
-	static int LARGEUR_FENETRE = 0;
-	static int HAUTEUR_FENETRE = 0;
-	static Controller controleur;
-	static TileType content = TileType.OUTSIDE;
+    private static final int TAILLE_IMAGE = 32;
+
+    private int largeurFenetre = 0;
+    private int hauteurFenetre = 0;
+    private Controller controleur;
+    private TileType content = TileType.OUTSIDE;
 
 	public Editor (int nbLignes, int nbColonnes, String name) throws IOException  {
 
@@ -46,11 +47,11 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 		levelWriter.close();
 
 		controleur = new Controller(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt").getPath());
-		LARGEUR_FENETRE = controleur.warehouse.getColumns() * TAILLE_IMAGE;
-        HAUTEUR_FENETRE = controleur.warehouse.getLines() * TAILLE_IMAGE;
+		largeurFenetre = controleur.warehouse.getColumns() * TAILLE_IMAGE;
+        hauteurFenetre = controleur.warehouse.getLines() * TAILLE_IMAGE;
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         this.setTitle("Sokoban v1.0 par Gabriel FARAGO");
-        this.setPreferredSize(new Dimension(LARGEUR_FENETRE + 150, Math.max(HAUTEUR_FENETRE + 150, 330)));
+        this.setPreferredSize(new Dimension(largeurFenetre + 150, Math.max(hauteurFenetre + 150, 330)));
         this.setResizable(false);
 
         Icon gardien_icon = new ImageIcon("img/Joueur.jpg");
@@ -73,48 +74,48 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
         JLabel invalid_level = new JLabel("", SwingConstants.CENTER);
 	 	invalid_level.setForeground(Color.RED);
-	 	invalid_level.setBounds(LARGEUR_FENETRE, 145, 150, 20);
+	 	invalid_level.setBounds(largeurFenetre, 145, 150, 20);
 
         JButton validate = new JButton("Terminer");
-	 	validate.setBounds(LARGEUR_FENETRE + 20, 170 , 110, 30);
+	 	validate.setBounds(largeurFenetre + 20, 170 , 110, 30);
 
         JButton back = new JButton("Retour");
-	 	back.setBounds(LARGEUR_FENETRE + 20, 210 , 110, 30);
+	 	back.setBounds(largeurFenetre + 20, 210 , 110, 30);
 
         JButton quit = new JButton("Quitter");
-	 	quit.setBounds(LARGEUR_FENETRE + 20, 250 , 110, 30);
+	 	quit.setBounds(largeurFenetre + 20, 250 , 110, 30);
 
         gardien.setOpaque(false);
 	 	gardien.setContentAreaFilled(false);
-	 	gardien.setBounds(LARGEUR_FENETRE + 30, 0, 32, 32);
+	 	gardien.setBounds(largeurFenetre + 30, 0, 32, 32);
 
         background.setOpaque(false);
 	 	background.setContentAreaFilled(false);
-	 	background.setBounds(LARGEUR_FENETRE + 30, 37, 32, 32);
+	 	background.setBounds(largeurFenetre + 30, 37, 32, 32);
 
         caisse.setOpaque(false);
 	 	caisse.setContentAreaFilled(false);
-	 	caisse.setBounds(LARGEUR_FENETRE + 30, 74, 32, 32);
+	 	caisse.setBounds(largeurFenetre + 30, 74, 32, 32);
 
         caisse_rangee.setOpaque(false);
 	 	caisse_rangee.setContentAreaFilled(false);
-	 	caisse_rangee.setBounds(LARGEUR_FENETRE + 30, 111, 32, 32);
+	 	caisse_rangee.setBounds(largeurFenetre + 30, 111, 32, 32);
 
         gardien_rangement.setOpaque(false);
 	 	gardien_rangement.setContentAreaFilled(false);
-	 	gardien_rangement.setBounds(LARGEUR_FENETRE + 75, 0, 32, 32);
+	 	gardien_rangement.setBounds(largeurFenetre + 75, 0, 32, 32);
 
         mur.setOpaque(false);
 	 	mur.setContentAreaFilled(false);
-	 	mur.setBounds(LARGEUR_FENETRE + 75, 37, 32, 32);
+	 	mur.setBounds(largeurFenetre + 75, 37, 32, 32);
 
         rangement.setOpaque(false);
 	 	rangement.setContentAreaFilled(false);
-	 	rangement.setBounds(LARGEUR_FENETRE + 75, 74, 32, 32);
+	 	rangement.setBounds(largeurFenetre + 75, 74, 32, 32);
 
         vide.setOpaque(false);
 	 	vide.setContentAreaFilled(false);
-	 	vide.setBounds(LARGEUR_FENETRE + 75, 111, 32, 32);
+	 	vide.setBounds(largeurFenetre + 75, 111, 32, 32);
 
 	 	quit.addActionListener(new ActionListener() {
 			@Override
@@ -307,7 +308,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if (e.getX() < LARGEUR_FENETRE && e.getY() < HAUTEUR_FENETRE) {
+		if (e.getX() < largeurFenetre && e.getY() < hauteurFenetre) {
 
 			//controleur.entrepot.getCase(c-1, l).setContent(content);
 			//repaint();
@@ -319,7 +320,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (e.getX() < LARGEUR_FENETRE + 31 && e.getY() < HAUTEUR_FENETRE + 31) {
+		if (e.getX() < largeurFenetre + 31 && e.getY() < hauteurFenetre + 31) {
 			int l = Math.max((e.getX() - 10) / 32, 0);
 			int c = Math.max((e.getY() - 32) / 32, 0);
 			controleur.warehouse.getCase(c, l).setContent(content);
