@@ -28,11 +28,11 @@ import logic.Controller;
 public class Editor extends JFrame implements MouseListener, MouseMotionListener {
     private static final Logger LOGGER = Logger.getLogger(Editor.class.getName());
 
-    private static final int TAILLE_IMAGE = 32;
+    private static final int TILE_SIZE = 32;
 
-    private int largeurFenetre = 0;
-    private int hauteurFenetre = 0;
-    private Controller controleur;
+    private int windowWidth = 0;
+    private int windowHeight = 0;
+    private final Controller controller;
     private TileType content = TileType.OUTSIDE;
 
 	public Editor (int nbLignes, int nbColonnes, String name) throws IOException  {
@@ -46,12 +46,12 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 		lowerWriter.close();
 		levelWriter.close();
 
-		controleur = new Controller(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt").getPath());
-		largeurFenetre = controleur.warehouse.getColumns() * TAILLE_IMAGE;
-        hauteurFenetre = controleur.warehouse.getLines() * TAILLE_IMAGE;
+		controller = new Controller(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt").getPath());
+		windowWidth = controller.warehouse.getColumns() * TILE_SIZE;
+        windowHeight = controller.warehouse.getLines() * TILE_SIZE;
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         this.setTitle("Sokoban v1.0 par Gabriel FARAGO");
-        this.setPreferredSize(new Dimension(largeurFenetre + 150, Math.max(hauteurFenetre + 150, 330)));
+        this.setPreferredSize(new Dimension(windowWidth + 150, Math.max(windowHeight + 150, 330)));
         this.setResizable(false);
 
         Icon gardien_icon = new ImageIcon("img/Joueur.jpg");
@@ -74,48 +74,48 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
         JLabel invalid_level = new JLabel("", SwingConstants.CENTER);
 	 	invalid_level.setForeground(Color.RED);
-	 	invalid_level.setBounds(largeurFenetre, 145, 150, 20);
+	 	invalid_level.setBounds(windowWidth, 145, 150, 20);
 
         JButton validate = new JButton("Terminer");
-	 	validate.setBounds(largeurFenetre + 20, 170 , 110, 30);
+	 	validate.setBounds(windowWidth + 20, 170 , 110, 30);
 
         JButton back = new JButton("Retour");
-	 	back.setBounds(largeurFenetre + 20, 210 , 110, 30);
+	 	back.setBounds(windowWidth + 20, 210 , 110, 30);
 
         JButton quit = new JButton("Quitter");
-	 	quit.setBounds(largeurFenetre + 20, 250 , 110, 30);
+	 	quit.setBounds(windowWidth + 20, 250 , 110, 30);
 
         gardien.setOpaque(false);
 	 	gardien.setContentAreaFilled(false);
-	 	gardien.setBounds(largeurFenetre + 30, 0, 32, 32);
+	 	gardien.setBounds(windowWidth + 30, 0, 32, 32);
 
         background.setOpaque(false);
 	 	background.setContentAreaFilled(false);
-	 	background.setBounds(largeurFenetre + 30, 37, 32, 32);
+	 	background.setBounds(windowWidth + 30, 37, 32, 32);
 
         caisse.setOpaque(false);
 	 	caisse.setContentAreaFilled(false);
-	 	caisse.setBounds(largeurFenetre + 30, 74, 32, 32);
+	 	caisse.setBounds(windowWidth + 30, 74, 32, 32);
 
         caisse_rangee.setOpaque(false);
 	 	caisse_rangee.setContentAreaFilled(false);
-	 	caisse_rangee.setBounds(largeurFenetre + 30, 111, 32, 32);
+	 	caisse_rangee.setBounds(windowWidth + 30, 111, 32, 32);
 
         gardien_rangement.setOpaque(false);
 	 	gardien_rangement.setContentAreaFilled(false);
-	 	gardien_rangement.setBounds(largeurFenetre + 75, 0, 32, 32);
+	 	gardien_rangement.setBounds(windowWidth + 75, 0, 32, 32);
 
         mur.setOpaque(false);
 	 	mur.setContentAreaFilled(false);
-	 	mur.setBounds(largeurFenetre + 75, 37, 32, 32);
+	 	mur.setBounds(windowWidth + 75, 37, 32, 32);
 
         rangement.setOpaque(false);
 	 	rangement.setContentAreaFilled(false);
-	 	rangement.setBounds(largeurFenetre + 75, 74, 32, 32);
+	 	rangement.setBounds(windowWidth + 75, 74, 32, 32);
 
         vide.setOpaque(false);
 	 	vide.setContentAreaFilled(false);
-	 	vide.setBounds(largeurFenetre + 75, 111, 32, 32);
+	 	vide.setBounds(windowWidth + 75, 111, 32, 32);
 
 	 	quit.addActionListener(new ActionListener() {
 			@Override
@@ -153,7 +153,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 				for (int i = 0; i < nbLignes * nbColonnes; i++) {
 					int c = i / nbColonnes;
 					int l = i % nbColonnes;
-					TileType end_content = controleur.warehouse.getCase(c, l).getContent();
+					TileType end_content = controller.warehouse.getCase(c, l).getContent();
 					if (end_content == TileType.WORKER_ON_FLOOR || end_content == TileType.WORKER_IN_STORAGE_AREA) {
 						gardien ++;
 					}
@@ -171,7 +171,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
 						int c = i / nbColonnes;
 						int l = i % nbColonnes;
-						TileType end_content = controleur.warehouse.getCase(c, l).getContent();
+						TileType end_content = controller.warehouse.getCase(c, l).getContent();
 						switch (end_content) {
 							case WORKER_ON_FLOOR:
 								ligne += "G";
@@ -296,7 +296,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	 	this.add(quit);
 	 	this.add(back);
 	 	this.add(invalid_level);
-        this.add( new SokobanPanel( controleur ));
+        this.add( new SokobanPanel(controller));
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
         this.pack();
@@ -308,7 +308,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if (e.getX() < largeurFenetre && e.getY() < hauteurFenetre) {
+		if (e.getX() < windowWidth && e.getY() < windowHeight) {
 
 			//controleur.entrepot.getCase(c-1, l).setContent(content);
 			//repaint();
@@ -320,10 +320,10 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (e.getX() < largeurFenetre + 31 && e.getY() < hauteurFenetre + 31) {
+		if (e.getX() < windowWidth + 31 && e.getY() < windowHeight + 31) {
 			int l = Math.max((e.getX() - 10) / 32, 0);
 			int c = Math.max((e.getY() - 32) / 32, 0);
-			controleur.warehouse.getCase(c, l).setContent(content);
+			controller.warehouse.getCase(c, l).setContent(content);
 			repaint();
 		}
 	}
