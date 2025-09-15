@@ -54,23 +54,14 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         this.setPreferredSize(new Dimension(windowWidth + 150, Math.max(windowHeight + 150, 330)));
         this.setResizable(false);
 
-        Icon gardien_icon = new ImageIcon("img/Joueur.jpg");
-        Icon background_icon = new ImageIcon("img/Background.jpg");
-        Icon caisse_icon = new ImageIcon("img/Caisse.jpg");
-        Icon caisse_rangee_icon = new ImageIcon("img/CaisseRangee.jpg");
-        Icon gardien_rangement_icon = new ImageIcon("img/JoueurRangement.jpg");
-        Icon mur_icon = new ImageIcon("img/Mur.jpg");
-        Icon rangement_icon = new ImageIcon("img/Rangement.jpg");
-        Icon vide_icon = new ImageIcon("img/Vide.jpg");
-
-        JButton gardien = new JButton(gardien_icon);
-	 	JButton background = new JButton(background_icon);
-	 	JButton caisse = new JButton(caisse_icon);
-	 	JButton caisse_rangee = new JButton(caisse_rangee_icon);
-	 	JButton gardien_rangement = new JButton(gardien_rangement_icon);
-	 	JButton mur = new JButton(mur_icon);
-	 	JButton rangement = new JButton(rangement_icon);
-	 	JButton vide = new JButton(vide_icon);
+        JButton gardien           = new JButton(new ImageIcon( "img/Joueur.jpg"));
+        JButton background        = new JButton(new ImageIcon( "img/Background.jpg"));
+        JButton caisse            = new JButton(new ImageIcon( "img/Caisse.jpg"));
+        JButton caisse_rangee     = new JButton(new ImageIcon( "img/CaisseRangee.jpg"));
+        JButton gardien_rangement = new JButton(new ImageIcon( "img/JoueurRangement.jpg"));
+        JButton mur               = new JButton(new ImageIcon( "img/Mur.jpg"));
+        JButton rangement         = new JButton(new ImageIcon( "img/Rangement.jpg"));
+        JButton vide              = new JButton(new ImageIcon( "img/Vide.jpg"));
 
         JLabel invalid_level = new JLabel("", SwingConstants.CENTER);
 	 	invalid_level.setForeground(Color.RED);
