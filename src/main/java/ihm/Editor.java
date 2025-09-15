@@ -1,6 +1,5 @@
 package ihm;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -32,8 +31,8 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	static Controller controleur;
 	static TileType content = TileType.OUTSIDE;
 
-	public Editor (int nbLignes, int nbColonnes, String name) throws IOException  {  
-		
+	public Editor (int nbLignes, int nbColonnes, String name) throws IOException  {
+
 		FileWriter levelWriter = new FileWriter(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt"));
 		BufferedWriter lowerWriter = new BufferedWriter(levelWriter);
 		for (int i = 0; i < nbLignes; i++ ) {
@@ -42,7 +41,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 		}
 		lowerWriter.close();
 		levelWriter.close();
-		
+
 		controleur = new Controller(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt").getPath());
 		LARGEUR_FENETRE = controleur.warehouse.getColumns() * TAILLE_IMAGE;
         HAUTEUR_FENETRE = controleur.warehouse.getLines() * TAILLE_IMAGE;
@@ -50,7 +49,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         this.setTitle("Sokoban v1.0 par Gabriel FARAGO");
         this.setPreferredSize(new Dimension(LARGEUR_FENETRE + 150, Math.max(HAUTEUR_FENETRE + 150, 330)));
         this.setResizable(false);
-        
+
         Icon gardien_icon = new ImageIcon("img/Joueur.jpg");
         Icon background_icon = new ImageIcon("img/Background.jpg");
         Icon caisse_icon = new ImageIcon("img/Caisse.jpg");
@@ -59,7 +58,8 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         Icon mur_icon = new ImageIcon("img/Mur.jpg");
         Icon rangement_icon = new ImageIcon("img/Rangement.jpg");
         Icon vide_icon = new ImageIcon("img/Vide.jpg");
-	 	JButton gardien = new JButton(gardien_icon);
+
+        JButton gardien = new JButton(gardien_icon);
 	 	JButton background = new JButton(background_icon);
 	 	JButton caisse = new JButton(caisse_icon);
 	 	JButton caisse_rangee = new JButton(caisse_rangee_icon);
@@ -67,41 +67,52 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	 	JButton mur = new JButton(mur_icon);
 	 	JButton rangement = new JButton(rangement_icon);
 	 	JButton vide = new JButton(vide_icon);
-	 	JLabel invalid_level = new JLabel("", SwingConstants.CENTER);
+
+        JLabel invalid_level = new JLabel("", SwingConstants.CENTER);
 	 	invalid_level.setForeground(Color.RED);
 	 	invalid_level.setBounds(LARGEUR_FENETRE, 145, 150, 20);
-	 	JButton validate = new JButton("Terminer");
+
+        JButton validate = new JButton("Terminer");
 	 	validate.setBounds(LARGEUR_FENETRE + 20, 170 , 110, 30);
-	 	JButton back = new JButton("Retour");
+
+        JButton back = new JButton("Retour");
 	 	back.setBounds(LARGEUR_FENETRE + 20, 210 , 110, 30);
-	 	JButton quit = new JButton("Quitter");
+
+        JButton quit = new JButton("Quitter");
 	 	quit.setBounds(LARGEUR_FENETRE + 20, 250 , 110, 30);
-	 	gardien.setOpaque(false);
+
+        gardien.setOpaque(false);
 	 	gardien.setContentAreaFilled(false);
 	 	gardien.setBounds(LARGEUR_FENETRE + 30, 0, 32, 32);
-	 	background.setOpaque(false);
+
+        background.setOpaque(false);
 	 	background.setContentAreaFilled(false);
 	 	background.setBounds(LARGEUR_FENETRE + 30, 37, 32, 32);
-	 	caisse.setOpaque(false);
+
+        caisse.setOpaque(false);
 	 	caisse.setContentAreaFilled(false);
 	 	caisse.setBounds(LARGEUR_FENETRE + 30, 74, 32, 32);
-	 	caisse_rangee.setOpaque(false);
+
+        caisse_rangee.setOpaque(false);
 	 	caisse_rangee.setContentAreaFilled(false);
 	 	caisse_rangee.setBounds(LARGEUR_FENETRE + 30, 111, 32, 32);
-	 	gardien_rangement.setOpaque(false);
+
+        gardien_rangement.setOpaque(false);
 	 	gardien_rangement.setContentAreaFilled(false);
 	 	gardien_rangement.setBounds(LARGEUR_FENETRE + 75, 0, 32, 32);
-	 	mur.setOpaque(false);
+
+        mur.setOpaque(false);
 	 	mur.setContentAreaFilled(false);
 	 	mur.setBounds(LARGEUR_FENETRE + 75, 37, 32, 32);
-	 	rangement.setOpaque(false);
+
+        rangement.setOpaque(false);
 	 	rangement.setContentAreaFilled(false);
 	 	rangement.setBounds(LARGEUR_FENETRE + 75, 74, 32, 32);
-	 	vide.setOpaque(false);
+
+        vide.setOpaque(false);
 	 	vide.setContentAreaFilled(false);
 	 	vide.setBounds(LARGEUR_FENETRE + 75, 111, 32, 32);
-	 	
-	 	
+
 	 	quit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -111,7 +122,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				} 				
+				}
 				System.exit( 0 );
 			}
 	    });
@@ -133,7 +144,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	 	validate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				int gardien = 0;
 				int nb_caisse = 0;
 				int nb_target = 0;
@@ -150,12 +161,12 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 					if (end_content == TileType.WORKER_IN_STORAGE_AREA || end_content == TileType.STORAGE_AREA || end_content == TileType.STORED_BOX) {
 						nb_target ++;
 					}
-					
+
 				}
 				if (gardien == 1 && nb_target >= nb_caisse && nb_caisse > 0) {
 					String ligne = "";
 					for (int i = 0; i < nbLignes * nbColonnes; i++) {
-						
+
 						int c = i / nbColonnes;
 						int l = i % nbColonnes;
 						TileType end_content = controleur.warehouse.getCase(c, l).getContent();
@@ -185,7 +196,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 								ligne += "M";
 								break;
 						}
-						
+
 						if (ligne.length() == nbColonnes && i+1 == nbColonnes) {
 							try {
 								FileWriter levelWriter = new FileWriter(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt"));
@@ -221,7 +232,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 				}
 			}
 	    });
-	 	
+
 	 	gardien.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -270,8 +281,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 				content = TileType.FLOOR;
 			}
 	    });
-	 	
-        
+
 	 	this.add(gardien);
 	 	this.add(background);
 	 	this.add(caisse);
@@ -297,14 +307,12 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		if (e.getX() < LARGEUR_FENETRE && e.getY() < HAUTEUR_FENETRE) {
-			
-			
+
 			//controleur.entrepot.getCase(c-1, l).setContent(content);
 			//repaint();
 		}
 	}
 
-	
 	@Override
 	public void mouseClicked(MouseEvent e) {}
 
@@ -324,5 +332,3 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	@Override
 	public void mouseExited(MouseEvent e) {}
 }
-
-
