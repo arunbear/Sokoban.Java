@@ -35,12 +35,12 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
     private final Controller controller;
     private TileType content = TileType.OUTSIDE;
 
-	public Editor (int nbLignes, int nbColonnes, String name) throws IOException  {
+	public Editor (int rowCount, int columnCount, String name) throws IOException  {
 
 		FileWriter levelWriter = new FileWriter(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt"));
 		BufferedWriter lowerWriter = new BufferedWriter(levelWriter);
-		for (int i = 0; i < nbLignes; i++ ) {
-			lowerWriter.write("_".repeat(nbColonnes));
+		for (int i = 0; i < rowCount; i++ ) {
+			lowerWriter.write("_".repeat(columnCount));
 			lowerWriter.newLine();
 		}
 		lowerWriter.close();
@@ -150,9 +150,9 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 				int gardien = 0;
 				int nb_caisse = 0;
 				int nb_target = 0;
-				for (int i = 0; i < nbLignes * nbColonnes; i++) {
-					int c = i / nbColonnes;
-					int l = i % nbColonnes;
+				for (int i = 0; i < rowCount * columnCount; i++) {
+					int c = i / columnCount;
+					int l = i % columnCount;
 					TileType end_content = controller.warehouse.getCase(c, l).getContent();
 					if (end_content == TileType.WORKER_ON_FLOOR || end_content == TileType.WORKER_IN_STORAGE_AREA) {
 						gardien ++;
@@ -167,10 +167,10 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 				}
 				if (gardien == 1 && nb_target >= nb_caisse && nb_caisse > 0) {
 					String ligne = "";
-					for (int i = 0; i < nbLignes * nbColonnes; i++) {
+					for (int i = 0; i < rowCount * columnCount; i++) {
 
-						int c = i / nbColonnes;
-						int l = i % nbColonnes;
+						int c = i / columnCount;
+						int l = i % columnCount;
 						TileType end_content = controller.warehouse.getCase(c, l).getContent();
 						switch (end_content) {
 							case WORKER_ON_FLOOR:
@@ -199,7 +199,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 								break;
 						}
 
-						if (ligne.length() == nbColonnes && i+1 == nbColonnes) {
+						if (ligne.length() == columnCount && i+1 == columnCount) {
 							try {
 								FileWriter levelWriter = new FileWriter(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt"));
 								BufferedWriter lowerWriter = new BufferedWriter(levelWriter);
@@ -211,7 +211,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 								LOGGER.log(Level.SEVERE, "Error while writing level file: " + name, e1);
 							}
 						}
-						else if (ligne.length() == nbColonnes) {
+						else if (ligne.length() == columnCount) {
 							try {
 								FileWriter levelWriter = new FileWriter(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt"), true);
 								BufferedWriter lowerWriter = new BufferedWriter(levelWriter);
