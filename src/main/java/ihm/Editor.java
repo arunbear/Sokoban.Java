@@ -1,5 +1,7 @@
 package ihm;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -24,6 +26,7 @@ import logic.Controller;
 
 @SuppressWarnings("serial")
 public class Editor extends JFrame implements MouseListener, MouseMotionListener {
+    private static final Logger LOGGER = Logger.getLogger(Editor.class.getName());
 
 	static final int TAILLE_IMAGE = 32;
 	static int LARGEUR_FENETRE = 0;
@@ -120,8 +123,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 					File level_drop = new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt");
 					level_drop.delete();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+                    LOGGER.log(Level.SEVERE, "Error while deleting level file: " + name, e1);
 				}
 				System.exit( 0 );
 			}
@@ -134,8 +136,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 					File level_drop = new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt");
 					level_drop.delete();
 				} catch (IOException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
+                    LOGGER.log(Level.SEVERE, "Error while deleting level file when going back: " + name, e2);
 				}
                 new HomeWindow();
 
@@ -206,7 +207,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 								levelWriter.close();
 								ligne = "";
 							} catch (IOException e1) {
-								e1.printStackTrace();
+								LOGGER.log(Level.SEVERE, "Error while writing level file: " + name, e1);
 							}
 						}
 						else if (ligne.length() == nbColonnes) {
@@ -219,7 +220,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 								levelWriter.close();
 								ligne = "";
 							} catch (IOException e1) {
-								e1.printStackTrace();
+								LOGGER.log(Level.SEVERE, "Error while writing level file: " + name, e1);
 							}
 						}
 					}
