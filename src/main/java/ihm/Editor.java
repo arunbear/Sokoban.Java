@@ -23,7 +23,6 @@ import javax.swing.SwingConstants;
 import logic.TileType;
 import logic.Controller;
 
-@SuppressWarnings("serial")
 public class Editor extends JFrame implements MouseListener, MouseMotionListener {
     private static final Logger LOGGER = Logger.getLogger(Editor.class.getName());
 
@@ -52,6 +51,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         this.setTitle("Sokoban v1.0 par Gabriel FARAGO");
         this.setPreferredSize(new Dimension(windowWidth + 150, Math.max(windowHeight + 150, 330)));
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
 
         JButton playerButton         = new JButton(new ImageIcon( "img/Joueur.jpg"));
         JButton backgroundButton     = new JButton(new ImageIcon( "img/Background.jpg"));
@@ -66,13 +66,13 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	 	invalid_level.setForeground(Color.RED);
 	 	invalid_level.setBounds(windowWidth, 145, 150, 20);
 
-        JButton validate = new JButton("Terminer");
-	 	validate.setBounds(windowWidth + 20, 170 , 110, 30);
+        JButton save = new JButton("Save");
+	 	save.setBounds(windowWidth + 20, 170 , 110, 30);
 
-        JButton back = new JButton("Retour");
+        JButton back = new JButton("Back");
 	 	back.setBounds(windowWidth + 20, 210 , 110, 30);
 
-        JButton quit = new JButton("Quitter");
+        JButton quit = new JButton("Quit");
 	 	quit.setBounds(windowWidth + 20, 250 , 110, 30);
 
         playerButton.setOpaque(false);
@@ -133,7 +133,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
             }
 	    });
-	 	validate.addActionListener(new ActionListener() {
+	 	save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -220,7 +220,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
                 }
 				else {
-					invalid_level.setText("Niveau invalide !");
+					invalid_level.setText("Invalid level!");
 				}
 			}
 	    });
@@ -282,7 +282,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         this.add(wallButton);
         this.add(targetButton);
         this.add(emptyButton);
-	 	this.add(validate);
+	 	this.add(save);
 	 	this.add(quit);
 	 	this.add(back);
 	 	this.add(invalid_level);
