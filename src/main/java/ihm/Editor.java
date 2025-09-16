@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -54,14 +53,14 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         this.setPreferredSize(new Dimension(windowWidth + 150, Math.max(windowHeight + 150, 330)));
         this.setResizable(false);
 
-        JButton gardien           = new JButton(new ImageIcon( "img/Joueur.jpg"));
-        JButton background        = new JButton(new ImageIcon( "img/Background.jpg"));
-        JButton caisse            = new JButton(new ImageIcon( "img/Caisse.jpg"));
-        JButton caisse_rangee     = new JButton(new ImageIcon( "img/CaisseRangee.jpg"));
-        JButton gardien_rangement = new JButton(new ImageIcon( "img/JoueurRangement.jpg"));
-        JButton mur               = new JButton(new ImageIcon( "img/Mur.jpg"));
-        JButton rangement         = new JButton(new ImageIcon( "img/Rangement.jpg"));
-        JButton vide              = new JButton(new ImageIcon( "img/Vide.jpg"));
+        JButton playerButton         = new JButton(new ImageIcon( "img/Joueur.jpg"));
+        JButton backgroundButton     = new JButton(new ImageIcon( "img/Background.jpg"));
+        JButton boxButton            = new JButton(new ImageIcon( "img/Caisse.jpg"));
+        JButton boxOnTargetButton    = new JButton(new ImageIcon( "img/CaisseRangee.jpg"));
+        JButton playerOnTargetButton = new JButton(new ImageIcon( "img/JoueurRangement.jpg"));
+        JButton wallButton           = new JButton(new ImageIcon( "img/Mur.jpg"));
+        JButton targetButton         = new JButton(new ImageIcon( "img/Rangement.jpg"));
+        JButton emptyButton          = new JButton(new ImageIcon( "img/Vide.jpg"));
 
         JLabel invalid_level = new JLabel("", SwingConstants.CENTER);
 	 	invalid_level.setForeground(Color.RED);
@@ -76,37 +75,37 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         JButton quit = new JButton("Quitter");
 	 	quit.setBounds(windowWidth + 20, 250 , 110, 30);
 
-        gardien.setOpaque(false);
-	 	gardien.setContentAreaFilled(false);
-	 	gardien.setBounds(windowWidth + 30, 0, 32, 32);
+        playerButton.setOpaque(false);
+        playerButton.setContentAreaFilled(false);
+        playerButton.setBounds(windowWidth + 30, 0, 32, 32);
 
-        background.setOpaque(false);
-	 	background.setContentAreaFilled(false);
-	 	background.setBounds(windowWidth + 30, 37, 32, 32);
+        backgroundButton.setOpaque(false);
+        backgroundButton.setContentAreaFilled(false);
+        backgroundButton.setBounds(windowWidth + 30, 37, 32, 32);
 
-        caisse.setOpaque(false);
-	 	caisse.setContentAreaFilled(false);
-	 	caisse.setBounds(windowWidth + 30, 74, 32, 32);
+        boxButton.setOpaque(false);
+        boxButton.setContentAreaFilled(false);
+        boxButton.setBounds(windowWidth + 30, 74, 32, 32);
 
-        caisse_rangee.setOpaque(false);
-	 	caisse_rangee.setContentAreaFilled(false);
-	 	caisse_rangee.setBounds(windowWidth + 30, 111, 32, 32);
+        boxOnTargetButton.setOpaque(false);
+        boxOnTargetButton.setContentAreaFilled(false);
+        boxOnTargetButton.setBounds(windowWidth + 30, 111, 32, 32);
 
-        gardien_rangement.setOpaque(false);
-	 	gardien_rangement.setContentAreaFilled(false);
-	 	gardien_rangement.setBounds(windowWidth + 75, 0, 32, 32);
+        playerOnTargetButton.setOpaque(false);
+        playerOnTargetButton.setContentAreaFilled(false);
+        playerOnTargetButton.setBounds(windowWidth + 75, 0, 32, 32);
 
-        mur.setOpaque(false);
-	 	mur.setContentAreaFilled(false);
-	 	mur.setBounds(windowWidth + 75, 37, 32, 32);
+        wallButton.setOpaque(false);
+        wallButton.setContentAreaFilled(false);
+        wallButton.setBounds(windowWidth + 75, 37, 32, 32);
 
-        rangement.setOpaque(false);
-	 	rangement.setContentAreaFilled(false);
-	 	rangement.setBounds(windowWidth + 75, 74, 32, 32);
+        targetButton.setOpaque(false);
+        targetButton.setContentAreaFilled(false);
+        targetButton.setBounds(windowWidth + 75, 74, 32, 32);
 
-        vide.setOpaque(false);
-	 	vide.setContentAreaFilled(false);
-	 	vide.setBounds(windowWidth + 75, 111, 32, 32);
+        emptyButton.setOpaque(false);
+        emptyButton.setContentAreaFilled(false);
+        emptyButton.setBounds(windowWidth + 75, 111, 32, 32);
 
 	 	quit.addActionListener(new ActionListener() {
 			@Override
@@ -226,63 +225,63 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 			}
 	    });
 
-	 	gardien.addActionListener(new ActionListener() {
+        playerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				content = TileType.WORKER_ON_FLOOR;
 			}
 	    });
-	 	background.addActionListener(new ActionListener() {
+        backgroundButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				content = TileType.OUTSIDE;
 			}
 	    });
-	 	caisse.addActionListener(new ActionListener() {
+        boxButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				content = TileType.UNSTORED_BOX;
 			}
 	    });
-	 	caisse_rangee.addActionListener(new ActionListener() {
+        boxOnTargetButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				content = TileType.STORED_BOX;
 			}
 	    });
-	 	gardien_rangement.addActionListener(new ActionListener() {
+        playerOnTargetButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				content = TileType.WORKER_IN_STORAGE_AREA;
 			}
 	    });
-	 	mur.addActionListener(new ActionListener() {
+        wallButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				content = TileType.WALL;
 			}
 	    });
-	 	rangement.addActionListener(new ActionListener() {
+        targetButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				content = TileType.STORAGE_AREA;
 			}
 	    });
-	 	vide.addActionListener(new ActionListener() {
+        emptyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				content = TileType.FLOOR;
 			}
 	    });
 
-	 	this.add(gardien);
-	 	this.add(background);
-	 	this.add(caisse);
-	 	this.add(caisse_rangee);
-	 	this.add(gardien_rangement);
-	 	this.add(mur);
-	 	this.add(rangement);
-	 	this.add(vide);
+        this.add(playerButton);
+        this.add(backgroundButton);
+        this.add(boxButton);
+        this.add(boxOnTargetButton);
+        this.add(playerOnTargetButton);
+        this.add(wallButton);
+        this.add(targetButton);
+        this.add(emptyButton);
 	 	this.add(validate);
 	 	this.add(quit);
 	 	this.add(back);
