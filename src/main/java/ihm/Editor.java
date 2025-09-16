@@ -137,25 +137,25 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				int gardien = 0;
-				int nb_caisse = 0;
-				int nb_target = 0;
+				int workerCount = 0;
+				int boxCount = 0;
+				int targetCount = 0;
 				for (int i = 0; i < rowCount * columnCount; i++) {
 					int c = i / columnCount;
 					int l = i % columnCount;
 					TileType end_content = controller.warehouse.getCase(c, l).getContent();
 					if (end_content == TileType.WORKER_ON_FLOOR || end_content == TileType.WORKER_IN_STORAGE_AREA) {
-						gardien ++;
+						workerCount++;
 					}
 					if (end_content == TileType.UNSTORED_BOX || end_content == TileType.STORED_BOX) {
-						nb_caisse ++;
+						boxCount++;
 					}
 					if (end_content == TileType.WORKER_IN_STORAGE_AREA || end_content == TileType.STORAGE_AREA || end_content == TileType.STORED_BOX) {
-						nb_target ++;
+						targetCount++;
 					}
 
 				}
-				if (gardien == 1 && nb_target >= nb_caisse && nb_caisse > 0) {
+				if (workerCount == 1 && targetCount >= boxCount && boxCount > 0) {
 					String ligne = "";
 					for (int i = 0; i < rowCount * columnCount; i++) {
 
