@@ -156,7 +156,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
 				}
 				if (workerCount == 1 && targetCount >= boxCount && boxCount > 0) {
-					String ligne = "";
+					String line = "";
 					for (int i = 0; i < rowCount * columnCount; i++) {
 
 						int c = i / columnCount;
@@ -164,52 +164,52 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 						TileType end_content = controller.warehouse.getCase(c, l).getContent();
 						switch (end_content) {
 							case WORKER_ON_FLOOR:
-								ligne += "G";
+								line += "G";
 								break;
 							case WORKER_IN_STORAGE_AREA:
-								ligne += "B";
+								line += "B";
 								break;
 							case UNSTORED_BOX:
-								ligne += "C";
+								line += "C";
 								break;
 							case STORED_BOX:
-								ligne += "V";
+								line += "V";
 								break;
 							case FLOOR:
-								ligne += "#";
+								line += "#";
 								break;
 							case STORAGE_AREA:
-								ligne += "T";
+								line += "T";
 								break;
 							case OUTSIDE:
-								ligne += "_";
+								line += "_";
 								break;
 							case WALL:
-								ligne += "M";
+								line += "M";
 								break;
 						}
 
-						if (ligne.length() == columnCount && i+1 == columnCount) {
+						if (line.length() == columnCount && i+1 == columnCount) {
 							try {
 								FileWriter levelWriter = new FileWriter(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt"));
 								BufferedWriter lowerWriter = new BufferedWriter(levelWriter);
-								lowerWriter.write(ligne);
+								lowerWriter.write(line);
 								lowerWriter.close();
 								levelWriter.close();
-								ligne = "";
+								line = "";
 							} catch (IOException e1) {
 								LOGGER.log(Level.SEVERE, "Error while writing level file: " + name, e1);
 							}
 						}
-						else if (ligne.length() == columnCount) {
+						else if (line.length() == columnCount) {
 							try {
 								FileWriter levelWriter = new FileWriter(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt"), true);
 								BufferedWriter lowerWriter = new BufferedWriter(levelWriter);
 								lowerWriter.newLine();
-								lowerWriter.write(ligne);
+								lowerWriter.write(line);
 								lowerWriter.close();
 								levelWriter.close();
-								ligne = "";
+								line = "";
 							} catch (IOException e1) {
 								LOGGER.log(Level.SEVERE, "Error while writing level file: " + name, e1);
 							}
