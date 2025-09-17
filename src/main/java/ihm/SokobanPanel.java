@@ -6,9 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -19,29 +16,33 @@ import static ihm.SokobanWindow.IMAGE_SIZE;
 
 
 public class SokobanPanel extends JPanel {
-    private static final Logger LOGGER = Logger.getLogger(SokobanPanel.class.getName());
+    private static final EnumMap<TileType, Image> images;
 
-    private static EnumMap<TileType, Image > images;
+    static {
+        try {
+            images = new EnumMap<>(Map.of(
+                TileType.FLOOR,                  loadImage("img/Vide.jpg"),
+                TileType.WALL,                   loadImage("img/Mur.jpg"),
+                TileType.UNSTORED_BOX,           loadImage("img/Caisse.jpg"),
+                TileType.STORED_BOX,             loadImage("img/CaisseRangee.jpg"),
+                TileType.STORAGE_AREA,           loadImage("img/Rangement.jpg"),
+                TileType.WORKER_ON_FLOOR,        loadImage("img/Joueur.jpg"),
+                TileType.OUTSIDE,                loadImage("img/Background.jpg"),
+                TileType.WORKER_IN_STORAGE_AREA, loadImage("img/JoueurRangement.jpg")
+            ));
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load game resources: " + e.getMessage(), e);
+        }
+    }
+
+    private static Image loadImage(String path) throws IOException {
+        return ImageIO.read(new File(path));
+    }
 
     private final Controller controller;
 
     public SokobanPanel(Controller controller) {
         this.controller = controller;
-        try {
-            images = new EnumMap<>( Map.of(
-                        TileType.FLOOR,                  ImageIO.read(new File( "img/Vide.jpg")),
-                        TileType.WALL,                   ImageIO.read(new File( "img/Mur.jpg")),
-                        TileType.UNSTORED_BOX,           ImageIO.read(new File( "img/Caisse.jpg")),
-                        TileType.STORED_BOX,             ImageIO.read(new File( "img/CaisseRangee.jpg")),
-                        TileType.STORAGE_AREA,           ImageIO.read(new File( "img/Rangement.jpg")),
-                        TileType.WORKER_ON_FLOOR,        ImageIO.read(new File( "img/Joueur.jpg")),
-                        TileType.OUTSIDE,                ImageIO.read(new File( "img/Background.jpg")),
-                        TileType.WORKER_IN_STORAGE_AREA, ImageIO.read(new File( "img/JoueurRangement.jpg"))
-            ));
-        }
-        catch( IOException e ) {
-            LOGGER.log(Level.SEVERE, "Error loading game images", e);
-        }
     }
 
     @Override
