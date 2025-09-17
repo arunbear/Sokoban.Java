@@ -270,54 +270,14 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 			}
 	    });
 
-        playerButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				content = TileType.WORKER_ON_FLOOR;
-			}
-	    });
-        backgroundButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				content = TileType.OUTSIDE;
-			}
-	    });
-        boxButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				content = TileType.UNSTORED_BOX;
-			}
-	    });
-        boxOnTargetButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				content = TileType.STORED_BOX;
-			}
-	    });
-        playerOnTargetButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				content = TileType.WORKER_IN_STORAGE_AREA;
-			}
-	    });
-        wallButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				content = TileType.WALL;
-			}
-	    });
-        targetButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				content = TileType.STORAGE_AREA;
-			}
-	    });
-        emptyButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				content = TileType.FLOOR;
-			}
-	    });
+        playerButton.addActionListener(_         -> content = TileType.WORKER_ON_FLOOR);
+        backgroundButton.addActionListener(_     -> content = TileType.OUTSIDE);
+        boxButton.addActionListener(_            -> content = TileType.UNSTORED_BOX);
+        boxOnTargetButton.addActionListener(_    -> content = TileType.STORED_BOX);
+        playerOnTargetButton.addActionListener(_ -> content = TileType.WORKER_IN_STORAGE_AREA);
+        wallButton.addActionListener(_           -> content = TileType.WALL);
+        targetButton.addActionListener(_         -> content = TileType.STORAGE_AREA);
+        emptyButton.addActionListener(_          -> content = TileType.FLOOR);
 
         this.add(playerButton);
         this.add(backgroundButton);
