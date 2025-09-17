@@ -77,29 +77,14 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         this.setLocationRelativeTo(null);
 
         // Tool buttons
-        JButton playerButton = new JButton(new ImageIcon("img/Joueur.jpg"));
-        playerButton.setName(Component.PLAYER_BUTTON.name());
-        
-        JButton backgroundButton = new JButton(new ImageIcon("img/Background.jpg"));
-        backgroundButton.setName(Component.BACKGROUND_BUTTON.name());
-        
-        JButton boxButton = new JButton(new ImageIcon("img/Caisse.jpg"));
-        boxButton.setName(Component.BOX_BUTTON.name());
-        
-        JButton boxOnTargetButton = new JButton(new ImageIcon("img/CaisseRangee.jpg"));
-        boxOnTargetButton.setName(Component.BOX_ON_TARGET_BUTTON.name());
-        
-        JButton playerOnTargetButton = new JButton(new ImageIcon("img/JoueurRangement.jpg"));
-        playerOnTargetButton.setName(Component.PLAYER_ON_TARGET_BUTTON.name());
-        
-        JButton wallButton = new JButton(new ImageIcon("img/Mur.jpg"));
-        wallButton.setName(Component.WALL_BUTTON.name());
-        
-        JButton targetButton = new JButton(new ImageIcon("img/Rangement.jpg"));
-        targetButton.setName(Component.TARGET_BUTTON.name());
-        
-        JButton emptyButton = new JButton(new ImageIcon("img/Vide.jpg"));
-        emptyButton.setName(Component.EMPTY_BUTTON.name());
+        createPlayerButton();
+        createBackgroundButton();
+        createBoxButton();
+        createBoxOnTargetButton();
+        createPlayerOnTargetButton();
+        createWallButton();
+        createTargetButton();
+        createEmptyButton();
 
         // Status label
         JLabel invalid_level = new JLabel("", SwingConstants.CENTER);
@@ -120,37 +105,9 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         quit.setName(Component.QUIT_BUTTON.name());
         quit.setBounds(windowWidth + 20, 250, 110, 30);
 
-        playerButton.setOpaque(false);
-        playerButton.setContentAreaFilled(false);
-        playerButton.setBounds(windowWidth + 30, 0, 32, 32);
 
-        backgroundButton.setOpaque(false);
-        backgroundButton.setContentAreaFilled(false);
-        backgroundButton.setBounds(windowWidth + 30, 37, 32, 32);
 
-        boxButton.setOpaque(false);
-        boxButton.setContentAreaFilled(false);
-        boxButton.setBounds(windowWidth + 30, 74, 32, 32);
 
-        boxOnTargetButton.setOpaque(false);
-        boxOnTargetButton.setContentAreaFilled(false);
-        boxOnTargetButton.setBounds(windowWidth + 30, 111, 32, 32);
-
-        playerOnTargetButton.setOpaque(false);
-        playerOnTargetButton.setContentAreaFilled(false);
-        playerOnTargetButton.setBounds(windowWidth + 75, 0, 32, 32);
-
-        wallButton.setOpaque(false);
-        wallButton.setContentAreaFilled(false);
-        wallButton.setBounds(windowWidth + 75, 37, 32, 32);
-
-        targetButton.setOpaque(false);
-        targetButton.setContentAreaFilled(false);
-        targetButton.setBounds(windowWidth + 75, 74, 32, 32);
-
-        emptyButton.setOpaque(false);
-        emptyButton.setContentAreaFilled(false);
-        emptyButton.setBounds(windowWidth + 75, 111, 32, 32);
 
 	 	quit.addActionListener(new ActionListener() {
 			@Override
@@ -270,23 +227,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 			}
 	    });
 
-        playerButton.addActionListener(_         -> content = TileType.WORKER_ON_FLOOR);
-        backgroundButton.addActionListener(_     -> content = TileType.OUTSIDE);
-        boxButton.addActionListener(_            -> content = TileType.UNSTORED_BOX);
-        boxOnTargetButton.addActionListener(_    -> content = TileType.STORED_BOX);
-        playerOnTargetButton.addActionListener(_ -> content = TileType.WORKER_IN_STORAGE_AREA);
-        wallButton.addActionListener(_           -> content = TileType.WALL);
-        targetButton.addActionListener(_         -> content = TileType.STORAGE_AREA);
-        emptyButton.addActionListener(_          -> content = TileType.FLOOR);
 
-        this.add(playerButton);
-        this.add(backgroundButton);
-        this.add(boxButton);
-        this.add(boxOnTargetButton);
-        this.add(playerOnTargetButton);
-        this.add(wallButton);
-        this.add(targetButton);
-        this.add(emptyButton);
 	 	this.add(save);
 	 	this.add(quit);
 	 	this.add(back);
@@ -298,9 +239,90 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
+        this.addMouseMotionListener(this);
         this.pack();
         this.setVisible( true );
 	}
+
+    private void createPlayerButton() {
+        JButton button = new JButton(new ImageIcon("img/Joueur.jpg"));
+        button.setName(Component.PLAYER_BUTTON.name());
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBounds(windowWidth + 30, 0, 32, 32);
+        button.addActionListener(_ -> content = TileType.WORKER_ON_FLOOR);
+        this.add(button);
+    }
+
+    private void createBackgroundButton() {
+        JButton button = new JButton(new ImageIcon("img/Background.jpg"));
+        button.setName(Component.BACKGROUND_BUTTON.name());
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBounds(windowWidth + 30, 37, 32, 32);
+        button.addActionListener(_ -> content = TileType.OUTSIDE);
+        this.add(button);
+    }
+
+    private void createBoxButton() {
+        JButton button = new JButton(new ImageIcon("img/Caisse.jpg"));
+        button.setName(Component.BOX_BUTTON.name());
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBounds(windowWidth + 30, 74, 32, 32);
+        button.addActionListener(_ -> content = TileType.UNSTORED_BOX);
+        this.add(button);
+    }
+
+    private void createBoxOnTargetButton() {
+        JButton button = new JButton(new ImageIcon("img/CaisseRangee.jpg"));
+        button.setName(Component.BOX_ON_TARGET_BUTTON.name());
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBounds(windowWidth + 30, 111, 32, 32);
+        button.addActionListener(_ -> content = TileType.STORED_BOX);
+        this.add(button);
+    }
+
+    private void createPlayerOnTargetButton() {
+        JButton button = new JButton(new ImageIcon("img/JoueurRangement.jpg"));
+        button.setName(Component.PLAYER_ON_TARGET_BUTTON.name());
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBounds(windowWidth + 75, 0, 32, 32);
+        button.addActionListener(_ -> content = TileType.WORKER_IN_STORAGE_AREA);
+        this.add(button);
+    }
+
+    private void createWallButton() {
+        JButton button = new JButton(new ImageIcon("img/Mur.jpg"));
+        button.setName(Component.WALL_BUTTON.name());
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBounds(windowWidth + 75, 37, 32, 32);
+        button.addActionListener(_ -> content = TileType.WALL);
+        this.add(button);
+    }
+
+    private void createTargetButton() {
+        JButton button = new JButton(new ImageIcon("img/Rangement.jpg"));
+        button.setName(Component.TARGET_BUTTON.name());
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBounds(windowWidth + 75, 74, 32, 32);
+        button.addActionListener(_ -> content = TileType.STORAGE_AREA);
+        this.add(button);
+    }
+
+    private void createEmptyButton() {
+        JButton button = new JButton(new ImageIcon("img/Vide.jpg"));
+        button.setName(Component.EMPTY_BUTTON.name());
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBounds(windowWidth + 75, 111, 32, 32);
+        button.addActionListener(_ -> content = TileType.FLOOR);
+        this.add(button);
+    }
 
 	@Override
 	public void mouseDragged(MouseEvent e) {}
