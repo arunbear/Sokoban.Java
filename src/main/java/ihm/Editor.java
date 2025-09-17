@@ -14,12 +14,34 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import com.google.common.annotations.VisibleForTesting;
 import javax.swing.*;
 
 import logic.TileType;
 import logic.Controller;
 
 public class Editor extends JFrame implements MouseListener, MouseMotionListener {
+    @VisibleForTesting
+    enum Component {
+        // Tool buttons
+        PLAYER_BUTTON,
+        BACKGROUND_BUTTON,
+        BOX_BUTTON,
+        BOX_ON_TARGET_BUTTON,
+        PLAYER_ON_TARGET_BUTTON,
+        WALL_BUTTON,
+        TARGET_BUTTON,
+        EMPTY_BUTTON,
+        
+        // Action buttons
+        SAVE_BUTTON,
+        BACK_BUTTON,
+        QUIT_BUTTON,
+        
+        // Other components
+        ERROR_LABEL,
+        SOKOBAN_PANEL
+    }
     private static final Logger LOGGER = Logger.getLogger(Editor.class.getName());
 
     private static final int TILE_SIZE = 32;
@@ -28,6 +50,11 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
     private int windowHeight = 0;
     private final Controller controller;
     private TileType content = TileType.OUTSIDE;
+    
+    @VisibleForTesting
+    TileType getContent() {
+        return content;
+    }
 
 	public Editor (int rowCount, int columnCount, String name) throws IOException  {
 
@@ -51,46 +78,46 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
         // Tool buttons
         JButton playerButton = new JButton(new ImageIcon("img/Joueur.jpg"));
-        playerButton.setName("playerButton");
+        playerButton.setName(Component.PLAYER_BUTTON.name());
         
         JButton backgroundButton = new JButton(new ImageIcon("img/Background.jpg"));
-        backgroundButton.setName("backgroundButton");
+        backgroundButton.setName(Component.BACKGROUND_BUTTON.name());
         
         JButton boxButton = new JButton(new ImageIcon("img/Caisse.jpg"));
-        boxButton.setName("boxButton");
+        boxButton.setName(Component.BOX_BUTTON.name());
         
         JButton boxOnTargetButton = new JButton(new ImageIcon("img/CaisseRangee.jpg"));
-        boxOnTargetButton.setName("boxOnTargetButton");
+        boxOnTargetButton.setName(Component.BOX_ON_TARGET_BUTTON.name());
         
         JButton playerOnTargetButton = new JButton(new ImageIcon("img/JoueurRangement.jpg"));
-        playerOnTargetButton.setName("playerOnTargetButton");
+        playerOnTargetButton.setName(Component.PLAYER_ON_TARGET_BUTTON.name());
         
         JButton wallButton = new JButton(new ImageIcon("img/Mur.jpg"));
-        wallButton.setName("wallButton");
+        wallButton.setName(Component.WALL_BUTTON.name());
         
         JButton targetButton = new JButton(new ImageIcon("img/Rangement.jpg"));
-        targetButton.setName("targetButton");
+        targetButton.setName(Component.TARGET_BUTTON.name());
         
         JButton emptyButton = new JButton(new ImageIcon("img/Vide.jpg"));
-        emptyButton.setName("emptyButton");
+        emptyButton.setName(Component.EMPTY_BUTTON.name());
 
         // Status label
         JLabel invalid_level = new JLabel("", SwingConstants.CENTER);
-        invalid_level.setName("errorLabel");
+        invalid_level.setName(Component.ERROR_LABEL.name());
         invalid_level.setForeground(Color.RED);
         invalid_level.setBounds(windowWidth, 145, 150, 20);
 
         // Action buttons
         JButton save = new JButton("Save");
-        save.setName("saveButton");
+        save.setName(Component.SAVE_BUTTON.name());
         save.setBounds(windowWidth + 20, 170, 110, 30);
 
         JButton back = new JButton("Back");
-        back.setName("backButton");
+        back.setName(Component.BACK_BUTTON.name());
         back.setBounds(windowWidth + 20, 210, 110, 30);
 
         JButton quit = new JButton("Quit");
-        quit.setName("quitButton");
+        quit.setName(Component.QUIT_BUTTON.name());
         quit.setBounds(windowWidth + 20, 250, 110, 30);
 
         playerButton.setOpaque(false);
@@ -306,7 +333,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	 	this.add(invalid_level);
 
         JPanel sokobanPanel = new SokobanPanel(controller);
-        sokobanPanel.setName("sokobanPanel");
+        sokobanPanel.setName(Component.SOKOBAN_PANEL.name());
         this.add(sokobanPanel);
 
         this.addMouseMotionListener(this);
