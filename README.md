@@ -1,15 +1,10 @@
 # Sokoban Game - Java Implementation
 
-[![java.io](https://img.shields.io/badge/Dependency-java.io-blue)](https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/io/package-summary.html)  [![java.awt](https://img.shields.io/badge/Dependency-java.awt-green)](https://docs.oracle.com/en/java/javase/16/docs/api/java.desktop/java/awt/package-summary.html)  [![java.util](https://img.shields.io/badge/Dependency-java.util-orange)](https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/package-summary.html)  [![javax.imageio](https://img.shields.io/badge/Dependency-javax.imageio-purple)](https://docs.oracle.com/en/java/javase/16/docs/api/java.desktop/javax/imageio/package-summary.html)  [![javax.swing](https://img.shields.io/badge/Dependency-javax.swing-yellow)](https://docs.oracle.com/en/java/javase/16/docs/api/java.desktop/javax/swing/package-summary.html)  [![java.nio](https://img.shields.io/badge/Dependency-java.nio-red)](https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/nio/package-summary.html)  [![java.util](https://img.shields.io/badge/Dependency-java.util-orange)](https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/util/package-summary.html)
-
-
 [![License: MIT with Attribution](https://img.shields.io/badge/License-MIT%20with%20Attribution-green.svg)](https://opensource.org/licenses/MIT-0) ![Programming Language](https://img.shields.io/badge/Language-Java-blue) 
 
 ## Table of Contents
 
 - [Introduction](#Introduction)
-- [Design Choices and Features](#Design)
-- [Validation Points](#Validation)
 - [Installation](#Installation)
 - [Build Instructions](#Build-Instructions)
 - [Game Controls](#Game-Controls)
@@ -19,75 +14,135 @@
 
 ## Introduction
 
-Sokoban is a classic puzzle game where the player must push boxes onto designated spots in order to complete the level. The player controls a character that can move up, down, left, and right and push boxes. The game is won when all boxes are on the designated spots.
+[Sokoban](https://en.wikipedia.org/wiki/Sokoban) is a classic puzzle game where the player must push boxes onto designated spots in order to complete the level. The player controls a character that can move up, down, left, and right and push boxes. The game is won when all boxes are on the designated spots.
 
-## Design Choices and Features
+This project is a fork of a [nice Sokoban implementation](https://github.com/Gimligili/Sokoban.Java),
+enhanced with modern development practices.
+The original implementation has been updated with the following key improvements:
 
-During the early stages of development, the following design choices and features were considered:
+- **Build System**: Migrated to Maven for dependency management and build automation
+- **Testing**: Added unit tests using JUnit 5, AssertJ, and Mockito
+- **Code Quality**: Integrated static analysis tools including:
+  - Error Prone for catching common programming mistakes
+  - NullAway for compile-time null safety checking
+  - Maven Compiler Plugin with strict compilation flags
+- **Modern Java**: Upgraded to use Java 24 features
+- **Dependencies**: Added useful libraries like Guava and StreamEx for improved functionality
 
-- The game should have a simple, easy-to-use interface that allows the player to quickly understand how to play the game.
-- The game should have multiple levels of increasing difficulty to keep the player engaged.
-- The game should keep track of the player's score and time to add an element of competitiveness to the game.
-- The game should have sound effects and music to enhance the player's experience.
-- The game should have the ability to save and load game progress.
+## Screenshots
 
-In order to meet these requirements, the following features were implemented:
+### Gameplay
+<div style="text-align: center">
+<img src="img/Screenshot_Level_1.png" alt="Gameplay Screenshot" style="max-width: 80%;">
+<div><em>Level 1 - The main game screen showing the player, boxes, and target locations</em></div>
+</div>
 
-- A graphical user interface (GUI) was designed to display the game board, the player's score and time, and the menu options.
-- A set of levels with increasing difficulty was created.
-- A scoring system was implemented based on the number of moves the player makes and the time taken to complete the level.
-- Sound effects and background music were added to enhance the player's experience.
-- The game state can be saved and loaded using the Java Serialization API.
-
-## Validation Points
-
-During the testing phase, the following validation points were checked to ensure the game is working correctly:
-
-- The game interface is displayed correctly on different screen resolutions.
-- The player's movements and box movements are correctly registered and displayed on the game board.
-- The game levels are of increasing difficulty and can be completed by the player.
-- The scoring system correctly calculates the player's score based on the number of moves and time taken to complete the level.
-- The sound effects and background music are correctly played.
-- The game state is correctly saved and loaded using the Java Serialization API.
+### Level Editor
+<div style="text-align: center">
+<img src="img/Screenshot_Level_Editor.png" alt="Level Editor Screenshot" style="max-width: 80%;">
+<div><em>The built-in level editor for creating and modifying game levels</em></div>
+</div>
 
 ## Installation
 
 To play the Sokoban game, you need to have Java installed on your computer. Once you have Java installed, you can download the game files from the repository and compile them using a Java compiler.
 
 ## Build Instructions
-If you want to build yourself the .jar file from the release, you need to have Java Development Kit installed on your computer. I used version JDK 20. Then, you can either reuse the .class files that I included each time needed, or you can run the command :
 
-`javac *.java ihm\*.java logic\*.java` 
+### Prerequisites
+- Java Development Kit (JDK) 24 or later
+  - Example installation method using [SDKMAN!](https://sdkman.io/):
+    ```bash
+    # Install SDKMAN! (if not already installed)
+    curl -s "https://get.sdkman.io" | bash
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+    
+    # Install Java 24
+    sdk install java 24-tem
+    sdk use java 24-tem
+    ```
+- Apache Maven 3.6.0 or later (can also be installed via SDKMAN! with `sdk install maven`)
 
-from the ./src folder (referenced from the root folder of the project). Then you need to go to the root of the project and run :
+### Building the Project
 
-`jar cvfm <MY FILE>.jar MANIFEST.MF src\*.class src\ihm\*.class src\logic\*.class img font levels`
+1. **Clone the repository** (if you haven't already):
+   ```bash
+   git clone <repository-url>
+   cd Sokoban.Java
+   ```
 
-To execute your .jar file, you can navigate with the console to its location and run :
+2. **Build the project** using Maven:
+   ```bash
+   mvn clean package
+   ```
+   This will:
+   - Compile the source code
+   - Run the tests
+   - Package the application into a JAR file in the `target` directory
 
-`java -jar <MY FILE>.jar`
+### Running the Game
 
-or simply find the .jar file with the file exlorer, and run it. You only have to check that the file is run with the Java(TM) Platform SE binary, or else it will not run correctly.
+After building, you can run the game using either of these methods:
+
+1. **Using Maven**:
+   ```bash
+   mvn exec:java -Dexec.mainClass="main_game"
+   ```
+
+2. **Using the generated JAR**:
+   ```bash
+   java -jar target/sokoban-1.0-SNAPSHOT.jar
+   ```
+
+   > Note: The JAR file will be named based on the `artifactId` and `version` defined in `pom.xml`
+
+### Development
+
+- **Compile the project**: `mvn compile`
+- **Run tests**: `mvn test`
+- **Create a distributable JAR**: `mvn package`
+- **Clean build**: `mvn clean install`
+
+### IDE Support
+
+You can import the project into any Java IDE that supports Maven. The project contains the necessary Maven configuration (`pom.xml`) for easy setup in IDEs like IntelliJ IDEA, Eclipse, or VS Code with the Java extension pack.
 
 ## Game Controls
 
 The Sokoban game is controlled using the arrow keys on the keyboard. The character moves one square at a time in the direction of the arrow key pressed. If there is a box in the way, the character will push the box in the direction of the arrow key. The game is won when all the boxes have been moved to their designated storage locations.
 
-## Game Classes
+## Game Architecture
 
-The Sokoban game is implemented using several Java classes. These classes include:
+The Sokoban game is implemented using a Model-View-Controller (MVC) architecture with the following key components:
 
-- Game: The main class that runs the game.
-- Level: Represents a single level of the game, including the maze layout, box and storage locations, and character starting position.
-- Player: Represents the player character in the game.
-- Box: Represents the boxes that the player pushes around the maze.
-- Storage: Represents the storage locations for the boxes.
+### Core Game Logic (`logic` package)
+- [`Case.java`](src/main/java/logic/Case.java): Represents a single cell in the game grid, containing information about its contents (wall, floor, target) and any movable objects (player, box).
+- [`Controller.java`](src/main/java/logic/Controller.java): Handles game state management, move validation, and game progression.
+- [`Direction.java`](src/main/java/logic/Direction.java): Enumerates possible movement directions (UP, DOWN, LEFT, RIGHT).
+- [`GameAction.java`](src/main/java/logic/GameAction.java): Defines possible game actions and their outcomes.
+- [`TileType.java`](src/main/java/logic/TileType.java): Enumerates different types of tiles (WALL, FLOOR, TARGET, etc.).
+- [`Warehouse.java`](src/main/java/logic/Warehouse.java): Represents the game level, including the grid layout and game state.
+- [`Worker.java`](src/main/java/logic/Worker.java): Represents the player character with movement capabilities.
+
+### User Interface (`ihm` package)
+- [`Editor.java`](src/main/java/ihm/Editor.java): The main level editor interface for creating and modifying game levels.
+- [`HomeWindow.java`](src/main/java/ihm/HomeWindow.java): The main menu screen with options to play, edit, or exit.
+- [`LevelEditorSetup.java`](src/main/java/ihm/LevelEditorSetup.java): Dialog for setting up new levels in the editor.
+- [`LevelSelection.java`](src/main/java/ihm/LevelSelection.java): Screen for selecting which level to play or edit.
+- [`SokobanPanel.java`](src/main/java/ihm/SokobanPanel.java): The main game panel that renders the current game state.
+- [`SokobanWindow.java`](src/main/java/ihm/SokobanWindow.java): The main application window that contains the game panel.
+- `*Handler.java`: Various event handlers for user interactions.
+
+### Game Flow
+1. The game starts with `SokobanWindow` showing the main menu.
+2. Players can select a level or enter the level editor.
+3. During gameplay, `Controller` processes moves and updates the `Warehouse` state.
+4. The `SokobanPanel` renders the current game state based on the `Warehouse` model.
+5. The level editor allows creating and modifying levels with a visual interface.
 
 ## Conclusion
 
 The Sokoban game is a challenging and enjoyable puzzle game that requires strategy and planning to solve. With its multiple levels, undo feature, and sound effects, it provides hours of entertainment for players of all ages. Thank you for considering this game for your entertainment needs.
-
-This README file was created with the help of ChatGPT, an AI language model trained by OpenAI. The content was based on the original report written by myself for a Software Engineering lab. Thank you ChatGPT for your contribution!
 
 ## License
 
