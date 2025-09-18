@@ -101,27 +101,9 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         back.setName(Component.BACK_BUTTON.name());
         back.setBounds(windowWidth + 20, 210, 110, 30);
 
-        JButton quit = new JButton("Quit");
-        quit.setName(Component.QUIT_BUTTON.name());
-        quit.setBounds(windowWidth + 20, 250, 110, 30);
+        createQuitButton(name);
 
-
-
-
-
-	 	quit.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					File level_drop = new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt");
-					level_drop.delete();
-				} catch (IOException e1) {
-                    LOGGER.log(Level.SEVERE, "Error while deleting level file: " + name, e1);
-				}
-				System.exit( 0 );
-			}
-	    });
-	 	back.addActionListener(new ActionListener() {
+        back.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -229,7 +211,6 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
 
 	 	this.add(save);
-	 	this.add(quit);
 	 	this.add(back);
 	 	this.add(invalid_level);
 
@@ -243,6 +224,26 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         this.pack();
         this.setVisible( true );
 	}
+
+    private void createQuitButton(String name) {
+        JButton quit = new JButton("Quit");
+        quit.setName(Component.QUIT_BUTTON.name());
+        quit.setBounds(windowWidth + 20, 250, 110, 30);
+
+        quit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    File level_drop = new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt");
+                    level_drop.delete();
+                } catch (IOException e1) {
+                    LOGGER.log(Level.SEVERE, "Error while deleting level file: " + name, e1);
+                }
+                System.exit(0);
+            }
+        });
+        this.add(quit);
+    }
 
     private void createPlayerButton() {
         JButton button = new JButton(new ImageIcon("img/Joueur.jpg"));
