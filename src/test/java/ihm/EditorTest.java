@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.jspecify.annotations.NullMarked;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
@@ -32,15 +33,17 @@ class EditorTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        // Create a new Editor instance for testing
         editor = new Editor(TEST_ROWS, TEST_COLUMNS, TEST_LEVEL_NAME);
         deleteIfExists(TEST_LEVEL_PATH);
     }
 
     @AfterEach
     void tearDown() throws IOException {
-        // Clean up the editor window after each test
-        editor.dispose();
+        // Clean up windows
+        Arrays.stream(java.awt.Window.getWindows())
+                .filter(java.awt.Window::isDisplayable)
+                .forEach(java.awt.Window::dispose);
+
         deleteIfExists(TEST_LEVEL_PATH);
     }
 
@@ -172,6 +175,44 @@ class EditorTest {
 
         // Then
         then(editor.getContent()).isEqualTo(TileType.FLOOR);
+    }
+
+    @Test
+    void back_button_deletes_level_file() throws IOException {
+        // Given
+        Files.createDirectories(TEST_LEVEL_PATH.getParent());
+        Files.createFile(TEST_LEVEL_PATH);
+        then(Files.exists(TEST_LEVEL_PATH)).isTrue();
+
+        JButton backButton = findComponentByNameAsType(editor, Editor.Component.BACK_BUTTON.name(), JButton.class);
+
+        // When
+        backButton.doClick();
+
+        // Then
+        then(Files.exists(TEST_LEVEL_PATH))
+            .as("The level file no longer exists")
+            .isFalse();
+    }
+
+    @Test
+    void back_button_closes_editor_and_shows_home_window() {
+        // Given
+        JButton backButton = findComponentByNameAsType(editor, Editor.Component.BACK_BUTTON.name(), JButton.class);
+
+        // When
+        backButton.doClick();
+
+        // Then
+        then(editor.isDisplayable())
+            .as("The editor window is no longer displayed")
+            .isFalse();
+
+        then(Arrays.stream(Window.getWindows())
+            .filter(Window::isVisible)
+            .toList())
+            .as("Exactly one HomeWindow is visible")
+            .hasExactlyElementsOfTypes(HomeWindow.class);
     }
 
     @Test
