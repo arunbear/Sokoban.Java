@@ -33,13 +33,13 @@ The original implementation has been updated with the following key improvements
 
 ### Gameplay
 <div style="text-align: center">
-<img src="img/Screenshot_Level_1.png" alt="Gameplay Screenshot" style="max-width: 80%;">
+<img src="img/Screenshot_Level_1.png?raw=true" alt="Gameplay Screenshot" style="max-width: 80%;">
 <div><em>Level 1 - The main game screen showing the player, boxes, and target locations</em></div>
 </div>
 
 ### Level Editor
 <div style="text-align: center">
-<img src="img/Screenshot_Level_Editor.png" alt="Level Editor Screenshot" style="max-width: 80%;">
+<img src="img/Screenshot_Level_Editor.png?raw=true" alt="Level Editor Screenshot" style="max-width: 80%;">
 <div><em>The built-in level editor for creating and modifying game levels</em></div>
 </div>
 
