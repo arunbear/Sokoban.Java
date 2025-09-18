@@ -229,20 +229,21 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         JButton quit = new JButton("Quit");
         quit.setName(Component.QUIT_BUTTON.name());
         quit.setBounds(windowWidth + 20, 250, 110, 30);
-
-        quit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    File level_drop = new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt");
-                    level_drop.delete();
-                } catch (IOException e1) {
-                    LOGGER.log(Level.SEVERE, "Error while deleting level file: " + name, e1);
-                }
-                System.exit(0);
+        quit.addActionListener(_ -> {
+            try {
+                File level_drop = new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt");
+                level_drop.delete();
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "Error while deleting level file: " + name, e);
             }
+            defaultExitHandler().exit(ExitHandler.SUCCESS);
         });
         this.add(quit);
+    }
+    
+    @VisibleForTesting
+    ExitHandler defaultExitHandler() {
+        return System::exit;
     }
 
     private void createPlayerButton() {

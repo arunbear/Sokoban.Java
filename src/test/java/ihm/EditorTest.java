@@ -10,11 +10,14 @@ import javax.swing.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 
 import static java.nio.file.Files.deleteIfExists;
 import static org.assertj.core.api.BDDAssertions.then;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static swing.ComponentFinder.findComponentByNameAsType;
 
 @NullMarked
@@ -31,6 +34,7 @@ class EditorTest {
     void setUp() throws Exception {
         // Create a new Editor instance for testing
         editor = new Editor(TEST_ROWS, TEST_COLUMNS, TEST_LEVEL_NAME);
+        deleteIfExists(TEST_LEVEL_PATH);
     }
 
     @AfterEach
@@ -162,10 +166,38 @@ class EditorTest {
     void empty_button_sets_content_to_floor() {
         // Given
         JButton button = findComponentByNameAsType(editor, Editor.Component.EMPTY_BUTTON.name(), JButton.class);
-        
-        // When - Simulate button click
+
+        // When
         button.doClick();
-        
+
+        // Then
         then(editor.getContent()).isEqualTo(TileType.FLOOR);
+    }
+
+    @Test
+    void quit_button_triggers_exit_handler_and_deletes_file() throws IOException {
+        // Given
+        ExitHandler mockExitHandler = mock(ExitHandler.class);
+
+        // Create a test level file that should be deleted
+        Files.createDirectories(TEST_LEVEL_PATH.getParent());
+        Files.createFile(TEST_LEVEL_PATH);
+        then(Files.exists(TEST_LEVEL_PATH)).isTrue();
+
+        editor = new Editor(TEST_ROWS, TEST_COLUMNS, TEST_LEVEL_NAME) {
+            @Override
+            ExitHandler defaultExitHandler() {
+                return mockExitHandler;
+            }
+        };
+
+        JButton quitButton = findComponentByNameAsType(editor, Editor.Component.QUIT_BUTTON.name(), JButton.class);
+
+        // When
+        quitButton.doClick();
+
+        // Then
+        then(Files.exists(TEST_LEVEL_PATH)).isFalse();
+        verify(mockExitHandler).exit(ExitHandler.SUCCESS);
     }
 }
