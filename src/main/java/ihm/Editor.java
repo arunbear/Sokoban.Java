@@ -104,21 +104,13 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
         createQuitButton(name);
 
-        back.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				try {
-					File level_drop = new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt");
-					level_drop.delete();
-				} catch (IOException e2) {
-                    LOGGER.log(Level.SEVERE, "Error while deleting level file when going back: " + name, e2);
-				}
-                new HomeWindow();
+        back.addActionListener(_ -> {
+            dispose();
+            LevelFile.of(name).delete();
+            new HomeWindow();
+        });
 
-            }
-	    });
-	 	save.addActionListener(new ActionListener() {
+        save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
