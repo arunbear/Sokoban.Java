@@ -19,6 +19,7 @@ import javax.swing.*;
 
 import logic.TileType;
 import logic.Controller;
+import logic.LevelFile;
 
 public class Editor extends JFrame implements MouseListener, MouseMotionListener {
     @VisibleForTesting
@@ -230,12 +231,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         quit.setName(Component.QUIT_BUTTON.name());
         quit.setBounds(windowWidth + 20, 250, 110, 30);
         quit.addActionListener(_ -> {
-            try {
-                File level_drop = new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt");
-                level_drop.delete();
-            } catch (IOException e) {
-                LOGGER.log(Level.SEVERE, "Error while deleting level file: " + name, e);
-            }
+            LevelFile.of(name).delete();
             defaultExitHandler().exit(ExitHandler.SUCCESS);
         });
         this.add(quit);
