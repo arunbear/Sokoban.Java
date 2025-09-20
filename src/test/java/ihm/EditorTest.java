@@ -31,7 +31,6 @@ class EditorTest {
     private static final int TEST_ROWS = 10;
     private static final int TEST_COLUMNS = 10;
 
-    // Using Editor's X_OFFSET to ensure consistency with the actual implementation
     private static final int Y_OFFSET = Editor.TILE_SIZE;  // Vertical offset for grid positioning
 
     private Editor editor;
@@ -115,21 +114,21 @@ class EditorTest {
 
         // Add player at (1,1)
         playerButton.doClick();
-        editor.mousePressed(createMouseEvent(
+        editor.mousePressed(mouseEventAt(
             Editor.X_OFFSET + 1 * Editor.TILE_SIZE,  // x = column 1
             Y_OFFSET + 1 * Editor.TILE_SIZE   // y = row 1
         ));
 
         // Add box at (2,2)
         boxButton.doClick();
-        editor.mousePressed(createMouseEvent(
+        editor.mousePressed(mouseEventAt(
             Editor.X_OFFSET + 2 * Editor.TILE_SIZE,  // x = column 2
             Y_OFFSET + 2 * Editor.TILE_SIZE   // y = row 2
         ));
 
         // Add target at (3,3)
         targetButton.doClick();
-        editor.mousePressed(createMouseEvent(
+        editor.mousePressed(mouseEventAt(
             Editor.X_OFFSET + 3 * Editor.TILE_SIZE,  // x = column 3
             Y_OFFSET + 3 * Editor.TILE_SIZE   // y = row 3
         ));
@@ -156,7 +155,7 @@ class EditorTest {
         then(lines[3].charAt(3)).isEqualTo('T');
     }
 
-    private MouseEvent createMouseEvent(int x, int y) {
+    private MouseEvent mouseEventAt(int x, int y) {
         return new MouseEvent(
             editor,                      // Component source
             MouseEvent.MOUSE_PRESSED,    // Event type
