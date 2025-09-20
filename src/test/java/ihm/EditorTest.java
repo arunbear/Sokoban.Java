@@ -104,10 +104,10 @@ class EditorTest {
     void save_button_saves_valid_level() throws Exception {
         // Given
         // Set up a valid level with one player, one box, and one target
-        JButton playerButton = findComponentByNameAsType(editor, Editor.Component.PLAYER_BUTTON.name(), JButton.class);
-        JButton boxButton = findComponentByNameAsType(editor, Editor.Component.BOX_BUTTON.name(), JButton.class);
-        JButton targetButton = findComponentByNameAsType(editor, Editor.Component.TARGET_BUTTON.name(), JButton.class);
-        JButton saveButton = findComponentByNameAsType(editor, Editor.Component.SAVE_BUTTON.name(), JButton.class);
+        JButton playerButton  = findComponentByNameAsType(editor, Editor.Component.PLAYER_BUTTON.name(), JButton.class);
+        JButton boxButton     = findComponentByNameAsType(editor, Editor.Component.BOX_BUTTON.name(), JButton.class);
+        JButton targetButton  = findComponentByNameAsType(editor, Editor.Component.TARGET_BUTTON.name(), JButton.class);
+        JButton saveButton    = findComponentByNameAsType(editor, Editor.Component.SAVE_BUTTON.name(), JButton.class);
 
         // Add player at (1,1)
         playerButton.doClick();
