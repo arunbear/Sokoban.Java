@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 
 import static java.nio.file.Files.deleteIfExists;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -138,21 +139,20 @@ class EditorTest {
 
         // Then - Verify the file was created and contains valid content
         then(TEST_LEVEL_PATH).exists();
-        String content = Files.readString(TEST_LEVEL_PATH);
-        then(content).isNotEmpty();
+        List<String> lines = Files.readAllLines(TEST_LEVEL_PATH);
 
-        // Verify the file has the correct number of lines and columns
-        String[] lines = content.split("\n");
-        then(lines).hasSize(TEST_ROWS);
-        then(lines[0].length()).isEqualTo(TEST_COLUMNS);
+        then(lines).hasSize(TEST_ROWS); //
+        then(lines).allSatisfy(line ->
+            then(line.length()).isEqualTo(TEST_COLUMNS)
+        );
 
         // Verify the level contains the expected characters (converted from tile types)
         // Player should be at (1,1) - converted to 'G' in the file
-        then(lines[1].charAt(1)).isEqualTo('G');
+        then(lines.get(1).charAt(1)).isEqualTo('G');
         // Box should be at (2,2) - converted to 'C' in the file
-        then(lines[2].charAt(2)).isEqualTo('C');
+        then(lines.get(2).charAt(2)).isEqualTo('C');
         // Target should be at (3,3) - converted to 'T' in the file
-        then(lines[3].charAt(3)).isEqualTo('T');
+        then(lines.get(3).charAt(3)).isEqualTo('T');
     }
 
     private MouseEvent mouseEventAt(int x, int y) {
