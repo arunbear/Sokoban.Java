@@ -113,25 +113,26 @@ class EditorTest {
         JButton targetButton  = findComponentByNameAsType(editor, Editor.Component.TARGET_BUTTON.name(), JButton.class);
         JButton saveButton    = findComponentByNameAsType(editor, Editor.Component.SAVE_BUTTON.name(), JButton.class);
 
-        // Add player at (1,1)
+        // Add elements at their expected positions
         playerButton.doClick();
+        var player = new ExpectedAt(1, 1);
         editor.mousePressed(mouseEventAt(
-            Editor.X_OFFSET + 1 * Editor.TILE_SIZE,  // x = column 1
-            Y_OFFSET + 1 * Editor.TILE_SIZE   // y = row 1
+            Editor.X_OFFSET + player.x * Editor.TILE_SIZE,
+            Y_OFFSET + player.y * Editor.TILE_SIZE
         ));
 
-        // Add box at (2,2)
         boxButton.doClick();
+        var box = new ExpectedAt(2, 2);
         editor.mousePressed(mouseEventAt(
-            Editor.X_OFFSET + 2 * Editor.TILE_SIZE,  // x = column 2
-            Y_OFFSET + 2 * Editor.TILE_SIZE   // y = row 2
+            Editor.X_OFFSET + box.x * Editor.TILE_SIZE,
+            Y_OFFSET + box.y * Editor.TILE_SIZE
         ));
 
-        // Add target at (3,3)
         targetButton.doClick();
+        var target = new ExpectedAt(3, 3);
         editor.mousePressed(mouseEventAt(
-            Editor.X_OFFSET + 3 * Editor.TILE_SIZE,  // x = column 3
-            Y_OFFSET + 3 * Editor.TILE_SIZE   // y = row 3
+            Editor.X_OFFSET + target.x * Editor.TILE_SIZE,
+            Y_OFFSET + target.y * Editor.TILE_SIZE
         ));
 
         // When
@@ -141,20 +142,15 @@ class EditorTest {
         then(TEST_LEVEL_PATH).exists();
         List<String> lines = Files.readAllLines(TEST_LEVEL_PATH);
 
-        then(lines).hasSize(TEST_ROWS); //
+        then(lines).hasSize(TEST_ROWS);
         then(lines).allSatisfy(line ->
             then(line.length()).isEqualTo(TEST_COLUMNS)
         );
 
         // Verify the level contains the expected characters (converted from tile types)
-        var player = new ExpectedAt(1, 1);
-        then(lines.get(player.y).charAt(player.x)).isEqualTo(TileType.WORKER_ON_FLOOR.getCode());
-
-        var box = new ExpectedAt(2, 2);
-        then(lines.get(box.y).charAt(box.x)).isEqualTo(TileType.UNSTORED_BOX.getCode());
-
-        var target = new ExpectedAt(3, 3);
-        then(lines.get(target.y).charAt(target.x)).isEqualTo(TileType.STORAGE_AREA.getCode());
+        then(lines.get(player.y).charAt(player.x)) .isEqualTo(TileType.WORKER_ON_FLOOR.getCode());
+        then(lines.get(box.y).charAt(box.x))       .isEqualTo(TileType.UNSTORED_BOX.getCode());
+        then(lines.get(target.y).charAt(target.x)) .isEqualTo(TileType.STORAGE_AREA.getCode());
     }
 
     private MouseEvent mouseEventAt(int x, int y) {
@@ -314,7 +310,7 @@ class EditorTest {
     }
 
     /**
-     * Simple record to represent expected positions in the test grid.
+     * Represents expected positions in the test grid.
      */
     private record ExpectedAt(int x, int y) {
     }
