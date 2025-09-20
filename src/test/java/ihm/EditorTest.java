@@ -147,14 +147,14 @@ class EditorTest {
         );
 
         // Verify the level contains the expected characters (converted from tile types)
-        // Player should be at (1,1)
-        then(lines.get(1).charAt(1)).isEqualTo(TileType.WORKER_ON_FLOOR.getCode());
+        var player = new ExpectedAt(1, 1);
+        then(lines.get(player.y).charAt(player.x)).isEqualTo(TileType.WORKER_ON_FLOOR.getCode());
 
-        // Box should be at (2,2)
-        then(lines.get(2).charAt(2)).isEqualTo(TileType.UNSTORED_BOX.getCode());
+        var box = new ExpectedAt(2, 2);
+        then(lines.get(box.y).charAt(box.x)).isEqualTo(TileType.UNSTORED_BOX.getCode());
 
-        // Target should be at (3,3)
-        then(lines.get(3).charAt(3)).isEqualTo(TileType.STORAGE_AREA.getCode());
+        var target = new ExpectedAt(3, 3);
+        then(lines.get(target.y).charAt(target.x)).isEqualTo(TileType.STORAGE_AREA.getCode());
     }
 
     private MouseEvent mouseEventAt(int x, int y) {
@@ -311,5 +311,11 @@ class EditorTest {
         // Then
         then(Files.exists(TEST_LEVEL_PATH)).isFalse();
         verify(mockExitHandler).exit(ExitHandler.SUCCESS);
+    }
+
+    /**
+     * Simple record to represent expected positions in the test grid.
+     */
+    private record ExpectedAt(int x, int y) {
     }
 }
