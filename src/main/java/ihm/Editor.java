@@ -240,7 +240,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         button.setName(Component.PLAYER_BUTTON.name());
         button.setOpaque(false);
         button.setContentAreaFilled(false);
-        button.setBounds(windowWidth + 30, 0, 32, 32);
+        button.setBounds(windowWidth + 30, 0, TILE_SIZE, TILE_SIZE);
         button.addActionListener(_ -> content = TileType.WORKER_ON_FLOOR);
         this.add(button);
     }
@@ -250,7 +250,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         button.setName(Component.BACKGROUND_BUTTON.name());
         button.setOpaque(false);
         button.setContentAreaFilled(false);
-        button.setBounds(windowWidth + 30, 37, 32, 32);
+        button.setBounds(windowWidth + 30, 37, TILE_SIZE, TILE_SIZE);
         button.addActionListener(_ -> content = TileType.OUTSIDE);
         this.add(button);
     }
@@ -260,7 +260,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         button.setName(Component.BOX_BUTTON.name());
         button.setOpaque(false);
         button.setContentAreaFilled(false);
-        button.setBounds(windowWidth + 30, 74, 32, 32);
+        button.setBounds(windowWidth + 30, 74, TILE_SIZE, TILE_SIZE);
         button.addActionListener(_ -> content = TileType.UNSTORED_BOX);
         this.add(button);
     }
@@ -270,7 +270,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         button.setName(Component.BOX_ON_TARGET_BUTTON.name());
         button.setOpaque(false);
         button.setContentAreaFilled(false);
-        button.setBounds(windowWidth + 30, 111, 32, 32);
+        button.setBounds(windowWidth + 30, 111, TILE_SIZE, TILE_SIZE);
         button.addActionListener(_ -> content = TileType.STORED_BOX);
         this.add(button);
     }
@@ -280,7 +280,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         button.setName(Component.PLAYER_ON_TARGET_BUTTON.name());
         button.setOpaque(false);
         button.setContentAreaFilled(false);
-        button.setBounds(windowWidth + 75, 0, 32, 32);
+        button.setBounds(windowWidth + 75, 0, TILE_SIZE, TILE_SIZE);
         button.addActionListener(_ -> content = TileType.WORKER_IN_STORAGE_AREA);
         this.add(button);
     }
@@ -290,7 +290,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         button.setName(Component.WALL_BUTTON.name());
         button.setOpaque(false);
         button.setContentAreaFilled(false);
-        button.setBounds(windowWidth + 75, 37, 32, 32);
+        button.setBounds(windowWidth + 75, 37, TILE_SIZE, TILE_SIZE);
         button.addActionListener(_ -> content = TileType.WALL);
         this.add(button);
     }
@@ -300,7 +300,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         button.setName(Component.TARGET_BUTTON.name());
         button.setOpaque(false);
         button.setContentAreaFilled(false);
-        button.setBounds(windowWidth + 75, 74, 32, 32);
+        button.setBounds(windowWidth + 75, 74, TILE_SIZE, TILE_SIZE);
         button.addActionListener(_ -> content = TileType.STORAGE_AREA);
         this.add(button);
     }
@@ -310,7 +310,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         button.setName(Component.EMPTY_BUTTON.name());
         button.setOpaque(false);
         button.setContentAreaFilled(false);
-        button.setBounds(windowWidth + 75, 111, 32, 32);
+        button.setBounds(windowWidth + 75, 111, TILE_SIZE, TILE_SIZE);
         button.addActionListener(_ -> content = TileType.FLOOR);
         this.add(button);
     }
