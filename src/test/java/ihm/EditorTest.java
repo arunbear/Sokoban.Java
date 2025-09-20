@@ -8,12 +8,14 @@ import org.jspecify.annotations.NullMarked;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 
 import static java.nio.file.Files.deleteIfExists;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -26,9 +28,12 @@ class EditorTest {
 
     private static final String TEST_LEVEL_NAME = "testEditorLevel";
     private static final Path TEST_LEVEL_PATH = Path.of("levels", TEST_LEVEL_NAME + ".txt");
+
     private static final int TEST_ROWS = 10;
     private static final int TEST_COLUMNS = 10;
-    
+
+    private static final int Y_OFFSET = Editor.TILE_SIZE;  // Vertical offset for grid positioning
+
     private Editor editor;
 
     @BeforeEach
@@ -83,30 +88,92 @@ class EditorTest {
     void editor_has_correct_mouse_listeners() {
         MouseListener[] mouseListeners = editor.getMouseListeners();
         then(mouseListeners.length).isPositive();
-        
+
         MouseMotionListener[] mouseMotionListeners = editor.getMouseMotionListeners();
         then(mouseMotionListeners.length).isPositive();
     }
-    
+
     @Test
     void player_button_sets_content_to_worker_on_floor() {
         // Given
         JButton button = findComponentByNameAsType(editor, Editor.Component.PLAYER_BUTTON.name(), JButton.class);
-        
+
         // When - Simulate button click
         button.doClick();
-        
+
         then(editor.getContent()).isEqualTo(TileType.WORKER_ON_FLOOR);
+    }
+
+    @Test
+    void save_button_saves_valid_level() throws Exception {
+        // Given
+        // Set up a valid level with one player, one box, and one target
+        JButton playerButton  = findComponentByNameAsType(editor, Editor.Component.PLAYER_BUTTON.name(), JButton.class);
+        JButton boxButton     = findComponentByNameAsType(editor, Editor.Component.BOX_BUTTON.name(), JButton.class);
+        JButton targetButton  = findComponentByNameAsType(editor, Editor.Component.TARGET_BUTTON.name(), JButton.class);
+        JButton saveButton    = findComponentByNameAsType(editor, Editor.Component.SAVE_BUTTON.name(), JButton.class);
+
+        // Add elements at their expected positions
+        playerButton.doClick();
+        var player = new ExpectedAt(1, 1);
+        editor.mousePressed(mouseEventAt(
+            Editor.X_OFFSET + player.x * Editor.TILE_SIZE,
+            Y_OFFSET + player.y * Editor.TILE_SIZE
+        ));
+
+        boxButton.doClick();
+        var box = new ExpectedAt(2, 2);
+        editor.mousePressed(mouseEventAt(
+            Editor.X_OFFSET + box.x * Editor.TILE_SIZE,
+            Y_OFFSET + box.y * Editor.TILE_SIZE
+        ));
+
+        targetButton.doClick();
+        var target = new ExpectedAt(3, 3);
+        editor.mousePressed(mouseEventAt(
+            Editor.X_OFFSET + target.x * Editor.TILE_SIZE,
+            Y_OFFSET + target.y * Editor.TILE_SIZE
+        ));
+
+        // When
+        saveButton.doClick();
+
+        // Then - Verify the file was created and contains valid content
+        then(TEST_LEVEL_PATH).exists();
+        List<String> lines = Files.readAllLines(TEST_LEVEL_PATH);
+
+        then(lines).hasSize(TEST_ROWS);
+        then(lines).allSatisfy(line ->
+            then(line.length()).isEqualTo(TEST_COLUMNS)
+        );
+
+        // Verify the level contains the expected characters (converted from tile types)
+        then(lines.get(player.y).charAt(player.x)) .isEqualTo(TileType.WORKER_ON_FLOOR.getCode());
+        then(lines.get(box.y).charAt(box.x))       .isEqualTo(TileType.UNSTORED_BOX.getCode());
+        then(lines.get(target.y).charAt(target.x)) .isEqualTo(TileType.STORAGE_AREA.getCode());
+    }
+
+    private MouseEvent mouseEventAt(int x, int y) {
+        return new MouseEvent(
+            editor,                      // Component source
+            MouseEvent.MOUSE_PRESSED,    // Event type
+            System.currentTimeMillis(),  // When
+            0,                          // No modifiers
+            x,                          // x-coordinate
+            y,                          // y-coordinate
+            1,                          // Click count
+            false                       // Popup trigger
+        );
     }
 
     @Test
     void background_button_sets_content_to_outside() {
         // Given
         JButton button = findComponentByNameAsType(editor, Editor.Component.BACKGROUND_BUTTON.name(), JButton.class);
-        
+
         // When - Simulate button click
         button.doClick();
-        
+
         then(editor.getContent()).isEqualTo(TileType.OUTSIDE);
     }
 
@@ -114,10 +181,10 @@ class EditorTest {
     void box_button_sets_content_to_unstored_box() {
         // Given
         JButton button = findComponentByNameAsType(editor, Editor.Component.BOX_BUTTON.name(), JButton.class);
-        
+
         // When - Simulate button click
         button.doClick();
-        
+
         then(editor.getContent()).isEqualTo(TileType.UNSTORED_BOX);
     }
 
@@ -125,10 +192,10 @@ class EditorTest {
     void box_on_target_button_sets_content_to_stored_box() {
         // Given
         JButton button = findComponentByNameAsType(editor, Editor.Component.BOX_ON_TARGET_BUTTON.name(), JButton.class);
-        
+
         // When - Simulate button click
         button.doClick();
-        
+
         then(editor.getContent()).isEqualTo(TileType.STORED_BOX);
     }
 
@@ -136,10 +203,10 @@ class EditorTest {
     void player_on_target_button_sets_content_to_worker_in_storage_area() {
         // Given
         JButton button = findComponentByNameAsType(editor, Editor.Component.PLAYER_ON_TARGET_BUTTON.name(), JButton.class);
-        
+
         // When - Simulate button click
         button.doClick();
-        
+
         then(editor.getContent()).isEqualTo(TileType.WORKER_IN_STORAGE_AREA);
     }
 
@@ -147,10 +214,10 @@ class EditorTest {
     void wall_button_sets_content_to_wall() {
         // Given
         JButton button = findComponentByNameAsType(editor, Editor.Component.WALL_BUTTON.name(), JButton.class);
-        
+
         // When - Simulate button click
         button.doClick();
-        
+
         then(editor.getContent()).isEqualTo(TileType.WALL);
     }
 
@@ -158,10 +225,10 @@ class EditorTest {
     void target_button_sets_content_to_storage_area() {
         // Given
         JButton button = findComponentByNameAsType(editor, Editor.Component.TARGET_BUTTON.name(), JButton.class);
-        
+
         // When - Simulate button click
         button.doClick();
-        
+
         then(editor.getContent()).isEqualTo(TileType.STORAGE_AREA);
     }
 
@@ -240,5 +307,11 @@ class EditorTest {
         // Then
         then(Files.exists(TEST_LEVEL_PATH)).isFalse();
         verify(mockExitHandler).exit(ExitHandler.SUCCESS);
+    }
+
+    /**
+     * Represents expected positions in the test grid.
+     */
+    private record ExpectedAt(int x, int y) {
     }
 }
