@@ -51,10 +51,13 @@ public class LevelFile {
      * @param content The content to write to the file
      * @throws LevelFileException if an I/O error occurs
      */
-    public void write(String content) {
+    public void write(String... lines) {
+        if (lines == null || lines.length == 0) {
+            return;
+        }
         try {
             Files.createDirectories(getLevelsDirectory());
-            Files.writeString(getFilePath(), content);
+            Files.writeString(getFilePath(), String.join("", lines));
         } catch (IOException e) {
             String errorMsg = "Error while writing to level file: %s".formatted(levelName);
             LOGGER.log(Level.SEVERE, errorMsg, e);
