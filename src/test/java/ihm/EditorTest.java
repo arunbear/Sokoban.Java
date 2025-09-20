@@ -148,11 +148,13 @@ class EditorTest {
 
         // Verify the level contains the expected characters (converted from tile types)
         // Player should be at (1,1) - converted to 'G' in the file
-        then(lines.get(1).charAt(1)).isEqualTo('G');
+        then(lines.get(1).charAt(1)).isEqualTo(TileType.WORKER_ON_FLOOR.getCode());
+
         // Box should be at (2,2) - converted to 'C' in the file
-        then(lines.get(2).charAt(2)).isEqualTo('C');
+        then(lines.get(2).charAt(2)).isEqualTo(TileType.UNSTORED_BOX.getCode());
+
         // Target should be at (3,3) - converted to 'T' in the file
-        then(lines.get(3).charAt(3)).isEqualTo('T');
+        then(lines.get(3).charAt(3)).isEqualTo(TileType.STORAGE_AREA.getCode());
     }
 
     private MouseEvent mouseEventAt(int x, int y) {
