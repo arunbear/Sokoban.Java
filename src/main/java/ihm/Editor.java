@@ -1,7 +1,6 @@
 package ihm;
 
 import java.util.logging.Logger;
-import java.util.logging.Level;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -9,10 +8,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.StandardOpenOption;
 
 import com.google.common.annotations.VisibleForTesting;
 import javax.swing.*;
@@ -20,8 +18,12 @@ import javax.swing.*;
 import logic.TileType;
 import logic.Controller;
 import logic.LevelFile;
+import one.util.streamex.IntStreamEx;
 
 public class Editor extends JFrame implements MouseListener, MouseMotionListener {
+
+    private final LevelFile levelFile;
+
     @VisibleForTesting
     enum Component {
         // Tool buttons
@@ -63,18 +65,13 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
 	public Editor (int rowCount, int columnCount, String name) throws IOException  {
 
-		FileWriter levelWriter = new FileWriter(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt"));
-		BufferedWriter lowerWriter = new BufferedWriter(levelWriter);
-		for (int i = 0; i < rowCount; i++ ) {
-			lowerWriter.write("_".repeat(columnCount));
-			lowerWriter.newLine();
-		}
-		lowerWriter.close();
-		levelWriter.close();
+        levelFile = LevelFile.of(name);
+        initializeEmptyLevel(rowCount, columnCount);
 
-		controller = new Controller(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt").getPath());
+        controller = new Controller(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt").getPath());
 		windowWidth = controller.warehouse.getColumns() * TILE_SIZE;
         windowHeight = controller.warehouse.getLines() * TILE_SIZE;
+
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         this.setTitle("Sokoban v1.0 par Gabriel FARAGO");
         this.setPreferredSize(new Dimension(windowWidth + 150, Math.max(windowHeight + 150, 330)));
@@ -171,34 +168,16 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 						}
 
 						if (line.length() == columnCount && i+1 == columnCount) {
-							try {
-								FileWriter levelWriter = new FileWriter(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt"));
-								BufferedWriter lowerWriter = new BufferedWriter(levelWriter);
-								lowerWriter.write(line);
-								lowerWriter.close();
-								levelWriter.close();
-								line = "";
-							} catch (IOException e1) {
-								LOGGER.log(Level.SEVERE, "Error while writing level file: " + name, e1);
-							}
+							LevelFile.of(name).write(line);
+							line = "";
 						}
 						else if (line.length() == columnCount) {
-							try {
-								FileWriter levelWriter = new FileWriter(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt"), true);
-								BufferedWriter lowerWriter = new BufferedWriter(levelWriter);
-								lowerWriter.newLine();
-								lowerWriter.write(line);
-								lowerWriter.close();
-								levelWriter.close();
-								line = "";
-							} catch (IOException e1) {
-								LOGGER.log(Level.SEVERE, "Error while writing level file: " + name, e1);
-							}
+							LevelFile.of(name).write(System.lineSeparator() + line, StandardOpenOption.APPEND);
+							line = "";
 						}
 					}
 					dispose();
                     new HomeWindow();
-
                 }
 				else {
 					invalid_level.setText("Invalid level!");
@@ -221,6 +200,14 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         this.pack();
         this.setVisible( true );
 	}
+
+    private void initializeEmptyLevel(int rowCount, int columnCount) {
+        String content = IntStreamEx
+                .range(rowCount)
+                .mapToObj(i -> "_".repeat(columnCount))
+                .joining(System.lineSeparator());
+        levelFile.write(content);
+    }
 
     private void createQuitButton(String name) {
         JButton quit = new JButton("Quit");
