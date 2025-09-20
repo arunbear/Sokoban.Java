@@ -22,6 +22,7 @@ class LevelFileException extends RuntimeException {
 public class LevelFile {
     private static final Logger LOGGER = Logger.getLogger(LevelFile.class.getName());
     private static final String LEVELS_DIR = "levels";
+
     /**
      * Creates a new LevelFile instance for the given level name.
      * @param levelName the name of the level (without .txt extension)
@@ -42,6 +43,21 @@ public class LevelFile {
             String errorMsg = "Error while deleting level file: %s".formatted(levelName);
             LOGGER.log(Level.SEVERE, errorMsg, e);
             return false;
+        }
+    }
+
+    /**
+     * Writes the first line of content to the level file, overwriting any existing content.
+     * @param content The content to write to the file
+     * @throws LevelFileException if an I/O error occurs
+     */
+    public void write(String content) {
+        try {
+            Files.createDirectories(getLevelsDirectory());
+            Files.writeString(getFilePath(), content);
+        } catch (IOException e) {
+            String errorMsg = "Error while writing to level file: %s".formatted(levelName);
+            LOGGER.log(Level.SEVERE, errorMsg, e);
         }
     }
 

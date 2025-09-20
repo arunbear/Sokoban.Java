@@ -171,16 +171,8 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 						}
 
 						if (line.length() == columnCount && i+1 == columnCount) {
-							try {
-								FileWriter levelWriter = new FileWriter(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt"));
-								BufferedWriter lowerWriter = new BufferedWriter(levelWriter);
-								lowerWriter.write(line);
-								lowerWriter.close();
-								levelWriter.close();
-								line = "";
-							} catch (IOException e1) {
-								LOGGER.log(Level.SEVERE, "Error while writing level file: " + name, e1);
-							}
+							LevelFile.of(name).write(line);
+							line = "";
 						}
 						else if (line.length() == columnCount) {
 							try {
