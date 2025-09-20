@@ -33,25 +33,26 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         WALL_BUTTON,
         TARGET_BUTTON,
         EMPTY_BUTTON,
-        
+
         // Action buttons
         SAVE_BUTTON,
         BACK_BUTTON,
         QUIT_BUTTON,
-        
+
         // Other components
         ERROR_LABEL,
         SOKOBAN_PANEL
     }
     private static final Logger LOGGER = Logger.getLogger(Editor.class.getName());
 
-    private static final int TILE_SIZE = 32;
+    @VisibleForTesting
+    static final int TILE_SIZE = 32;
 
     private int windowWidth = 0;
     private int windowHeight = 0;
     private final Controller controller;
     private TileType content = TileType.OUTSIDE;
-    
+
     @VisibleForTesting
     TileType getContent() {
         return content;
@@ -228,7 +229,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         });
         this.add(quit);
     }
-    
+
     @VisibleForTesting
     ExitHandler defaultExitHandler() {
         return System::exit;

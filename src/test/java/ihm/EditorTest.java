@@ -29,9 +29,8 @@ class EditorTest {
     private static final Path TEST_LEVEL_PATH = Path.of("levels", TEST_LEVEL_NAME + ".txt");
     private static final int TEST_ROWS = 10;
     private static final int TEST_COLUMNS = 10;
-    private static final int TILE_SIZE = 32;
     private static final int X_OFFSET = 10;  // Horizontal offset for grid positioning
-    private static final int Y_OFFSET = 32;  // Vertical offset for grid positioning
+    private static final int Y_OFFSET = 32;  // Vertical offset for grid positioning (matches Editor's TILE_SIZE)
 
     private Editor editor;
 
@@ -115,22 +114,22 @@ class EditorTest {
         // Add player at (1,1)
         playerButton.doClick();
         editor.mousePressed(createMouseEvent(
-            X_OFFSET + 1 * TILE_SIZE,  // x = column 1
-            Y_OFFSET + 1 * TILE_SIZE   // y = row 1
+            X_OFFSET + 1 * Editor.TILE_SIZE,  // x = column 1
+            Y_OFFSET + 1 * Editor.TILE_SIZE   // y = row 1
         ));
 
         // Add box at (2,2)
         boxButton.doClick();
         editor.mousePressed(createMouseEvent(
-            X_OFFSET + 2 * TILE_SIZE,  // x = column 2
-            Y_OFFSET + 2 * TILE_SIZE   // y = row 2
+            X_OFFSET + 2 * Editor.TILE_SIZE,  // x = column 2
+            Y_OFFSET + 2 * Editor.TILE_SIZE   // y = row 2
         ));
 
         // Add target at (3,3)
         targetButton.doClick();
         editor.mousePressed(createMouseEvent(
-            X_OFFSET + 3 * TILE_SIZE,  // x = column 3
-            Y_OFFSET + 3 * TILE_SIZE   // y = row 3
+            X_OFFSET + 3 * Editor.TILE_SIZE,  // x = column 3
+            Y_OFFSET + 3 * Editor.TILE_SIZE   // y = row 3
         ));
 
         // When
