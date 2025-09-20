@@ -48,6 +48,9 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
     @VisibleForTesting
     static final int TILE_SIZE = 32;
 
+    @VisibleForTesting
+    static final int X_OFFSET = 10;  // Horizontal offset from window edge to grid start
+
     private int windowWidth = 0;
     private int windowHeight = 0;
     private final Controller controller;
@@ -333,16 +336,19 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if (e.getX() < windowWidth + 31 && e.getY() < windowHeight + 31) {
-			int l = Math.max((e.getX() - 10) / 32, 0);
-			int c = Math.max((e.getY() - 32) / 32, 0);
+			int l = Math.max((e.getX() - X_OFFSET) / TILE_SIZE, 0);
+			int c = Math.max((e.getY() - TILE_SIZE) / TILE_SIZE, 0);
 			controller.warehouse.getCase(c, l).setContent(content);
 			repaint();
 		}
 	}
-	@Override
+
+    @Override
 	public void mouseReleased(MouseEvent e) {}
-	@Override
+
+    @Override
 	public void mouseEntered(MouseEvent e) {}
-	@Override
+
+    @Override
 	public void mouseExited(MouseEvent e) {}
 }
