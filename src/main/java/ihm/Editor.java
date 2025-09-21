@@ -13,6 +13,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.StandardOpenOption;
 
 import com.google.common.annotations.VisibleForTesting;
 import javax.swing.*;
@@ -175,22 +176,12 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 							line = "";
 						}
 						else if (line.length() == columnCount) {
-							try {
-								FileWriter levelWriter = new FileWriter(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt"), true);
-								BufferedWriter lowerWriter = new BufferedWriter(levelWriter);
-								lowerWriter.newLine();
-								lowerWriter.write(line);
-								lowerWriter.close();
-								levelWriter.close();
-								line = "";
-							} catch (IOException e1) {
-								LOGGER.log(Level.SEVERE, "Error while writing level file: " + name, e1);
-							}
+							LevelFile.of(name).write(System.lineSeparator() + line, StandardOpenOption.APPEND);
+							line = "";
 						}
 					}
 					dispose();
                     new HomeWindow();
-
                 }
 				else {
 					invalid_level.setText("Invalid level!");
