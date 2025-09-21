@@ -1,6 +1,5 @@
 package ihm;
 
-import java.util.logging.Logger;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -8,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.StandardOpenOption;
 
@@ -45,7 +43,6 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         ERROR_LABEL,
         SOKOBAN_PANEL
     }
-    private static final Logger LOGGER = Logger.getLogger(Editor.class.getName());
 
     @VisibleForTesting
     static final int TILE_SIZE = 32;
@@ -68,7 +65,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         levelFile = LevelFile.of(name);
         initializeEmptyLevel(rowCount, columnCount);
 
-        controller = new Controller(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt").getPath());
+        controller = new Controller(levelFile.getFilePath().toString());
 		windowWidth = controller.warehouse.getColumns() * TILE_SIZE;
         windowHeight = controller.warehouse.getLines() * TILE_SIZE;
 
@@ -103,11 +100,11 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         back.setName(Component.BACK_BUTTON.name());
         back.setBounds(windowWidth + 20, 210, 110, 30);
 
-        createQuitButton(name);
+        createQuitButton();
 
         back.addActionListener(_ -> {
             dispose();
-            LevelFile.of(name).delete();
+            levelFile.delete();
             new HomeWindow();
         });
 
@@ -168,11 +165,11 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 						}
 
 						if (line.length() == columnCount && i+1 == columnCount) {
-							LevelFile.of(name).write(line);
+							levelFile.write(line);
 							line = "";
 						}
 						else if (line.length() == columnCount) {
-							LevelFile.of(name).write(System.lineSeparator() + line, StandardOpenOption.APPEND);
+							levelFile.write(System.lineSeparator() + line, StandardOpenOption.APPEND);
 							line = "";
 						}
 					}
@@ -209,12 +206,12 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         levelFile.write(content);
     }
 
-    private void createQuitButton(String name) {
+    private void createQuitButton() {
         JButton quit = new JButton("Quit");
         quit.setName(Component.QUIT_BUTTON.name());
         quit.setBounds(windowWidth + 20, 250, 110, 30);
         quit.addActionListener(_ -> {
-            LevelFile.of(name).delete();
+            levelFile.delete();
             defaultExitHandler().exit(ExitHandler.SUCCESS);
         });
         this.add(quit);

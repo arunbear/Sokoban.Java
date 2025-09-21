@@ -62,7 +62,7 @@ public class LevelFile {
         this.levelName = levelName + ".txt";
     }
 
-    private Path getFilePath() throws IOException {
+    public Path getFilePath() throws IOException {
         return getLevelsDirectory().resolve(levelName);
     }
 
