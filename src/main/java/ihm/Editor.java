@@ -85,11 +85,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         createTargetButton();
         createEmptyButton();
 
-        // Status label
-        JLabel invalid_level = new JLabel("", SwingConstants.CENTER);
-        invalid_level.setName(Component.ERROR_LABEL.name());
-        invalid_level.setForeground(Color.RED);
-        invalid_level.setBounds(windowWidth, 145, 150, 20);
+        JLabel errorLabel = createErrorLabel();
 
         // Action buttons
         JButton save = new JButton("Save");
@@ -168,14 +164,14 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
                     new HomeWindow();
                 }
 				else {
-					invalid_level.setText("Invalid level!");
+					errorLabel.setText("Invalid level!");
 				}
 			}
 	    });
 
 
 	 	this.add(save);
-	 	this.add(invalid_level);
+	 	this.add(errorLabel);
 
         JPanel sokobanPanel = new SokobanPanel(controller);
         sokobanPanel.setName(Component.SOKOBAN_PANEL.name());
@@ -292,6 +288,15 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         button.setBounds(windowWidth + 75, 74, TILE_SIZE, TILE_SIZE);
         button.addActionListener(_ -> content = TileType.STORAGE_AREA);
         this.add(button);
+    }
+
+    private JLabel createErrorLabel() {
+        JLabel label = new JLabel("", SwingConstants.CENTER);
+        label.setName(Component.ERROR_LABEL.name());
+        label.setForeground(Color.RED);
+        label.setBounds(windowWidth, 145, 150, 20);
+        this.add(label);
+        return label;
     }
 
     private void createEmptyButton() {
