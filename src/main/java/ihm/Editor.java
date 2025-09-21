@@ -88,12 +88,9 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         JLabel errorLabel = createErrorLabel();
 
         // Action buttons
-        JButton save = new JButton("Save");
-        save.setName(Component.SAVE_BUTTON.name());
-        save.setBounds(windowWidth + 20, 170, 110, 30);
-
         createBackButton();
         createQuitButton();
+        JButton save = createSaveButton();
 
         save.addActionListener(new ActionListener() {
 			@Override
@@ -168,10 +165,6 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 				}
 			}
 	    });
-
-
-	 	this.add(save);
-	 	this.add(errorLabel);
 
         JPanel sokobanPanel = new SokobanPanel(controller);
         sokobanPanel.setName(Component.SOKOBAN_PANEL.name());
@@ -288,6 +281,14 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         button.setBounds(windowWidth + 75, 74, TILE_SIZE, TILE_SIZE);
         button.addActionListener(_ -> content = TileType.STORAGE_AREA);
         this.add(button);
+    }
+
+    private JButton createSaveButton() {
+        JButton save = new JButton("Save");
+        save.setName(Component.SAVE_BUTTON.name());
+        save.setBounds(windowWidth + 20, 170, 110, 30);
+        this.add(save);
+        return save;
     }
 
     private JLabel createErrorLabel() {
