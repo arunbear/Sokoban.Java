@@ -1,24 +1,19 @@
 package logic;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Thrown when an error occurs during level file operations.
- */
-class LevelFileException extends RuntimeException {
-    public LevelFileException(String message, Throwable cause) {
-        super(message, cause);
-    }
-}
-
-/**
  * Simple utility class for handling level file paths.
  */
+@NullMarked
 public class LevelFile {
     private static final Logger LOGGER = Logger.getLogger(LevelFile.class.getName());
     private static final String LEVELS_DIR = "levels";
@@ -47,17 +42,14 @@ public class LevelFile {
     }
 
     /**
-     * Writes the first line of content to the level file, overwriting any existing content.
+     * Writes content to the level file with the specified options.
      * @param content The content to write to the file
-     * @throws LevelFileException if an I/O error occurs
+     * @param options Options specifying how the file is opened
      */
-    public void write(String... lines) {
-        if (lines == null || lines.length == 0) {
-            return;
-        }
+    public void write(String content, OpenOption... options) {
         try {
             Files.createDirectories(getLevelsDirectory());
-            Files.writeString(getFilePath(), String.join("", lines));
+            Files.writeString(getFilePath(), content, options);
         } catch (IOException e) {
             String errorMsg = "Error while writing to level file: %s".formatted(levelName);
             LOGGER.log(Level.SEVERE, errorMsg, e);
