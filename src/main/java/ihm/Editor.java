@@ -18,6 +18,7 @@ import javax.swing.*;
 import logic.TileType;
 import logic.Controller;
 import logic.LevelFile;
+import one.util.streamex.IntStreamEx;
 
 public class Editor extends JFrame implements MouseListener, MouseMotionListener {
 
@@ -201,12 +202,11 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	}
 
     private void initializeEmptyLevel(int rowCount, int columnCount) {
-        StringBuilder content = new StringBuilder();
-        for (int i = 0; i < rowCount; i++) {
-            content.append("_".repeat(columnCount))
-                   .append(System.lineSeparator());
-        }
-        levelFile.write(content.toString());
+        String content = IntStreamEx
+                .range(rowCount)
+                .mapToObj(i -> "_".repeat(columnCount))
+                .joining(System.lineSeparator());
+        levelFile.write(content);
     }
 
     private void createQuitButton(String name) {
