@@ -120,33 +120,8 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
 						int c = i / columnCount;
 						int l = i % columnCount;
-						TileType end_content = controller.warehouse.getCase(c, l).getContent();
-						switch (end_content) {
-							case WORKER_ON_FLOOR:
-								line += "G";
-								break;
-							case WORKER_IN_STORAGE_AREA:
-								line += "B";
-								break;
-							case UNSTORED_BOX:
-								line += "C";
-								break;
-							case STORED_BOX:
-								line += "V";
-								break;
-							case FLOOR:
-								line += "#";
-								break;
-							case STORAGE_AREA:
-								line += "T";
-								break;
-							case OUTSIDE:
-								line += "_";
-								break;
-							case WALL:
-								line += "M";
-								break;
-						}
+						TileType endContent = controller.warehouse.getCase(c, l).getContent();
+                        line += endContent.getCode();
 
 						if (line.length() == columnCount && i+1 == columnCount) {
 							levelFile.write(line);
@@ -178,9 +153,10 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	}
 
     private void initializeEmptyLevel(int rowCount, int columnCount) {
+        String tileCode  = "" + TileType.OUTSIDE.getCode();
         String content = IntStreamEx
                 .range(rowCount)
-                .mapToObj(i -> "_".repeat(columnCount))
+                .mapToObj(_ -> tileCode.repeat(columnCount))
                 .joining(System.lineSeparator());
         levelFile.write(content);
     }
