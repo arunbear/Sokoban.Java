@@ -96,17 +96,8 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         save.setName(Component.SAVE_BUTTON.name());
         save.setBounds(windowWidth + 20, 170, 110, 30);
 
-        JButton back = new JButton("Back");
-        back.setName(Component.BACK_BUTTON.name());
-        back.setBounds(windowWidth + 20, 210, 110, 30);
-
+        createBackButton();
         createQuitButton();
-
-        back.addActionListener(_ -> {
-            dispose();
-            levelFile.delete();
-            new HomeWindow();
-        });
 
         save.addActionListener(new ActionListener() {
 			@Override
@@ -184,7 +175,6 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
 
 	 	this.add(save);
-	 	this.add(back);
 	 	this.add(invalid_level);
 
         JPanel sokobanPanel = new SokobanPanel(controller);
@@ -204,6 +194,18 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
                 .mapToObj(i -> "_".repeat(columnCount))
                 .joining(System.lineSeparator());
         levelFile.write(content);
+    }
+
+    private void createBackButton() {
+        JButton back = new JButton("Back");
+        back.setName(Component.BACK_BUTTON.name());
+        back.setBounds(windowWidth + 20, 210, 110, 30);
+        back.addActionListener(_ -> {
+            dispose();
+            levelFile.delete();
+            new HomeWindow();
+        });
+        this.add(back);
     }
 
     private void createQuitButton() {
