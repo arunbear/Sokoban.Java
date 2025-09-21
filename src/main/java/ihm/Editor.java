@@ -20,6 +20,9 @@ import logic.Controller;
 import logic.LevelFile;
 
 public class Editor extends JFrame implements MouseListener, MouseMotionListener {
+
+    private final LevelFile levelFile;
+
     @VisibleForTesting
     enum Component {
         // Tool buttons
@@ -61,15 +64,10 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
 	public Editor (int rowCount, int columnCount, String name) throws IOException  {
 
-        LevelFile levelFile = LevelFile.of(name);
-        StringBuilder content = new StringBuilder();
-        for (int i = 0; i < rowCount; i++) {
-            content.append("_".repeat(columnCount))
-                   .append(System.lineSeparator());
-        }
-        levelFile.write(content.toString());
+        levelFile = LevelFile.of(name);
+        initializeEmptyLevel(rowCount, columnCount);
 
-		controller = new Controller(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt").getPath());
+        controller = new Controller(new File(new File(".").getCanonicalPath() + "/levels/" + name + ".txt").getPath());
 		windowWidth = controller.warehouse.getColumns() * TILE_SIZE;
         windowHeight = controller.warehouse.getLines() * TILE_SIZE;
 
@@ -201,6 +199,15 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         this.pack();
         this.setVisible( true );
 	}
+
+    private void initializeEmptyLevel(int rowCount, int columnCount) {
+        StringBuilder content = new StringBuilder();
+        for (int i = 0; i < rowCount; i++) {
+            content.append("_".repeat(columnCount))
+                   .append(System.lineSeparator());
+        }
+        levelFile.write(content.toString());
+    }
 
     private void createQuitButton(String name) {
         JButton quit = new JButton("Quit");
