@@ -9,6 +9,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.IntStream;
 
 import com.google.common.annotations.VisibleForTesting;
 import javax.swing.*;
@@ -153,12 +157,18 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	}
 
     private void initializeEmptyLevel(int rowCount, int columnCount) {
-        String tileCode  = "" + TileType.OUTSIDE.getCode();
-        String content = IntStreamEx
-                .range(rowCount)
-                .mapToObj(_ -> tileCode.repeat(columnCount))
-                .joining(System.lineSeparator());
-        levelFile.write(content);
+        final var wall = TileType.WALL.codeAsString();
+        String wallRow = wall.repeat(columnCount);
+        String middleRow = wall
+                + TileType.FLOOR.codeAsString().repeat(columnCount - 2)
+                + wall;
+
+        List<String> lines = new ArrayList<>();
+        lines.add(wallRow);
+        lines.addAll(Collections.nCopies(rowCount - 2, middleRow));
+        lines.add(wallRow);
+
+        levelFile.write(String.join(System.lineSeparator(), lines));
     }
 
     private void createBackButton() {

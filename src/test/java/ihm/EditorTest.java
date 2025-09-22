@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static java.nio.file.Files.deleteIfExists;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -313,31 +314,35 @@ class EditorTest {
      * Represents expected positions in the test grid.
      */
     @Test
-    void a_new_level_is_created_with_all_tiles_set_to_outside() throws Exception {
+    void a_new_level_is_created_with_walls_and_floor_spaces() throws Exception {
         // Given
         int testRows = 7;
-        int testCols = 10;
+        int testCols = 7;
         String testLevelName = "emptyGridTest";
         Path testLevelPath = Path.of("levels", testLevelName + ".txt");
 
         try {
             // When
-            Editor emptyEditor = new Editor(testRows, testCols, testLevelName);
+            Editor newEditor = new Editor(testRows, testCols, testLevelName);
 
-            // Then - Verify the file was created with correct dimensions and content
             then(testLevelPath).exists();
             List<String> lines = Files.readAllLines(testLevelPath);
 
             then(lines).hasSize(testRows);
-            then(lines).allSatisfy(line -> {
-                then(line.length()).isEqualTo(testCols);
-                then(line).isEqualTo(TileType.OUTSIDE.codeAsString().repeat(testCols));
-            });
 
-            // Clean up
-            emptyEditor.dispose();
-        } finally {
-            // Ensure cleanup even if test fails
+            // First and last row should be all walls
+            String wallRow = TileType.WALL.codeAsString().repeat(testCols);
+            then(lines.getFirst()).isEqualTo(wallRow);
+            then(lines.getLast()).isEqualTo(wallRow);
+
+            // Middle rows should have walls on the sides
+            String middleRow = "%s%s%s".formatted(
+                    TileType.WALL.codeAsString(),
+                    TileType.FLOOR.codeAsString().repeat(testCols - 2),
+                    TileType.WALL.codeAsString());
+            then(lines.subList(1, testRows - 1)).allSatisfy(line -> then(line).isEqualTo(middleRow));
+        }
+        finally {
             Files.deleteIfExists(testLevelPath);
         }
     }
