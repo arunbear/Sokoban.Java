@@ -312,6 +312,36 @@ class EditorTest {
     /**
      * Represents expected positions in the test grid.
      */
+    @Test
+    void a_new_level_is_created_with_all_tiles_set_to_outside() throws Exception {
+        // Given
+        int testRows = 7;
+        int testCols = 10;
+        String testLevelName = "emptyGridTest";
+        Path testLevelPath = Path.of("levels", testLevelName + ".txt");
+
+        try {
+            // When
+            Editor emptyEditor = new Editor(testRows, testCols, testLevelName);
+
+            // Then - Verify the file was created with correct dimensions and content
+            then(testLevelPath).exists();
+            List<String> lines = Files.readAllLines(testLevelPath);
+
+            then(lines).hasSize(testRows);
+            then(lines).allSatisfy(line -> {
+                then(line.length()).isEqualTo(testCols);
+                then(line).isEqualTo(TileType.OUTSIDE.codeAsString().repeat(testCols));
+            });
+
+            // Clean up
+            emptyEditor.dispose();
+        } finally {
+            // Ensure cleanup even if test fails
+            Files.deleteIfExists(testLevelPath);
+        }
+    }
+
     private record ExpectedAt(int x, int y) {
     }
 }

@@ -23,4 +23,13 @@ public enum TileType {
     public char getCode() {
         return code;
     }
+
+    /**
+     * Returns the character code used to represent this tile type in level files as a String.
+     * @return the character code for this tile type as a single-character String
+     */
+    public String codeAsString() {
+        return String.valueOf(code);
+    }
+
 }
