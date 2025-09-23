@@ -97,15 +97,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-                int[] tileCounts = new int[TileType.values().length];
-
-                IntStream.range(0, rowCount * columnCount).forEach(i -> {
-                    int c = i / columnCount;
-                    int l = i % columnCount;
-                    TileType tileType = controller.warehouse.getCase(c, l).getContent();
-                    tileCounts[tileType.ordinal()]++;
-                });
-                if (isValidLevel(tileCounts)) {
+                if (isValidLevel(rowCount, columnCount)) {
 					String line = "";
 					for (int i = 0; i < rowCount * columnCount; i++) {
 
@@ -311,6 +303,30 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
     @Override
 	public void mouseExited(MouseEvent e) {}
 
+    /**
+     * Validates the level based on its dimensions and tile counts.
+     * @param rowCount Number of rows in the level
+     * @param columnCount Number of columns in the level
+     * @return true if the level is valid, false otherwise
+     */
+    private boolean isValidLevel(int rowCount, int columnCount) {
+        int[] tileCounts = new int[TileType.values().length];
+        
+        IntStream.range(0, rowCount * columnCount).forEach(i -> {
+            int c = i / columnCount;
+            int l = i % columnCount;
+            TileType tileType = controller.warehouse.getCase(c, l).getContent();
+            tileCounts[tileType.ordinal()]++;
+        });
+        
+        return isValidLevel(tileCounts);
+    }
+    
+    /**
+     * Validates the level based on tile counts.
+     * @param tileCounts Array containing counts of each tile type
+     * @return true if the level is valid, false otherwise
+     */
     private boolean isValidLevel(int[] tileCounts) {
         int workersFound = tileCounts[TileType.WORKER_ON_FLOOR.ordinal()]
                          + tileCounts[TileType.WORKER_IN_STORAGE_AREA.ordinal()];
@@ -324,7 +340,6 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
             return false;
         }
 
-        // check if there are enough targets for all boxes
         int targetsFound = tileCounts[TileType.WORKER_IN_STORAGE_AREA.ordinal()]
                          + tileCounts[TileType.STORAGE_AREA.ordinal()]
                          + tileCounts[TileType.STORED_BOX.ordinal()];
