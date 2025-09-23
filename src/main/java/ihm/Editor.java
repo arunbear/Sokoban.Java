@@ -2,8 +2,6 @@ package ihm;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -21,6 +19,8 @@ import logic.LevelFile;
 public class Editor extends JFrame implements MouseListener, MouseMotionListener {
 
     private final LevelFile levelFile;
+    private final int rowCount;
+    private final int columnCount;
 
     @VisibleForTesting
     enum Component {
@@ -63,7 +63,9 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 	public Editor (int rowCount, int columnCount, String name) throws IOException  {
 
         levelFile = LevelFile.of(name);
-        initializeEmptyLevel(rowCount, columnCount);
+        this.rowCount = rowCount;
+        this.columnCount = columnCount;
+        initializeEmptyLevel();
 
         controller = new Controller(levelFile.getFilePath().toString());
 		windowWidth = controller.warehouse.getColumns() * TILE_SIZE;
@@ -93,8 +95,8 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         JButton save = createSaveButton();
 
         save.addActionListener(_ -> {
-            if (isValidLevel(rowCount, columnCount)) {
-                saveLevelToFile(rowCount, columnCount);
+            if (isValidLevel()) {
+                saveLevelToFile();
                 dispose();
                 new HomeWindow();
             } else {
@@ -113,7 +115,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         this.setVisible( true );
 	}
 
-    private void initializeEmptyLevel(int rowCount, int columnCount) {
+    private void initializeEmptyLevel() {
         final var wall = TileType.WALL.codeAsString();
         String wallRow = wall.repeat(columnCount);
         String middleRow = wall
@@ -283,11 +285,10 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
     /**
      * Validates the level based on its dimensions and tile counts.
-     * @param rowCount Number of rows in the level
-     * @param columnCount Number of columns in the level
+     *
      * @return true if the level is valid, false otherwise
      */
-    private boolean isValidLevel(int rowCount, int columnCount) {
+    private boolean isValidLevel() {
         int[] tileCounts = new int[TileType.values().length];
 
         IntStream.range(0, rowCount * columnCount).forEach(i -> {
@@ -302,10 +303,8 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
     /**
      * Saves the current level state to a file.
-     * @param rowCount Number of rows in the level
-     * @param columnCount Number of columns in the level
      */
-    private void saveLevelToFile(int rowCount, int columnCount) {
+    private void saveLevelToFile() {
         StringBuilder levelContent = new StringBuilder();
 
         IntStream.range(0, rowCount * columnCount).forEach(i -> {
