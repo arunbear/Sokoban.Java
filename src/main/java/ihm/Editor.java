@@ -9,9 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -20,7 +18,6 @@ import javax.swing.*;
 import logic.TileType;
 import logic.Controller;
 import logic.LevelFile;
-import one.util.streamex.IntStreamEx;
 
 public class Editor extends JFrame implements MouseListener, MouseMotionListener {
 
@@ -100,25 +97,15 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				int workerCount = 0;
-				int boxCount = 0;
-				int targetCount = 0;
-				for (int i = 0; i < rowCount * columnCount; i++) {
-					int c = i / columnCount;
-					int l = i % columnCount;
-					TileType end_content = controller.warehouse.getCase(c, l).getContent();
-					if (end_content == TileType.WORKER_ON_FLOOR || end_content == TileType.WORKER_IN_STORAGE_AREA) {
-						workerCount++;
-					}
-					if (end_content == TileType.UNSTORED_BOX || end_content == TileType.STORED_BOX) {
-						boxCount++;
-					}
-					if (end_content == TileType.WORKER_IN_STORAGE_AREA || end_content == TileType.STORAGE_AREA || end_content == TileType.STORED_BOX) {
-						targetCount++;
-					}
+                int[] tileCounts = new int[TileType.values().length];
 
-				}
-				if (workerCount == 1 && targetCount >= boxCount && boxCount > 0) {
+                IntStream.range(0, rowCount * columnCount).forEach(i -> {
+                    int c = i / columnCount;
+                    int l = i % columnCount;
+                    TileType tileType = controller.warehouse.getCase(c, l).getContent();
+                    tileCounts[tileType.ordinal()]++;
+                });
+                if (isValidLevel(tileCounts)) {
 					String line = "";
 					for (int i = 0; i < rowCount * columnCount; i++) {
 
@@ -323,4 +310,25 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
     @Override
 	public void mouseExited(MouseEvent e) {}
+
+    private boolean isValidLevel(int[] tileCounts) {
+        int workersFound = tileCounts[TileType.WORKER_ON_FLOOR.ordinal()]
+                         + tileCounts[TileType.WORKER_IN_STORAGE_AREA.ordinal()];
+        if (workersFound != 1) {
+            return false;
+        }
+
+        int boxesFound = tileCounts[TileType.UNSTORED_BOX.ordinal()]
+                       + tileCounts[TileType.STORED_BOX.ordinal()];
+        if (boxesFound == 0) {
+            return false;
+        }
+
+        // check if there are enough targets for all boxes
+        int targetsFound = tileCounts[TileType.WORKER_IN_STORAGE_AREA.ordinal()]
+                         + tileCounts[TileType.STORAGE_AREA.ordinal()]
+                         + tileCounts[TileType.STORED_BOX.ordinal()];
+
+        return targetsFound >= boxesFound;
+    }
 }
