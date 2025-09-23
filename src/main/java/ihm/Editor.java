@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
-import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -93,36 +92,15 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         createQuitButton();
         JButton save = createSaveButton();
 
-        save.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-                if (isValidLevel(rowCount, columnCount)) {
-					String line = "";
-					for (int i = 0; i < rowCount * columnCount; i++) {
-
-						int c = i / columnCount;
-						int l = i % columnCount;
-						TileType endContent = controller.warehouse.getCase(c, l).getContent();
-                        line += endContent.getCode();
-
-						if (line.length() == columnCount && i+1 == columnCount) {
-							levelFile.write(line);
-							line = "";
-						}
-						else if (line.length() == columnCount) {
-							levelFile.write(System.lineSeparator() + line, StandardOpenOption.APPEND);
-							line = "";
-						}
-					}
-					dispose();
-                    new HomeWindow();
-                }
-				else {
-					errorLabel.setText("Invalid level!");
-				}
-			}
-	    });
+        save.addActionListener(_ -> {
+            if (isValidLevel(rowCount, columnCount)) {
+                saveLevelToFile(rowCount, columnCount);
+                dispose();
+                new HomeWindow();
+            } else {
+                errorLabel.setText("Invalid level!");
+            }
+        });
 
         JPanel sokobanPanel = new SokobanPanel(controller);
         sokobanPanel.setName(Component.SOKOBAN_PANEL.name());
@@ -311,17 +289,39 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
      */
     private boolean isValidLevel(int rowCount, int columnCount) {
         int[] tileCounts = new int[TileType.values().length];
-        
+
         IntStream.range(0, rowCount * columnCount).forEach(i -> {
             int c = i / columnCount;
             int l = i % columnCount;
             TileType tileType = controller.warehouse.getCase(c, l).getContent();
             tileCounts[tileType.ordinal()]++;
         });
-        
+
         return isValidLevel(tileCounts);
     }
-    
+
+    /**
+     * Saves the current level state to a file.
+     * @param rowCount Number of rows in the level
+     * @param columnCount Number of columns in the level
+     */
+    private void saveLevelToFile(int rowCount, int columnCount) {
+        StringBuilder levelContent = new StringBuilder();
+
+        IntStream.range(0, rowCount * columnCount).forEach(i -> {
+            int c = i / columnCount;
+            int l = i % columnCount;
+            TileType tileType = controller.warehouse.getCase(c, l).getContent();
+            levelContent.append(tileType.getCode());
+
+            if ((i + 1) % columnCount == 0) { // the row is complete
+                levelContent.append(System.lineSeparator());
+            }
+        });
+
+        levelFile.write(levelContent.toString());
+    }
+
     /**
      * Validates the level based on tile counts.
      * @param tileCounts Array containing counts of each tile type
