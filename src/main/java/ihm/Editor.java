@@ -15,12 +15,20 @@ import javax.swing.*;
 import logic.TileType;
 import logic.Controller;
 import logic.LevelFile;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class Editor extends JFrame implements MouseListener, MouseMotionListener {
 
     private final LevelFile levelFile;
     private final int rowCount;
     private final int columnCount;
+
+    private final int windowWidth;
+    private final int windowHeight;
+    private final Controller controller;
+
+    private TileType content = TileType.OUTSIDE;
 
     @VisibleForTesting
     enum Component {
@@ -50,11 +58,6 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
     @VisibleForTesting
     static final int X_OFFSET = 10;  // Horizontal offset from window edge to grid start
 
-    private int windowWidth = 0;
-    private int windowHeight = 0;
-    private final Controller controller;
-    private TileType content = TileType.OUTSIDE;
-
     @VisibleForTesting
     TileType getContent() {
         return content;
@@ -68,14 +71,32 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         initializeEmptyLevel();
 
         controller = new Controller(levelFile.getFilePath().toString());
-		windowWidth = controller.warehouse.getColumns() * TILE_SIZE;
+        windowWidth  = controller.warehouse.getColumns() * TILE_SIZE;
         windowHeight = controller.warehouse.getLines() * TILE_SIZE;
+        setupFrame();
 
-        this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        JLabel errorLabel = createErrorLabel();
+        createSaveButton(errorLabel);
+
+        this.pack();
+        this.setVisible(true);
+	}
+
+    private void setupFrame() {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Sokoban v1.0 par Gabriel FARAGO");
         this.setPreferredSize(new Dimension(windowWidth + 150, Math.max(windowHeight + 150, 330)));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+
+        this.addMouseListener(this);
+        this.addMouseMotionListener(this);
+
+        setupSokobanPanel();
+
+        // Action buttons
+        createBackButton();
+        createQuitButton();
 
         // Tool buttons
         createPlayerButton();
@@ -86,34 +107,13 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         createWallButton();
         createTargetButton();
         createEmptyButton();
+    }
 
-        JLabel errorLabel = createErrorLabel();
-
-        // Action buttons
-        createBackButton();
-        createQuitButton();
-        JButton save = createSaveButton();
-
-        save.addActionListener(_ -> {
-            if (isValidLevel()) {
-                saveLevelToFile();
-                dispose();
-                new HomeWindow();
-            } else {
-                errorLabel.setText("Invalid level!");
-            }
-        });
-
+    private void setupSokobanPanel() {
         JPanel sokobanPanel = new SokobanPanel(controller);
         sokobanPanel.setName(Component.SOKOBAN_PANEL.name());
         this.add(sokobanPanel);
-
-        this.addMouseMotionListener(this);
-        this.addMouseListener(this);
-        this.addMouseMotionListener(this);
-        this.pack();
-        this.setVisible( true );
-	}
+    }
 
     private void initializeEmptyLevel() {
         final var wall = TileType.WALL.codeAsString();
@@ -228,12 +228,21 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         this.add(button);
     }
 
-    private JButton createSaveButton() {
+    private void createSaveButton(JLabel errorLabel) {
         JButton save = new JButton("Save");
         save.setName(Component.SAVE_BUTTON.name());
         save.setBounds(windowWidth + 20, 170, 110, 30);
+
+        save.addActionListener(_ -> {
+            if (isValidLevel()) {
+                saveLevelToFile();
+                dispose();
+                new HomeWindow();
+            } else {
+                errorLabel.setText("Invalid level!");
+            }
+        });
         this.add(save);
-        return save;
     }
 
     private JLabel createErrorLabel() {
