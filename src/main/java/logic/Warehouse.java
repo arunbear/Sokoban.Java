@@ -59,6 +59,8 @@ public class Warehouse {
                     }
                     case "V" ->
                             case_tableau.add(new Case(i, j, TileType.STORED_BOX, this));
+
+                    default -> throw new RuntimeException("Invalid tile type: " + linesFromFile.get(i).charAt(j));
                 }
 
 			}

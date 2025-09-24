@@ -1,6 +1,5 @@
 package logic;
 
-import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -13,6 +12,15 @@ public class Controller {
 
 	private int level = customLevel;
     private final String pathToLevel;
+
+    public int getLines() {
+        return warehouse.getLines();
+    }
+
+    public int getColumns() {
+        return warehouse.getColumns();
+    }
+
     public Warehouse warehouse;
     public Worker worker;
 
