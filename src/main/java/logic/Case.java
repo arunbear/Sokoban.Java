@@ -7,53 +7,38 @@ public class Case {
     private int colonne;
     private TileType content;
     public Warehouse warehouse;
-    
+
     public Case (int ligne, int colonne, TileType content, Warehouse warehouse) {
     	this.ligne = ligne;
     	this.colonne = colonne;
     	this.content = content;
     	this.warehouse = warehouse;
     }
-    
+
     public TileType getContent() {
     	return this.content;
     }
-    
+
     public void setContent (TileType content) {
     	this.content = content;
     }
-    
+
     public void setContentVoisine(Direction direction, TileType content) {
-    	switch (direction) {
-		case UP:
-			warehouse.getCase(ligne - 1, colonne).setContent(content);
-			break;
-		case DOWN:
-			warehouse.getCase(ligne + 1, colonne).setContent(content);
-			break;
-		case LEFT:
-			warehouse.getCase(ligne, colonne - 1).setContent(content);
-			break;
-		case RIGHT:
-			warehouse.getCase(ligne, colonne + 1).setContent(content);
-			break;
-	}
+        switch (direction) {
+            case UP    -> warehouse.getCase(ligne - 1, colonne).setContent(content);
+            case DOWN  -> warehouse.getCase(ligne + 1, colonne).setContent(content);
+            case LEFT  -> warehouse.getCase(ligne, colonne - 1).setContent(content);
+            case RIGHT -> warehouse.getCase(ligne, colonne + 1).setContent(content);
+        }
     }
 
-    
-
     public TileType getContentVoisine(Direction direction) {
-    	switch (direction) {
-			case UP:
-				return warehouse.getCase(ligne - 1, colonne).getContent();
-			case DOWN:
-				return warehouse.getCase(ligne + 1, colonne).getContent();
-			case LEFT:
-				return warehouse.getCase(ligne, colonne - 1).getContent();
-			case RIGHT:
-				return warehouse.getCase(ligne, colonne + 1).getContent();
-    	}
-		return content;
+        return switch (direction) {
+            case UP    -> warehouse.getCase(ligne - 1, colonne).getContent();
+            case DOWN  -> warehouse.getCase(ligne + 1, colonne).getContent();
+            case LEFT  -> warehouse.getCase(ligne, colonne - 1).getContent();
+            case RIGHT -> warehouse.getCase(ligne, colonne + 1).getContent();
+        };
     }
 
     public boolean acceptGardian(Direction direction) {
