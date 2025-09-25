@@ -2,8 +2,13 @@ package ihm;
 
 import logic.Controller;
 import logic.Warehouse;
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import java.util.stream.Stream;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -11,17 +16,41 @@ import java.nio.file.Paths;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
+@NullMarked
 class SokobanWindowTest {
 
+    private static final String DEFAULT_TEST_LEVEL = "src/test/resources/levels/test_level.txt";
     private SokobanWindow window;
     private Controller controller;
 
     @BeforeEach
     void setUp() {
-        // Use a test level file
-        String testLevelPath = Paths.get("src/test/resources/levels/test_level.txt").toAbsolutePath().toString();
+        // Use the default test level file for all tests
+        window = createTestWindow();
+        controller = window.getController();
+    }
+
+    /**
+     * Creates and returns a test window with the default test level.
+     * This is the happy path setup used by most tests.
+     *
+     * @return A new SokobanWindow instance with the default test level
+     */
+    private SokobanWindow createTestWindow() {
+        return createTestWindow(DEFAULT_TEST_LEVEL);
+    }
+
+    /**
+     * Creates and returns a test window with the specified level file.
+     *
+     * @param levelPath Path to the level file to load
+     * @return A new SokobanWindow instance with the specified level
+     */
+    private SokobanWindow createTestWindow(String levelPath) {
+        String testLevelPath = Paths.get(levelPath).toAbsolutePath().toString();
         controller = new Controller(testLevelPath);
         window = new SokobanWindow(controller);
+        return window;
     }
 
     @Test
@@ -129,6 +158,45 @@ class SokobanWindowTest {
         // then - verify worker moved down
         then(controller.worker.getLine()).isEqualTo(initialLine + 1);
         then(controller.worker.getColumn()).isEqualTo(initialColumn);
+    }
+
+    private static Stream<Arguments> directionKeyCodes() {
+        return Stream.of(
+            Arguments.of(KeyEvent.VK_UP, "UP"),
+            Arguments.of(KeyEvent.VK_RIGHT, "RIGHT"),
+            Arguments.of(KeyEvent.VK_DOWN, "DOWN"),
+            Arguments.of(KeyEvent.VK_LEFT, "LEFT")
+        );
+    }
+
+    @ParameterizedTest(name = "Player cannot move {1} when obstructed")
+    @MethodSource("directionKeyCodes")
+    void player_cannot_move_when_obstructed(int keyCode, String directionName) {
+        // given - load the no-moves test level
+        window = createTestWindow("src/test/resources/levels/test_level_no_moves.txt");
+
+        // Record initial position
+        int initialLine = controller.worker.getLine();
+        int initialColumn = controller.worker.getColumn();
+
+        // when - try to move in the specified direction
+        KeyEvent keyEvent = new KeyEvent(
+            window,
+            KeyEvent.KEY_PRESSED,
+            System.currentTimeMillis(),
+            0,
+            keyCode,
+            KeyEvent.CHAR_UNDEFINED
+        );
+        window.keyPressed(keyEvent);
+
+        // then - verify the player didn't move
+        then(controller.worker.getLine())
+            .as("Player did not move from line %d when moving %s".formatted(initialLine, directionName))
+            .isEqualTo(initialLine);
+        then(controller.worker.getColumn())
+            .as("Player did not move from column %d when moving %s".formatted(initialColumn, directionName))
+            .isEqualTo(initialColumn);
     }
 
     @Test

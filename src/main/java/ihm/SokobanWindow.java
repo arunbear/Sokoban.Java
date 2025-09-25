@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -20,6 +19,10 @@ import logic.GameAction;
 public class SokobanWindow extends JFrame implements KeyListener{
 
     public static final int IMAGE_SIZE = 32;
+
+    public Controller getController() {
+        return controller;
+    }
 
     private final Controller controller;
     private final List<Direction> previousActions = new ArrayList<>();
