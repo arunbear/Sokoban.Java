@@ -50,36 +50,36 @@ public class Controller {
     public void action(Direction direction) {
     	int l = worker.getLine();
     	int c = worker.getColumn();
-    	switch (direction) {
-    		case UP:
-    			if (l != 0) {
-    				if (warehouse.getCase((l - 1), c).acceptGardian(direction)) {
-						worker.moveUp();
-    				}
+        switch (direction) {
+            case UP -> {
+                if (l != 0) {
+                    if (warehouse.getCase((l - 1), c).acceptGardian(direction)) {
+                        worker.moveUp();
+                    }
                 }
-                break;
-    		case DOWN:
-    			if (l != warehouse.getLines() - 1) {
-    				if (warehouse.getCase((l + 1), c).acceptGardian(direction)) {
-    					worker.moveDown();
-    				}
+            }
+            case DOWN -> {
+                if (l != warehouse.getLines() - 1) {
+                    if (warehouse.getCase((l + 1), c).acceptGardian(direction)) {
+                        worker.moveDown();
+                    }
                 }
-                break;
-    		case LEFT:
-    			if (c != 0) {
-    				if (warehouse.getCase(l, c - 1).acceptGardian(direction)) {
-    					worker.moveLeft();
-    				}
+            }
+            case LEFT -> {
+                if (c != 0) {
+                    if (warehouse.getCase(l, c - 1).acceptGardian(direction)) {
+                        worker.moveLeft();
+                    }
                 }
-                break;
-    		case RIGHT:
-    			if (c != warehouse.getColumns() - 1) {
-    				if (warehouse.getCase(l, c + 1).acceptGardian(direction)) {
-    					worker.moveRight();
-    				}
+            }
+            case RIGHT -> {
+                if (c != warehouse.getColumns() - 1) {
+                    if (warehouse.getCase(l, c + 1).acceptGardian(direction)) {
+                        worker.moveRight();
+                    }
                 }
-                break;
-    	}
+            }
+        }
     }
 
     public boolean levelEnd() {
