@@ -322,9 +322,12 @@ class EditorTest {
         Path testLevelPath = Path.of("levels", testLevelName + ".txt");
 
         try {
-            // When
+            then(testLevelPath).doesNotExist();
+
+            // Editor when created should create a new level file
             Editor newEditor = new Editor(testRows, testCols, testLevelName);
 
+            then(newEditor.getTitle()).isNotEmpty();
             then(testLevelPath).exists();
             List<String> lines = Files.readAllLines(testLevelPath);
 
