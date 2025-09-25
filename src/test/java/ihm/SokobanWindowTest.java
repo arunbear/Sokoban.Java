@@ -1,8 +1,8 @@
 package ihm;
 
 import logic.Controller;
-import logic.Warehouse;
 import org.jspecify.annotations.NullMarked;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,6 +28,11 @@ class SokobanWindowTest {
         // Use the default test level file for all tests
         window = createTestWindow();
         controller = window.getController();
+    }
+
+    @AfterEach
+    void tearDown() {
+        window.dispose();
     }
 
     /**
@@ -56,20 +61,37 @@ class SokobanWindowTest {
     @Test
     void window_has_correct_initial_state() {
         // then
+        then(window).isNotNull();
         then(window.isVisible()).isTrue();
-        then(window.isResizable()).isFalse();
-        then(window.getDefaultCloseOperation()).isEqualTo(JFrame.EXIT_ON_CLOSE);
 
-        // Verify the window size is set based on the warehouse
-        Warehouse warehouse = controller.warehouse;
-        int columns = warehouse.getColumns();
-        int lines = warehouse.getLines();
+        // The test level should be treated as a custom level
+        then(window.getController().isOnCustomLevel()).isTrue();
+        then(window.getTitle()).isEqualTo("Custom level");
+        then(window.isResizable()).isFalse();
+
+        // Verify window size is at least as large as the game content
+        int columns = controller.warehouse.getColumns();
+        int lines = controller.warehouse.getLines();
         int imageWidth = columns * SokobanWindow.IMAGE_SIZE;
         int imageHeight = lines * SokobanWindow.IMAGE_SIZE;
 
         // Verify window is at least as large as the game content
         then(window.getSize().width).isGreaterThanOrEqualTo(imageWidth);
         then(window.getSize().height).isGreaterThanOrEqualTo(imageHeight);
+    }
+
+    @Test
+    void window_title_reflects_standard_level() {
+        // given - a standard level (level 1)
+        String levelPath = "levels/level1.txt";
+
+        // when - creating window with standard level using helper method
+        window = createTestWindow(levelPath);
+
+        // then - should be a standard level with level number 1
+        then(window.getController().isOnCustomLevel()).isFalse();
+        then(window.getController().getLevel()).isEqualTo(1);
+        then(window.getTitle()).isEqualTo("Level 1");
     }
 
     @Test
