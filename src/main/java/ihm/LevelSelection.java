@@ -18,10 +18,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import logic.Controller;
 import com.google.common.annotations.VisibleForTesting;
 import org.jspecify.annotations.NullMarked;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @NullMarked
 public abstract class LevelSelection extends JFrame {
-
+    private static final Logger LOGGER = Logger.getLogger(LevelSelection.class.getName());
     private static final String FRAME_TITLE = "Sokoban v1.0 par Gabriel FARAGO";
     private static final String defaultFileName = "level1.txt";
 
@@ -155,8 +157,9 @@ public abstract class LevelSelection extends JFrame {
             levelFileLabel.setText(fileName);
             try {
                 selectedLevelFile = new File(new File(".").getCanonicalPath() + "/levels/%s".formatted(fileName));
+                LOGGER.log(Level.FINE, "Selected level file: {0}", selectedLevelFile.getAbsolutePath());
             } catch (IOException e1) {
-                e1.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Failed to resolve path for level file: " + fileName, e1);
             }
         });
         return levelList;
