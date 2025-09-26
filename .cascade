@@ -1,0 +1,23 @@
+# Cascade AI Assistant Configuration
+# This file controls how the AI assistant should behave
+
+[behavior]
+# Only make the exact changes requested
+# No additional refactoring or improvements unless explicitly asked for
+strict_mode = true
+# Don't create getter methods unless they're actually needed
+avoid_unnecessary_getters = true
+# Method ordering: helper methods after their callers
+helper_methods_after_caller = true
+
+[editing]
+# Only edit the specific lines or files mentioned
+# Don't suggest or make additional changes
+make_minimal_changes = true
+# Code formatting
+no_trailing_spaces = true
+
+[communication]
+# Be direct and to the point
+# Don't suggest alternatives unless asked
+be_direct = true
