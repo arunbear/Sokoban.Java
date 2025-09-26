@@ -29,6 +29,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
     private final Controller controller;
 
     private TileType content = TileType.OUTSIDE;
+    private final Map<TileType, Integer> tileCounts = new EnumMap<>(TileType.class);
 
     @VisibleForTesting
     enum Component {
@@ -298,16 +299,15 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
      * @return true if the level is valid, false otherwise
      */
     private boolean isValidLevel() {
-        int[] tileCounts = new int[TileType.values().length];
 
         IntStream.range(0, rowCount * columnCount).forEach(i -> {
             int c = i / columnCount;
             int l = i % columnCount;
             TileType tileType = controller.warehouse.getCase(c, l).getContent();
-            tileCounts[tileType.ordinal()]++;
+            tileCounts.merge(tileType, 1, Integer::sum);
         });
 
-        return isValidLevel(tileCounts);
+        return hasValidTileCounts();
     }
 
     /**
@@ -332,26 +332,36 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
 
     /**
      * Validates the level based on tile counts.
-     * @param tileCounts Array containing counts of each tile type
+     *
      * @return true if the level is valid, false otherwise
      */
-    private boolean isValidLevel(int[] tileCounts) {
-        int workersFound = tileCounts[TileType.WORKER_ON_FLOOR.ordinal()]
-                         + tileCounts[TileType.WORKER_IN_STORAGE_AREA.ordinal()];
+    private boolean hasValidTileCounts() {
+        int workersFound = countOf(TileType.WORKER_ON_FLOOR, TileType.WORKER_IN_STORAGE_AREA);
         if (workersFound != 1) {
             return false;
         }
 
-        int boxesFound = tileCounts[TileType.UNSTORED_BOX.ordinal()]
-                       + tileCounts[TileType.STORED_BOX.ordinal()];
+        int boxesFound = countOf(TileType.UNSTORED_BOX, TileType.STORED_BOX);
         if (boxesFound == 0) {
             return false;
         }
 
-        int targetsFound = tileCounts[TileType.WORKER_IN_STORAGE_AREA.ordinal()]
-                         + tileCounts[TileType.STORAGE_AREA.ordinal()]
-                         + tileCounts[TileType.STORED_BOX.ordinal()];
+        int targetsFound = countOf(TileType.WORKER_IN_STORAGE_AREA,
+                               TileType.STORAGE_AREA,
+                               TileType.STORED_BOX);
 
         return targetsFound >= boxesFound;
+    }
+
+    /**
+     * Counts the number of times any of the specified tile types appear in the level.
+     *
+     * @param types The tile types to count
+     * @return The total count of all specified tile types
+     */
+    private int countOf(TileType... types) {
+        return Arrays.stream(types)
+                   .mapToInt(type -> tileCounts.getOrDefault(type, 0))
+                   .sum();
     }
 }
