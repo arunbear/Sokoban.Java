@@ -42,121 +42,94 @@ public class Case {
     }
 
     public boolean canAcceptWorker(Direction direction) {
-    	switch (this.content) {
-    		case WALL:
-    			return false;
-    		case OUTSIDE:
-    			return false;
-    		case UNSTORED_BOX:
-    			switch(direction) {
-    				case UP:
-    					if (this.line == 0) {
-    						return false;
-    					}
-    					break;
-    				case DOWN:
-    					if (this.line == warehouse.getLines() - 1) {
-    						return false;
-    					}
-    					break;
-    				case LEFT:
-    					if (this.column == 0) {
-    						return false;
-    					}
-    					break;
-    				case RIGHT:
-    					if (this.column == warehouse.getColumns() - 1) {
-    						return false;
-    					}
-    					break;
-
-    			}
-    			switch(this.getAdjacentCellContent(direction)) {
-    				case UNSTORED_BOX:
-    					return false;
-    				case STORED_BOX:
-    					return false;
-    				case WALL:
-    					return false;
-    				case OUTSIDE:
-    					return false;
-    				case STORAGE_AREA:
-    					this.setContent(TileType.WORKER_ON_FLOOR);
-    					this.setAdjacentCellContent(direction, TileType.STORED_BOX);
-    					break;
-    				case FLOOR:
-    					this.setContent(TileType.WORKER_ON_FLOOR);
-    					this.setAdjacentCellContent(direction, TileType.UNSTORED_BOX);
-    					break;
-    				default:
-    					break;
-    			}
-    			break;
-    		case STORED_BOX:
-    			switch(direction) {
-				case UP:
-					if (this.line == 0) {
-						return false;
-					}
-					break;
-				case DOWN:
-					if (this.line == warehouse.getLines() - 1) {
-						return false;
-					}
-					break;
-				case LEFT:
-					if (this.column == 0) {
-						return false;
-					}
-					break;
-				case RIGHT:
-					if (this.column == warehouse.getColumns() - 1) {
-						return false;
-					}
-					break;
-
-    			}
-    			switch(this.getAdjacentCellContent(direction)) {
-					case UNSTORED_BOX:
-						return false;
-					case WALL:
-						return false;
-					case STORED_BOX:
-						return false;
-					case STORAGE_AREA:
-						this.setContent(TileType.WORKER_IN_STORAGE_AREA);
-    					this.setAdjacentCellContent(direction, TileType.STORED_BOX);
-    					break;
-					case FLOOR:
-						this.setContent(TileType.WORKER_IN_STORAGE_AREA);
-    					this.setAdjacentCellContent(direction, TileType.UNSTORED_BOX);
-    					break;
-					default:
-						break;
-    			}
-    			break;
-    		case FLOOR:
-    			this.setContent(TileType.WORKER_ON_FLOOR);
-    			break;
-    		case STORAGE_AREA:
-    			this.setContent(TileType.WORKER_IN_STORAGE_AREA);
-    			break;
-    		default:
-    			break;
-    	}
+        switch (this.content) {
+            case WALL, OUTSIDE -> {
+                return false;
+            }
+            case UNSTORED_BOX -> {
+                if (boxCellCannotAcceptWorker(direction)) {
+                    return false;
+                }
+                switch (this.getAdjacentCellContent(direction)) {
+                    case UNSTORED_BOX, STORED_BOX, WALL, OUTSIDE -> {
+                        return false;
+                    }
+                    case STORAGE_AREA -> {
+                        this.setContent(TileType.WORKER_ON_FLOOR);
+                        this.setAdjacentCellContent(direction, TileType.STORED_BOX);
+                    }
+                    case FLOOR -> {
+                        this.setContent(TileType.WORKER_ON_FLOOR);
+                        this.setAdjacentCellContent(direction, TileType.UNSTORED_BOX);
+                    }
+                    default -> {
+                    }
+                }
+            }
+            case STORED_BOX -> {
+                if (boxCellCannotAcceptWorker(direction)) {
+                    return false;
+                }
+                switch (this.getAdjacentCellContent(direction)) {
+                    case UNSTORED_BOX, WALL, STORED_BOX -> {
+                        return false;
+                    }
+                    case STORAGE_AREA -> {
+                        this.setContent(TileType.WORKER_IN_STORAGE_AREA);
+                        this.setAdjacentCellContent(direction, TileType.STORED_BOX);
+                    }
+                    case FLOOR -> {
+                        this.setContent(TileType.WORKER_IN_STORAGE_AREA);
+                        this.setAdjacentCellContent(direction, TileType.UNSTORED_BOX);
+                    }
+                    default -> {
+                    }
+                }
+            }
+            case FLOOR -> this.setContent(TileType.WORKER_ON_FLOOR);
+            case STORAGE_AREA -> this.setContent(TileType.WORKER_IN_STORAGE_AREA);
+            default -> {
+            }
+        }
     	Direction previous_player = direction.reverse();
-    	switch(this.getAdjacentCellContent(previous_player)) {
-    		case WORKER_ON_FLOOR:
-    			this.setAdjacentCellContent(previous_player, TileType.FLOOR);
-    			return true;
-    		case WORKER_IN_STORAGE_AREA:
-    			this.setAdjacentCellContent(previous_player, TileType.STORAGE_AREA);
-    			return true;
-    		default:
-    			break;
-    	}
-    	return false;
+        return switch (this.getAdjacentCellContent(previous_player)) {
+            case WORKER_ON_FLOOR -> {
+                this.setAdjacentCellContent(previous_player, TileType.FLOOR);
+                yield true;
+            }
+            case WORKER_IN_STORAGE_AREA -> {
+                this.setAdjacentCellContent(previous_player, TileType.STORAGE_AREA);
+                yield true;
+            }
+            default -> false;
+        };
 
+    }
+
+    private boolean boxCellCannotAcceptWorker(Direction direction) {
+        switch (direction) {
+            case UP -> {
+                if (this.line == 0) {
+                    return true;
+                }
+            }
+            case DOWN -> {
+                if (this.line == warehouse.getLines() - 1) {
+                    return true;
+                }
+            }
+            case LEFT -> {
+                if (this.column == 0) {
+                    return true;
+                }
+            }
+            case RIGHT -> {
+                if (this.column == warehouse.getColumns() - 1) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
