@@ -3,14 +3,14 @@ package logic;
 
 
 public class Case {
-    private int ligne;
-    private int colonne;
+    private final int line;
+    private final int column;
     private TileType content;
     public Warehouse warehouse;
 
-    public Case (int ligne, int colonne, TileType content, Warehouse warehouse) {
-    	this.ligne = ligne;
-    	this.colonne = colonne;
+    public Case (int line, int column, TileType content, Warehouse warehouse) {
+    	this.line = line;
+    	this.column = column;
     	this.content = content;
     	this.warehouse = warehouse;
     }
@@ -23,25 +23,25 @@ public class Case {
     	this.content = content;
     }
 
-    public void setContentVoisine(Direction direction, TileType content) {
+    public void setAdjacentCellContent(Direction direction, TileType content) {
         switch (direction) {
-            case UP    -> warehouse.getCase(ligne - 1, colonne).setContent(content);
-            case DOWN  -> warehouse.getCase(ligne + 1, colonne).setContent(content);
-            case LEFT  -> warehouse.getCase(ligne, colonne - 1).setContent(content);
-            case RIGHT -> warehouse.getCase(ligne, colonne + 1).setContent(content);
+            case UP    -> warehouse.getCase(line - 1, column).setContent(content);
+            case DOWN  -> warehouse.getCase(line + 1, column).setContent(content);
+            case LEFT  -> warehouse.getCase(line, column - 1).setContent(content);
+            case RIGHT -> warehouse.getCase(line, column + 1).setContent(content);
         }
     }
 
-    public TileType getContentVoisine(Direction direction) {
+    public TileType getAdjacentCellContent(Direction direction) {
         return switch (direction) {
-            case UP    -> warehouse.getCase(ligne - 1, colonne).getContent();
-            case DOWN  -> warehouse.getCase(ligne + 1, colonne).getContent();
-            case LEFT  -> warehouse.getCase(ligne, colonne - 1).getContent();
-            case RIGHT -> warehouse.getCase(ligne, colonne + 1).getContent();
+            case UP    -> warehouse.getCase(line - 1, column).getContent();
+            case DOWN  -> warehouse.getCase(line + 1, column).getContent();
+            case LEFT  -> warehouse.getCase(line, column - 1).getContent();
+            case RIGHT -> warehouse.getCase(line, column + 1).getContent();
         };
     }
 
-    public boolean acceptGardian(Direction direction) {
+    public boolean canAcceptWorker(Direction direction) {
     	switch (this.content) {
     		case WALL:
     			return false;
@@ -50,28 +50,28 @@ public class Case {
     		case UNSTORED_BOX:
     			switch(direction) {
     				case UP:
-    					if (this.ligne == 0) {
+    					if (this.line == 0) {
     						return false;
     					}
     					break;
     				case DOWN:
-    					if (this.ligne == warehouse.getLines() - 1) {
+    					if (this.line == warehouse.getLines() - 1) {
     						return false;
     					}
     					break;
     				case LEFT:
-    					if (this.colonne == 0) {
+    					if (this.column == 0) {
     						return false;
     					}
     					break;
     				case RIGHT:
-    					if (this.colonne == warehouse.getColumns() - 1) {
+    					if (this.column == warehouse.getColumns() - 1) {
     						return false;
     					}
     					break;
 
     			}
-    			switch(this.getContentVoisine(direction)) {
+    			switch(this.getAdjacentCellContent(direction)) {
     				case UNSTORED_BOX:
     					return false;
     				case STORED_BOX:
@@ -82,11 +82,11 @@ public class Case {
     					return false;
     				case STORAGE_AREA:
     					this.setContent(TileType.WORKER_ON_FLOOR);
-    					this.setContentVoisine(direction, TileType.STORED_BOX);
+    					this.setAdjacentCellContent(direction, TileType.STORED_BOX);
     					break;
     				case FLOOR:
     					this.setContent(TileType.WORKER_ON_FLOOR);
-    					this.setContentVoisine(direction, TileType.UNSTORED_BOX);
+    					this.setAdjacentCellContent(direction, TileType.UNSTORED_BOX);
     					break;
     				default:
     					break;
@@ -95,28 +95,28 @@ public class Case {
     		case STORED_BOX:
     			switch(direction) {
 				case UP:
-					if (this.ligne == 0) {
+					if (this.line == 0) {
 						return false;
 					}
 					break;
 				case DOWN:
-					if (this.ligne == warehouse.getLines() - 1) {
+					if (this.line == warehouse.getLines() - 1) {
 						return false;
 					}
 					break;
 				case LEFT:
-					if (this.colonne == 0) {
+					if (this.column == 0) {
 						return false;
 					}
 					break;
 				case RIGHT:
-					if (this.colonne == warehouse.getColumns() - 1) {
+					if (this.column == warehouse.getColumns() - 1) {
 						return false;
 					}
 					break;
 
     			}
-    			switch(this.getContentVoisine(direction)) {
+    			switch(this.getAdjacentCellContent(direction)) {
 					case UNSTORED_BOX:
 						return false;
 					case WALL:
@@ -125,11 +125,11 @@ public class Case {
 						return false;
 					case STORAGE_AREA:
 						this.setContent(TileType.WORKER_IN_STORAGE_AREA);
-    					this.setContentVoisine(direction, TileType.STORED_BOX);
+    					this.setAdjacentCellContent(direction, TileType.STORED_BOX);
     					break;
 					case FLOOR:
 						this.setContent(TileType.WORKER_IN_STORAGE_AREA);
-    					this.setContentVoisine(direction, TileType.UNSTORED_BOX);
+    					this.setAdjacentCellContent(direction, TileType.UNSTORED_BOX);
     					break;
 					default:
 						break;
@@ -145,12 +145,12 @@ public class Case {
     			break;
     	}
     	Direction previous_player = direction.reverse();
-    	switch(this.getContentVoisine(previous_player)) {
+    	switch(this.getAdjacentCellContent(previous_player)) {
     		case WORKER_ON_FLOOR:
-    			this.setContentVoisine(previous_player, TileType.FLOOR);
+    			this.setAdjacentCellContent(previous_player, TileType.FLOOR);
     			return true;
     		case WORKER_IN_STORAGE_AREA:
-    			this.setContentVoisine(previous_player, TileType.STORAGE_AREA);
+    			this.setAdjacentCellContent(previous_player, TileType.STORAGE_AREA);
     			return true;
     		default:
     			break;

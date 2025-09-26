@@ -53,28 +53,28 @@ public class Controller {
         switch (direction) {
             case UP -> {
                 if (l != 0) {
-                    if (warehouse.getCase((l - 1), c).acceptGardian(direction)) {
+                    if (warehouse.getCase((l - 1), c).canAcceptWorker(direction)) {
                         worker.moveUp();
                     }
                 }
             }
             case DOWN -> {
                 if (l != warehouse.getLines() - 1) {
-                    if (warehouse.getCase((l + 1), c).acceptGardian(direction)) {
+                    if (warehouse.getCase((l + 1), c).canAcceptWorker(direction)) {
                         worker.moveDown();
                     }
                 }
             }
             case LEFT -> {
                 if (c != 0) {
-                    if (warehouse.getCase(l, c - 1).acceptGardian(direction)) {
+                    if (warehouse.getCase(l, c - 1).canAcceptWorker(direction)) {
                         worker.moveLeft();
                     }
                 }
             }
             case RIGHT -> {
                 if (c != warehouse.getColumns() - 1) {
-                    if (warehouse.getCase(l, c + 1).acceptGardian(direction)) {
+                    if (warehouse.getCase(l, c + 1).canAcceptWorker(direction)) {
                         worker.moveRight();
                     }
                 }
