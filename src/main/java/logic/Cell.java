@@ -26,19 +26,19 @@ public class Cell {
 
     public void setAdjacentCellContent(Direction direction, TileType content) {
         switch (direction) {
-            case UP    -> warehouse.getCase(line - 1, column).setContent(content);
-            case DOWN  -> warehouse.getCase(line + 1, column).setContent(content);
-            case LEFT  -> warehouse.getCase(line, column - 1).setContent(content);
-            case RIGHT -> warehouse.getCase(line, column + 1).setContent(content);
+            case UP    -> warehouse.getCell(line - 1, column).setContent(content);
+            case DOWN  -> warehouse.getCell(line + 1, column).setContent(content);
+            case LEFT  -> warehouse.getCell(line, column - 1).setContent(content);
+            case RIGHT -> warehouse.getCell(line, column + 1).setContent(content);
         }
     }
 
     public TileType getAdjacentCellContent(Direction direction) {
         return switch (direction) {
-            case UP    -> warehouse.getCase(line - 1, column).getContent();
-            case DOWN  -> warehouse.getCase(line + 1, column).getContent();
-            case LEFT  -> warehouse.getCase(line, column - 1).getContent();
-            case RIGHT -> warehouse.getCase(line, column + 1).getContent();
+            case UP    -> warehouse.getCell(line - 1, column).getContent();
+            case DOWN  -> warehouse.getCell(line + 1, column).getContent();
+            case LEFT  -> warehouse.getCell(line, column - 1).getContent();
+            case RIGHT -> warehouse.getCell(line, column + 1).getContent();
         };
     }
 

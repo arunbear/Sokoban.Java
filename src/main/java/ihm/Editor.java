@@ -270,7 +270,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         if (e.getX() < windowWidth + 31 && e.getY() < windowHeight + 31) {
             int l = Math.max((e.getX() - X_OFFSET) / TILE_SIZE, 0);
             int c = Math.max((e.getY() - TILE_SIZE) / TILE_SIZE, 0);
-            controller.getWarehouse().getCase(c, l).setContent(content);
+            controller.getWarehouse().getCell(c, l).setContent(content);
             repaint();
         }
     }
@@ -303,7 +303,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         IntStream.range(0, rowCount * columnCount).forEach(i -> {
             int c = i / columnCount;
             int l = i % columnCount;
-            TileType tileType = controller.getWarehouse().getCase(c, l).getContent();
+            TileType tileType = controller.getWarehouse().getCell(c, l).getContent();
             tileCounts.merge(tileType, 1, Integer::sum);
         });
 
@@ -319,7 +319,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
         IntStream.range(0, rowCount * columnCount).forEach(i -> {
             int c = i / columnCount;
             int l = i % columnCount;
-            TileType tileType = controller.getWarehouse().getCase(c, l).getContent();
+            TileType tileType = controller.getWarehouse().getCell(c, l).getContent();
             levelContent.append(tileType.getCode());
 
             if ((i + 1) % columnCount == 0) { // the row is complete

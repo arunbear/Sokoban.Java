@@ -71,7 +71,7 @@ public class Warehouse {
 	}
 
 
-	public Cell getCase(int l, int c) {
+	public Cell getCell(int l, int c) {
     	return cells.get(l*this.columns + c);
     }
 
