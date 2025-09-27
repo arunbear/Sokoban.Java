@@ -11,10 +11,11 @@ import javax.swing.JPanel;
 
 import logic.TileType;
 import logic.Controller;
+import org.jspecify.annotations.NullMarked;
 
 import static ihm.SokobanWindow.IMAGE_SIZE;
 
-
+@NullMarked
 public class SokobanPanel extends JPanel {
     private static final EnumMap<TileType, Image> images;
 
@@ -51,9 +52,9 @@ public class SokobanPanel extends JPanel {
         // Business logic uses [row, column] coordinates
         // UI uses [x, y] coordinates
         // So x <=> column and y <=> row
-        for(int l = 0; l < controller.warehouse.getLines(); l++ ) {
-            for(int c = 0; c < controller.warehouse.getColumns(); c++ ) {
-                g.drawImage( images.get( controller.warehouse.getCase( l, c).getContent()), c * IMAGE_SIZE, l * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, null );
+        for(int l = 0; l < controller.getWarehouse().getLines(); l++ ) {
+            for(int c = 0; c < controller.getWarehouse().getColumns(); c++ ) {
+                g.drawImage( images.get(controller.getWarehouse().getCase(l, c).getContent()), c * IMAGE_SIZE, l * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, null);
             }
         }
     }

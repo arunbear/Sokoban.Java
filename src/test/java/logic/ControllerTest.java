@@ -22,8 +22,8 @@ class ControllerTest {
     void initializes_with_correct_level_properties() {
         // Then
         then(controller.isOnCustomLevel()).isTrue();
-        then(controller.warehouse).isNotNull();
-        then(controller.worker).isNotNull();
+        then(controller.getWarehouse()).isNotNull();
+        then(controller.getWorker()).isNotNull();
     }
 
     @Test
@@ -41,16 +41,16 @@ class ControllerTest {
     @Test
     void can_undo_last_move() {
         // Given - initial position and first move
-        int initialX = controller.worker.getColumn();
-        int initialY = controller.worker.getLine();
+        int initialX = controller.getWorker().getColumn();
+        int initialY = controller.getWorker().getLine();
 
         // When - move right then undo
         controller.action(Direction.RIGHT);
         controller.restart();
 
         // Then - should be back at initial position
-        then(controller.worker.getColumn()).isEqualTo(initialX);
-        then(controller.worker.getLine()).isEqualTo(initialY);
+        then(controller.getWorker().getColumn()).isEqualTo(initialX);
+        then(controller.getWorker().getLine()).isEqualTo(initialY);
     }
 
     @Test
@@ -63,8 +63,8 @@ class ControllerTest {
         controller.restart();
 
         // Then - should be back at initial position
-        then(controller.worker.getColumn()).isEqualTo(2);
-        then(controller.worker.getLine()).isEqualTo(2);
+        then(controller.getWorker().getColumn()).isEqualTo(2);
+        then(controller.getWorker().getLine()).isEqualTo(2);
     }
 
     @Test
@@ -73,8 +73,8 @@ class ControllerTest {
         controller.restart();
 
         // Then worker should be at initial position
-        then(controller.worker.getColumn()).isEqualTo(2);
-        then(controller.worker.getLine()).isEqualTo(2);
+        then(controller.getWorker().getColumn()).isEqualTo(2);
+        then(controller.getWorker().getLine()).isEqualTo(2);
     }
 
 }

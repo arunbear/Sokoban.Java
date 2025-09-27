@@ -1,28 +1,29 @@
 package logic;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.nio.file.FileSystems;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@SuppressWarnings("unused")
+@NullMarked
 public class Controller {
 
 	private static final int customLevel = 99;
 
 	private int level = customLevel;
     private final String pathToLevel;
+    private Warehouse warehouse;
+    private Worker worker;
 
-    public int getLines() {
-        return warehouse.getLines();
+    public Worker getWorker() {
+        return worker;
     }
 
-    public int getColumns() {
-        return warehouse.getColumns();
+    public Warehouse getWarehouse() {
+        return warehouse;
     }
-
-    public Warehouse warehouse;
-    public Worker worker;
 
     public Controller(String pathToLevel) {
 		var levelsPath = pathToLevels();

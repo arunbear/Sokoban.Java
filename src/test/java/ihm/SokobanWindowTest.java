@@ -70,8 +70,8 @@ class SokobanWindowTest {
         then(window.isResizable()).isFalse();
 
         // Verify window size is at least as large as the game content
-        int columns = controller.warehouse.getColumns();
-        int lines = controller.warehouse.getLines();
+        int columns = controller.getWarehouse().getColumns();
+        int lines = controller.getWarehouse().getLines();
         int imageWidth = columns * SokobanWindow.IMAGE_SIZE;
         int imageHeight = lines * SokobanWindow.IMAGE_SIZE;
 
@@ -97,8 +97,8 @@ class SokobanWindowTest {
     @Test
     void handles_right_direction_key_press() {
         // given - initial positions
-        int initialLine = controller.worker.getLine();
-        int initialColumn = controller.worker.getColumn();
+        int initialLine = controller.getWorker().getLine();
+        int initialColumn = controller.getWorker().getColumn();
 
         // Move right - should push the box
         KeyEvent rightKey = new KeyEvent(window,
@@ -112,15 +112,15 @@ class SokobanWindowTest {
         window.keyPressed(rightKey);
 
         // then - verify worker moved right (pushing the box)
-        then(controller.worker.getLine()).isEqualTo(initialLine);
-        then(controller.worker.getColumn()).isEqualTo(initialColumn + 1);
+        then(controller.getWorker().getLine()).isEqualTo(initialLine);
+        then(controller.getWorker().getColumn()).isEqualTo(initialColumn + 1);
     }
 
     @Test
     void handles_left_direction_key_press() {
         // given - initial positions
-        int initialLine = controller.worker.getLine();
-        int initialColumn = controller.worker.getColumn();
+        int initialLine = controller.getWorker().getLine();
+        int initialColumn = controller.getWorker().getColumn();
 
         // Move left
         KeyEvent leftKey = new KeyEvent(window,
@@ -134,15 +134,15 @@ class SokobanWindowTest {
         window.keyPressed(leftKey);
 
         // then - verify worker moved left
-        then(controller.worker.getLine()).isEqualTo(initialLine);
-        then(controller.worker.getColumn()).isEqualTo(initialColumn - 1);
+        then(controller.getWorker().getLine()).isEqualTo(initialLine);
+        then(controller.getWorker().getColumn()).isEqualTo(initialColumn - 1);
     }
 
     @Test
     void handles_up_direction_key_press() {
         // given - initial positions
-        int initialLine = controller.worker.getLine();
-        int initialColumn = controller.worker.getColumn();
+        int initialLine = controller.getWorker().getLine();
+        int initialColumn = controller.getWorker().getColumn();
 
         // Move up
         KeyEvent upKey = new KeyEvent(window,
@@ -156,15 +156,15 @@ class SokobanWindowTest {
         window.keyPressed(upKey);
 
         // then - verify worker moved up
-        then(controller.worker.getLine()).isEqualTo(initialLine - 1);
-        then(controller.worker.getColumn()).isEqualTo(initialColumn);
+        then(controller.getWorker().getLine()).isEqualTo(initialLine - 1);
+        then(controller.getWorker().getColumn()).isEqualTo(initialColumn);
     }
 
     @Test
     void handles_down_direction_key_press() {
         // given - initial positions
-        int initialLine = controller.worker.getLine();
-        int initialColumn = controller.worker.getColumn();
+        int initialLine = controller.getWorker().getLine();
+        int initialColumn = controller.getWorker().getColumn();
 
         // Move down
         KeyEvent downKey = new KeyEvent(window,
@@ -178,8 +178,8 @@ class SokobanWindowTest {
         window.keyPressed(downKey);
 
         // then - verify worker moved down
-        then(controller.worker.getLine()).isEqualTo(initialLine + 1);
-        then(controller.worker.getColumn()).isEqualTo(initialColumn);
+        then(controller.getWorker().getLine()).isEqualTo(initialLine + 1);
+        then(controller.getWorker().getColumn()).isEqualTo(initialColumn);
     }
 
     private static Stream<Arguments> directionKeyCodes() {
@@ -198,8 +198,8 @@ class SokobanWindowTest {
         window = createTestWindow("src/test/resources/levels/test_level_no_moves.txt");
 
         // Record initial position
-        int initialLine = controller.worker.getLine();
-        int initialColumn = controller.worker.getColumn();
+        int initialLine = controller.getWorker().getLine();
+        int initialColumn = controller.getWorker().getColumn();
 
         // when - try to move in the specified direction
         KeyEvent keyEvent = new KeyEvent(
@@ -213,10 +213,10 @@ class SokobanWindowTest {
         window.keyPressed(keyEvent);
 
         // then - verify the player didn't move
-        then(controller.worker.getLine())
+        then(controller.getWorker().getLine())
             .as("Player did not move from line %d when moving %s".formatted(initialLine, directionName))
             .isEqualTo(initialLine);
-        then(controller.worker.getColumn())
+        then(controller.getWorker().getColumn())
             .as("Player did not move from column %d when moving %s".formatted(initialColumn, directionName))
             .isEqualTo(initialColumn);
     }
@@ -224,7 +224,7 @@ class SokobanWindowTest {
     @Test
     void handles_restart_action() {
         // given
-        int initialColumn = controller.worker.getColumn();
+        int initialColumn = controller.getWorker().getColumn();
         KeyEvent rightKey = new KeyEvent(window,
                 KeyEvent.KEY_PRESSED,
                 System.currentTimeMillis(),
@@ -232,7 +232,7 @@ class SokobanWindowTest {
                 KeyEvent.VK_RIGHT,
                 KeyEvent.CHAR_UNDEFINED);
         window.keyPressed(rightKey);
-        int columnAfterMove = controller.worker.getColumn();
+        int columnAfterMove = controller.getWorker().getColumn();
 
         // when - press backspace to restart
         KeyEvent restartKey = new KeyEvent(window,
@@ -244,7 +244,7 @@ class SokobanWindowTest {
         window.keyPressed(restartKey);
 
         // then - worker should be back at initial position
-        then(controller.worker.getColumn()).isNotEqualTo(columnAfterMove);
-        then(controller.worker.getColumn()).isEqualTo(initialColumn);
+        then(controller.getWorker().getColumn()).isNotEqualTo(columnAfterMove);
+        then(controller.getWorker().getColumn()).isEqualTo(initialColumn);
     }
 }

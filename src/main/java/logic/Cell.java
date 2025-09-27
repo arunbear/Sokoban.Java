@@ -7,7 +7,7 @@ public class Cell {
     private final int line;
     private final int column;
     private TileType content;
-    public Warehouse warehouse;
+    private final Warehouse warehouse;
 
     public Cell(int line, int column, TileType content, Warehouse warehouse) {
     	this.line = line;

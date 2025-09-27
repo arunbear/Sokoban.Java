@@ -14,8 +14,9 @@ import javax.swing.JOptionPane;
 import logic.Controller;
 import logic.Direction;
 import logic.GameAction;
+import org.jspecify.annotations.NullMarked;
 
-
+@NullMarked
 public class SokobanWindow extends JFrame implements KeyListener{
 
     public static final int IMAGE_SIZE = 32;
@@ -30,8 +31,8 @@ public class SokobanWindow extends JFrame implements KeyListener{
     public SokobanWindow(Controller controller) {
         this.controller = controller;
 
-        int IMAGE_WIDTH = controller.warehouse.getColumns() * IMAGE_SIZE;
-        int IMAGE_HEIGHT = controller.warehouse.getLines() * IMAGE_SIZE;
+        int IMAGE_WIDTH = controller.getWarehouse().getColumns() * IMAGE_SIZE;
+        int IMAGE_HEIGHT = controller.getWarehouse().getLines() * IMAGE_SIZE;
 
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         this.setPreferredSize( new Dimension( IMAGE_WIDTH + 16, IMAGE_HEIGHT + 39 ));
