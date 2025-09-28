@@ -6,44 +6,44 @@ import org.jspecify.annotations.NullMarked;
 public class Cell {
     private final int line;
     private final int column;
-    private TileType content;
+    private TileType tileType;
     private final Warehouse warehouse;
 
-    public Cell(int line, int column, TileType content, Warehouse warehouse) {
+    public Cell(int line, int column, TileType tileType, Warehouse warehouse) {
     	this.line = line;
     	this.column = column;
-    	this.content = content;
+    	this.tileType = tileType;
     	this.warehouse = warehouse;
     }
 
-    public TileType getContent() {
-    	return this.content;
+    public TileType getTileType() {
+    	return this.tileType;
     }
 
-    public void setContent (TileType content) {
-    	this.content = content;
+    public void setTileType(TileType tileType) {
+    	this.tileType = tileType;
     }
 
     public void setAdjacentCellContent(Direction direction, TileType content) {
         switch (direction) {
-            case UP    -> warehouse.getCell(line - 1, column).setContent(content);
-            case DOWN  -> warehouse.getCell(line + 1, column).setContent(content);
-            case LEFT  -> warehouse.getCell(line, column - 1).setContent(content);
-            case RIGHT -> warehouse.getCell(line, column + 1).setContent(content);
+            case UP    -> warehouse.getCell(line - 1, column).setTileType(content);
+            case DOWN  -> warehouse.getCell(line + 1, column).setTileType(content);
+            case LEFT  -> warehouse.getCell(line, column - 1).setTileType(content);
+            case RIGHT -> warehouse.getCell(line, column + 1).setTileType(content);
         }
     }
 
     public TileType getAdjacentCellContent(Direction direction) {
         return switch (direction) {
-            case UP    -> warehouse.getCell(line - 1, column).getContent();
-            case DOWN  -> warehouse.getCell(line + 1, column).getContent();
-            case LEFT  -> warehouse.getCell(line, column - 1).getContent();
-            case RIGHT -> warehouse.getCell(line, column + 1).getContent();
+            case UP    -> warehouse.getCell(line - 1, column).getTileType();
+            case DOWN  -> warehouse.getCell(line + 1, column).getTileType();
+            case LEFT  -> warehouse.getCell(line, column - 1).getTileType();
+            case RIGHT -> warehouse.getCell(line, column + 1).getTileType();
         };
     }
 
     public boolean canAcceptWorker(Direction direction) {
-        switch (this.content) {
+        switch (this.tileType) {
             case WALL, OUTSIDE -> {
                 return false;
             }
@@ -56,11 +56,11 @@ public class Cell {
                         return false;
                     }
                     case STORAGE_AREA -> {
-                        this.setContent(TileType.WORKER_ON_FLOOR);
+                        this.setTileType(TileType.WORKER_ON_FLOOR);
                         this.setAdjacentCellContent(direction, TileType.STORED_BOX);
                     }
                     case FLOOR -> {
-                        this.setContent(TileType.WORKER_ON_FLOOR);
+                        this.setTileType(TileType.WORKER_ON_FLOOR);
                         this.setAdjacentCellContent(direction, TileType.UNSTORED_BOX);
                     }
                     default -> {
@@ -76,19 +76,19 @@ public class Cell {
                         return false;
                     }
                     case STORAGE_AREA -> {
-                        this.setContent(TileType.WORKER_IN_STORAGE_AREA);
+                        this.setTileType(TileType.WORKER_IN_STORAGE_AREA);
                         this.setAdjacentCellContent(direction, TileType.STORED_BOX);
                     }
                     case FLOOR -> {
-                        this.setContent(TileType.WORKER_IN_STORAGE_AREA);
+                        this.setTileType(TileType.WORKER_IN_STORAGE_AREA);
                         this.setAdjacentCellContent(direction, TileType.UNSTORED_BOX);
                     }
                     default -> {
                     }
                 }
             }
-            case FLOOR -> this.setContent(TileType.WORKER_ON_FLOOR);
-            case STORAGE_AREA -> this.setContent(TileType.WORKER_IN_STORAGE_AREA);
+            case FLOOR -> this.setTileType(TileType.WORKER_ON_FLOOR);
+            case STORAGE_AREA -> this.setTileType(TileType.WORKER_IN_STORAGE_AREA);
             default -> {
             }
         }

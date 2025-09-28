@@ -77,7 +77,7 @@ public class Warehouse {
 
 
     public boolean checkVictory() {
-        return cells.stream().noneMatch(cell -> cell.getContent() == TileType.UNSTORED_BOX);
+        return cells.stream().noneMatch(cell -> cell.getTileType() == TileType.UNSTORED_BOX);
     }
 
     public int getLines() {

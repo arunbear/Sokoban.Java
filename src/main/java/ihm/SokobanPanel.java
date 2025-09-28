@@ -55,7 +55,7 @@ public class SokobanPanel extends JPanel {
         // So x <=> column and y <=> row
         for(int l = 0; l < warehouse.getLines(); l++ ) {
             for(int c = 0; c < warehouse.getColumns(); c++ ) {
-                g.drawImage( images.get(warehouse.getCell(l, c).getContent()), c * IMAGE_SIZE, l * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, null);
+                g.drawImage( images.get(warehouse.getCell(l, c).getTileType()), c * IMAGE_SIZE, l * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, null);
             }
         }
     }
