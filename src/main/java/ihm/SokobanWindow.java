@@ -100,7 +100,7 @@ public class SokobanWindow extends JFrame implements KeyListener{
 
     private void handleEndOfLevel() {
         if (controller.isOnCustomLevel()) {
-            JOptionPane.showMessageDialog( this, "Bravo, vous avez fini le niveau !" );
+            JOptionPane.showMessageDialog(this, "Congratulations, you've completed the level!");
             exitGame();
         }
         else {
