@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import one.util.streamex.IntStreamEx;
 import java.util.EnumMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
@@ -48,16 +49,21 @@ public class SokobanPanel extends JPanel {
     }
 
     @Override
-    public void paint( Graphics g ) {
-    	super.paint( g );
+    public void paint(Graphics g) {
+        super.paint(g);
         // Business logic uses [row, column] coordinates
         // UI uses [x, y] coordinates
         // So x <=> column and y <=> row
-        for(int l = 0; l < warehouse.getLines(); l++ ) {
-            for(int c = 0; c < warehouse.getColumns(); c++ ) {
-                g.drawImage( images.get(warehouse.getCell(l, c).getTileType()), c * IMAGE_SIZE, l * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, null);
-            }
-        }
+        IntStreamEx.range(warehouse.getLines())
+            .forEach(l -> IntStreamEx.range(warehouse.getColumns())
+                .forEach(c -> g.drawImage(
+                    images.get(warehouse.getCell(l, c).getTileType()),
+                    c * IMAGE_SIZE,
+                    l * IMAGE_SIZE,
+                    IMAGE_SIZE,
+                    IMAGE_SIZE,
+                    null
+                )));
     }
 
 }
