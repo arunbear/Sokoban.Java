@@ -95,11 +95,7 @@ public class Controller {
 		return level == customLevel;
 	}
 
-    public String getPathToLevel() {
-    	return pathToLevel;
-    }
-
-	public void restart() {
+    public void restart() {
 		this.worker = new Worker();
     	this.warehouse = new Warehouse(this.pathToLevel, this.worker);
 	}

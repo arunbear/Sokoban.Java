@@ -10,13 +10,20 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import logic.TileType;
-import logic.Controller;
+import logic.Warehouse;
 import org.jspecify.annotations.NullMarked;
 
 import static ihm.SokobanWindow.IMAGE_SIZE;
 
 @NullMarked
 public class SokobanPanel extends JPanel {
+
+    private final Warehouse warehouse;
+
+    public SokobanPanel(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
+
     private static final EnumMap<TileType, Image> images;
 
     static {
@@ -40,21 +47,15 @@ public class SokobanPanel extends JPanel {
         return ImageIO.read(new File(path));
     }
 
-    private final Controller controller;
-
-    public SokobanPanel(Controller controller) {
-        this.controller = controller;
-    }
-
     @Override
     public void paint( Graphics g ) {
     	super.paint( g );
         // Business logic uses [row, column] coordinates
         // UI uses [x, y] coordinates
         // So x <=> column and y <=> row
-        for(int l = 0; l < controller.getWarehouse().getLines(); l++ ) {
-            for(int c = 0; c < controller.getWarehouse().getColumns(); c++ ) {
-                g.drawImage( images.get(controller.getWarehouse().getCell(l, c).getContent()), c * IMAGE_SIZE, l * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, null);
+        for(int l = 0; l < warehouse.getLines(); l++ ) {
+            for(int c = 0; c < warehouse.getColumns(); c++ ) {
+                g.drawImage( images.get(warehouse.getCell(l, c).getContent()), c * IMAGE_SIZE, l * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, null);
             }
         }
     }
