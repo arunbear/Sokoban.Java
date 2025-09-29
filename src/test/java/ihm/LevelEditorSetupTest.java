@@ -72,7 +72,7 @@ class LevelEditorSetupTest {
         then(title.getText()).isEqualTo("Level Editor");
         then(title.getHorizontalAlignment()).isEqualTo(SwingConstants.CENTER);
     }
-    
+
     @Test
     void a_LevelEditorSetup_has_an_edit_button() throws Exception {
         // Given
@@ -85,7 +85,7 @@ class LevelEditorSetupTest {
         then(editButton).isNotNull();
         then(editButton.getText()).isEqualTo("Edit");
     }
-    
+
     @Test
     void a_LevelEditorSetup_has_a_back_button() throws Exception {
         // Given
@@ -237,23 +237,23 @@ class LevelEditorSetupTest {
         // Given
         LevelEditorSetup editorSetup = new LevelEditorSetup();
         JButton backButton = findComponentByNameAsType(editorSetup, "LevelEditorSetup.back", JButton.class);
-        
+
         // When
         backButton.doClick();
-        
+
         then(editorSetup.isDisplayable())
             .as("Window is disposed when back button is clicked")
             .isFalse();
-            
+
         // Get all visible windows after clicking back
         var visibleWindows = Arrays.stream(java.awt.Window.getWindows())
             .filter(java.awt.Window::isVisible)
             .toList();
-            
+
         then(visibleWindows)
             .as("Exactly one window is visible (the HomeWindow)")
             .hasSize(1);
-            
+
         then(visibleWindows.getFirst())
             .as("The visible window is a HomeWindow")
             .isInstanceOf(HomeWindow.class);
@@ -265,7 +265,7 @@ class LevelEditorSetupTest {
         // Create a test level file first
         Files.createDirectories(TEST_LEVEL_PATH.getParent());
         Files.createFile(TEST_LEVEL_PATH);
-        
+
         var editorSetup = new LevelEditorSetup();
         var editButton   = findComponentByNameAsType(editorSetup, "LevelEditorSetup.edit",         JButton.class);
         var nameInput    = findComponentByNameAsType(editorSetup, "LevelEditorSetup.nameInput",    JTextField.class);
@@ -319,17 +319,17 @@ class LevelEditorSetupTest {
                 return exitStatus::set;
             }
         };
-        
+
         JButton quitButton = findComponentByNameAsType(editorSetup, "LevelEditorSetup.quit", JButton.class);
-        
+
         // When
         quitButton.doClick();
-        
+
         then(exitStatus.get())
             .isNotEqualTo(ExitHandler.FAILURE)
             .isEqualTo(ExitHandler.SUCCESS);
     }
-    
+
     @Test
     void a_LevelEditorSetup_has_level_name_input() throws Exception {
         // Given
@@ -342,11 +342,11 @@ class LevelEditorSetupTest {
         then(nameLabel).isNotNull();
         then(nameLabel.getText()).isEqualTo("Level name:");
         then(nameLabel.getHorizontalAlignment()).isEqualTo(SwingConstants.CENTER);
-        
+
         then(nameInput).isNotNull();
         then(nameInput.getColumns()).isEqualTo(15);
     }
-    
+
     @Test
     void a_LevelEditorSetup_has_rows_input() throws Exception {
         // Given
@@ -359,11 +359,11 @@ class LevelEditorSetupTest {
         then(rowsLabel).isNotNull();
         then(rowsLabel.getText()).isEqualTo("Number of rows:");
         then(rowsLabel.getHorizontalAlignment()).isEqualTo(SwingConstants.CENTER);
-        
+
         then(rowsInput).isNotNull();
         then(rowsInput.getColumns()).isEqualTo(5);
     }
-    
+
     @Test
     void a_LevelEditorSetup_has_columns_input() throws Exception {
         // Given
@@ -376,11 +376,11 @@ class LevelEditorSetupTest {
         then(columnsLabel).isNotNull();
         then(columnsLabel.getText()).isEqualTo("Number of columns:");
         then(columnsLabel.getHorizontalAlignment()).isEqualTo(SwingConstants.CENTER);
-        
+
         then(columnsInput).isNotNull();
         then(columnsInput.getColumns()).isEqualTo(5);
     }
-    
+
     @Test
     void a_LevelEditorSetup_has_an_error_label() throws Exception {
         // Given
