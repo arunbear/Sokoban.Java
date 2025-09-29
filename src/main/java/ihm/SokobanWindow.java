@@ -1,16 +1,15 @@
 package ihm;
 
-import java.awt.Dimension;
+import java.awt.*;
 
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+
+import com.google.common.annotations.VisibleForTesting;
 import logic.Controller;
 import logic.Direction;
 import logic.GameAction;
@@ -20,6 +19,7 @@ import org.jspecify.annotations.NullMarked;
 public class SokobanWindow extends JFrame implements KeyListener{
 
     public static final int IMAGE_SIZE = 32;
+    private final JButton okButton;
 
     public Controller getController() {
         return controller;
@@ -49,6 +49,7 @@ public class SokobanWindow extends JFrame implements KeyListener{
         this.pack();
         this.setLocationRelativeTo( null );
         this.setVisible( true );
+        okButton = new JButton("OK");
     }
 
     @Override
@@ -98,14 +99,34 @@ public class SokobanWindow extends JFrame implements KeyListener{
         }
     }
 
-    private void handleEndOfLevel() {
+     private void handleEndOfLevel() {
         if (controller.isOnCustomLevel()) {
-            JOptionPane.showMessageDialog(this, "Congratulations, you've completed the level!");
-            exitGame();
+
+            JDialog dialog = new JDialog(this, "Level Complete!", true);
+            okButton.addActionListener(_ -> dialog.dispose());
+
+            JOptionPane.showOptionDialog(
+                dialog,
+                "Congratulations! You've completed the level!",
+                "Level Complete!",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{okButton},
+                okButton
+            );
+
+            dispose();
+            new HomeWindow();
         }
         else {
             handleNextLevel();
         }
+    }
+
+    @VisibleForTesting
+    void clickOkButton() {
+        okButton.doClick();
     }
 
     private void handleNextLevel() {

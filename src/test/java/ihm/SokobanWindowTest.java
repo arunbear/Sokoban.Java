@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.awt.*;
 import java.util.stream.Stream;
 
 import javax.swing.*;
@@ -15,6 +17,8 @@ import java.awt.event.KeyEvent;
 import java.nio.file.Paths;
 
 import static org.assertj.core.api.BDDAssertions.then;
+
+import java.util.Arrays;
 
 @NullMarked
 class SokobanWindowTest {
@@ -32,7 +36,11 @@ class SokobanWindowTest {
 
     @AfterEach
     void tearDown() {
-        window.dispose();
+
+        // Clean up windows
+        Arrays.stream(java.awt.Window.getWindows())
+                .filter(java.awt.Window::isDisplayable)
+                .forEach(java.awt.Window::dispose);
     }
 
     /**
@@ -246,5 +254,36 @@ class SokobanWindowTest {
         // then - worker should be back at initial position
         then(controller.getWorker().getColumn()).isNotEqualTo(columnAfterMove);
         then(controller.getWorker().getColumn()).isEqualTo(initialColumn);
+    }
+
+    @Test
+    void completing_a_custom_level_disposes_window_and_shows_home_window() {
+        // given - create a test window with the simplified level that only needs one push
+        window = createTestWindow("src/test/resources/levels/test_level_end.txt");
+
+        // Simulate the user clicking OK to close the level completion dialog.
+        // This has to be done before the move to push the box to the target
+        // because the dialog will wait for user input
+        Timer timer = new Timer(10, _ -> window.clickOkButton());
+        timer.setRepeats(false);
+        SwingUtilities.invokeLater(timer::start);
+
+        // When:
+        // Single move to push the box to the target
+        KeyEvent rightKey = new KeyEvent(window,
+                KeyEvent.KEY_PRESSED,
+                System.currentTimeMillis(),
+                0,
+                KeyEvent.VK_RIGHT,
+                KeyEvent.CHAR_UNDEFINED);
+        window.keyPressed(rightKey);
+
+        then(window.isShowing())
+                .as("Window is disposed after level completion and OK click")
+                .isFalse();
+
+        then(Window.getWindows())
+                .as("Contains a visible HomeWindow")
+                .anyMatch(w -> w instanceof HomeWindow && w.isShowing());
     }
 }
