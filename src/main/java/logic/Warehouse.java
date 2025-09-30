@@ -1,4 +1,5 @@
 package logic;
+
 import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -18,9 +20,9 @@ public class Warehouse {
 
     private final List<Cell> cells = new ArrayList<>();
 
-	public Warehouse(String path_to_level, Worker worker)  {
+    public Warehouse(String path_to_level, Worker worker) {
 
-    	Path file = Paths.get(path_to_level);
+        Path file = Paths.get(path_to_level);
         List<String> linesFromFile;
         try {
             linesFromFile = Files.readAllLines(file, StandardCharsets.UTF_8);
@@ -34,45 +36,31 @@ public class Warehouse {
         this.columns = linesFromFile.getFirst().length();
         checkState(this.columns >= 5);
 
-		parseLevel(worker, linesFromFile);
-	}
+        parseLevel(worker, linesFromFile);
+    }
 
-	private void parseLevel(Worker worker, List<String> linesFromFile) {
-		for (int i = 0; i<this.lines; i++) {
-			for(int j = 0; j<this.columns; j++) {
+    private void parseLevel(Worker worker, List<String> linesFromFile) {
+        IntStream.range(0, this.lines)
+            .forEach(i -> IntStream.range(0, this.columns)
+                .forEach(j -> {
+                    char cellChar = linesFromFile.get(i).charAt(j);
 
-                switch (Character.toString(linesFromFile.get(i).charAt(j))) {
-                    case "_" ->
-                            cells.add(new Cell(i, j, TileType.OUTSIDE, this));
-                    case "M" ->
-                            cells.add(new Cell(i, j, TileType.WALL, this));
-                    case "#" ->
-                            cells.add(new Cell(i, j, TileType.FLOOR, this));
-                    case "T" ->
-                            cells.add(new Cell(i, j, TileType.STORAGE_AREA, this));
-                    case "G" -> {
-                        cells.add(new Cell(i, j, TileType.WORKER_ON_FLOOR, this));
-                        worker.moveTo(i, j);
-                    }
-                    case "C" ->
-                            cells.add(new Cell(i, j, TileType.UNSTORED_BOX, this));
-                    case "B" -> {
-                        cells.add(new Cell(i, j, TileType.WORKER_IN_STORAGE_AREA, this));
-                        worker.moveTo(i, j);
-                    }
-                    case "V" ->
-                            cells.add(new Cell(i, j, TileType.STORED_BOX, this));
-
-                    default -> throw new RuntimeException("Invalid tile type: " + linesFromFile.get(i).charAt(j));
-                }
-
-			}
-		}
-	}
+                    TileType.fromCode(cellChar).ifPresentOrElse(
+                        type -> {
+                            cells.add(new Cell(i, j, type, this));
+                            if (type == TileType.WORKER_ON_FLOOR || type == TileType.WORKER_IN_STORAGE_AREA) {
+                                worker.moveTo(i, j);
+                            }
+                        },
+                        () -> { throw new RuntimeException("Invalid tile type: " + cellChar); }
+                    );
+                })
+            );
+    }
 
 
-	public Cell getCell(int l, int c) {
-    	return cells.get(l*this.columns + c);
+    public Cell getCell(int l, int c) {
+        return cells.get(l * this.columns + c);
     }
 
 
@@ -81,11 +69,11 @@ public class Warehouse {
     }
 
     public int getLines() {
-    	return lines;
+        return lines;
     }
 
     public int getColumns() {
-    	return columns;
+        return columns;
     }
 
 }
