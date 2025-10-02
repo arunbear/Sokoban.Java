@@ -111,7 +111,7 @@ public class Editor extends JFrame implements MouseListener, MouseMotionListener
     }
 
     private void setupSokobanPanel() {
-        JPanel sokobanPanel = new SokobanPanel(controller.getWarehouse());
+        JPanel sokobanPanel = new SokobanPanel(controller);
         sokobanPanel.setName(Component.SOKOBAN_PANEL.name());
         this.add(sokobanPanel);
     }

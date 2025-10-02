@@ -4,27 +4,19 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import one.util.streamex.IntStreamEx;
 import java.util.EnumMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import logic.TileType;
-import logic.Warehouse;
+import logic.Controller;
 import org.jspecify.annotations.NullMarked;
 
 import static ihm.SokobanWindow.IMAGE_SIZE;
 
 @NullMarked
 public class SokobanPanel extends JPanel {
-
-    private final Warehouse warehouse;
-
-    public SokobanPanel(Warehouse warehouse) {
-        this.warehouse = warehouse;
-    }
-
     private static final EnumMap<TileType, Image> images;
 
     static {
@@ -48,22 +40,23 @@ public class SokobanPanel extends JPanel {
         return ImageIO.read(new File(path));
     }
 
+    private final Controller controller;
+
+    public SokobanPanel(Controller controller) {
+        this.controller = controller;
+    }
+
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paint( Graphics g ) {
+    	super.paint( g );
         // Business logic uses [row, column] coordinates
         // UI uses [x, y] coordinates
         // So x <=> column and y <=> row
-        IntStreamEx.range(warehouse.getLines())
-            .forEach(l -> IntStreamEx.range(warehouse.getColumns())
-                .forEach(c -> g.drawImage(
-                    images.get(warehouse.getCell(l, c).getTileType()),
-                    c * IMAGE_SIZE,
-                    l * IMAGE_SIZE,
-                    IMAGE_SIZE,
-                    IMAGE_SIZE,
-                    null
-                )));
+        for(int l = 0; l < controller.getWarehouse().getLines(); l++ ) {
+            for(int c = 0; c < controller.getWarehouse().getColumns(); c++ ) {
+                g.drawImage( images.get(controller.getWarehouse().getCell(l, c).getTileType()), c * IMAGE_SIZE, l * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE, null);
+            }
+        }
     }
 
 }
