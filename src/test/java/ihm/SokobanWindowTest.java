@@ -290,6 +290,40 @@ class SokobanWindowTest {
     }
 
     @Test
+    void resets_level_when_backspace_key_is_pressed() {
+        // given - make a move and change the level state
+        int initialLine   = controller.getWorker().getLine();
+        int initialColumn = controller.getWorker().getColumn();
+
+        // Move right to change the state
+        KeyEvent rightKey = new KeyEvent(window,
+                KeyEvent.KEY_PRESSED,
+                System.currentTimeMillis(),
+                0,
+                KeyEvent.VK_RIGHT,
+                KeyEvent.CHAR_UNDEFINED);
+        window.keyPressed(rightKey);
+        window.keyPressed(rightKey); // again
+
+        // when - press backspace to reset the level
+        KeyEvent resetKey = new KeyEvent(window,
+                KeyEvent.KEY_PRESSED,
+                System.currentTimeMillis(),
+                0,
+                KeyEvent.VK_BACK_SPACE,
+                KeyEvent.CHAR_UNDEFINED);
+        window.keyPressed(resetKey);
+
+        // then - worker should be back at initial position
+        then(controller.getWorker().getLine())
+            .as("line position is restored when resetting level")
+            .isEqualTo(initialLine);
+        then(controller.getWorker().getColumn())
+            .as("column position is restored when resetting level")
+            .isEqualTo(initialColumn);
+    }
+
+    @Test
     void completing_a_custom_level_disposes_window_and_shows_home_window() {
         // given - create a test window with the simplified level that only needs one push
         window = createTestWindow("src/test/resources/levels/test_level_end.txt");

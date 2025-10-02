@@ -20,6 +20,8 @@ helper_methods_after_caller = true
 make_minimal_changes = true
 # Code formatting
 no_trailing_spaces = true
+# Align related assignment statements in columns when they appear together
+align_related_assignments = true
 # Avoid comments that state the obvious or repeat the code
 avoid_superfluous_comments = true
 
