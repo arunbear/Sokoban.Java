@@ -335,8 +335,7 @@ class SokobanWindowTest {
         timer.setRepeats(false);
         SwingUtilities.invokeLater(timer::start);
 
-        // When:
-        // Single move to push the box to the target
+        // When: Perform a single move to push the box onto the target and end the level
         KeyEvent rightKey = new KeyEvent(window,
                 KeyEvent.KEY_PRESSED,
                 System.currentTimeMillis(),
@@ -352,5 +351,39 @@ class SokobanWindowTest {
         then(Window.getWindows())
                 .as("Contains a visible HomeWindow")
                 .anyMatch(w -> w instanceof HomeWindow && w.isShowing());
+    }
+
+    @Test
+    void completing_level_1_loads_next_level() {
+        // given - create a test window with the simplified test level
+        window = createTestWindow("src/test/resources/levels/level1.txt");
+
+        // Simulate the user clicking Next Level to proceed to the next level
+        // This has to be done before the move to push the box to the target
+        // because the dialog will wait for user input
+        Timer timer = new Timer(10, _ -> window.clickNextLevelButton());
+        timer.setRepeats(false);
+        SwingUtilities.invokeLater(timer::start);
+
+        // When: Perform a single move to push the box onto the target and end the level
+        pressKey(KeyEvent.VK_RIGHT);
+
+        then(window.isShowing())
+                .as("Current window is disposed after level completion")
+                .isFalse();
+
+        then(Window.getWindows())
+                .as("A new window with title 'Level 2' is created")
+                .anyMatch(w -> w instanceof SokobanWindow sw && sw.getTitle().equals("Level 2"));
+    }
+
+    private void pressKey(int keyCode) {
+        KeyEvent keyEvent = new KeyEvent(window,
+                KeyEvent.KEY_PRESSED,
+                System.currentTimeMillis(),
+                0,
+                keyCode,
+                KeyEvent.CHAR_UNDEFINED);
+        window.keyPressed(keyEvent);
     }
 }

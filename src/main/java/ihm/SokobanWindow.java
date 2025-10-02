@@ -4,7 +4,6 @@ import java.awt.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -19,7 +18,8 @@ import org.jspecify.annotations.NullMarked;
 public class SokobanWindow extends JFrame implements KeyListener{
 
     public static final int IMAGE_SIZE = 32;
-    private final JButton okButton;
+    private final JButton okButton = new JButton("OK");
+    private final JButton nextLevelButton = new JButton("Next level");
 
     public Controller getController() {
         return controller;
@@ -49,7 +49,6 @@ public class SokobanWindow extends JFrame implements KeyListener{
         this.pack();
         this.setLocationRelativeTo( null );
         this.setVisible( true );
-        okButton = new JButton("OK");
     }
 
     @Override
@@ -129,24 +128,36 @@ public class SokobanWindow extends JFrame implements KeyListener{
         okButton.doClick();
     }
 
+    @VisibleForTesting
+    void clickNextLevelButton() {
+        nextLevelButton.doClick();
+    }
+
     private void handleNextLevel() {
-        Object[] options = {"Next level", "Quit"};
-        Image image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-        int result = JOptionPane.showOptionDialog(this,
-                "You won!",
-                "End of level",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                new ImageIcon(image),
-                options,
-                options[0]);
-        if (result == JOptionPane.YES_OPTION) {
+        JDialog dialog = new JDialog(this, "Level Complete!", true);
+
+        nextLevelButton.addActionListener(_ -> {
+            dialog.dispose();
             this.dispose();
             new SokobanWindow(this.controller.nextLevel());
-        }
-        else if (result == JOptionPane.NO_OPTION) {
+        });
+
+        JButton quitButton = new JButton("Quit");
+        quitButton.addActionListener(_ -> {
+            dialog.dispose();
             exitGame();
-        }
+        });
+
+        JOptionPane.showOptionDialog(
+            dialog,
+            "You won!",
+            "Level Complete!",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.INFORMATION_MESSAGE,
+            null,
+            new Object[]{nextLevelButton, quitButton},
+            nextLevelButton
+        );
     }
 
     @Override

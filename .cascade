@@ -10,8 +10,6 @@ avoid_unnecessary_getters = true
 # Method ordering: helper methods after their callers
 # Test names should be propositional (e.g., "returns_true_when_condition_met")
 propositional_test_names = true
-# Test descriptions should be propositional (e.g., "returns_initial_position_after_undo")
-propositional_test_descriptions = true
 helper_methods_after_caller = true
 
 [editing]
@@ -24,6 +22,13 @@ no_trailing_spaces = true
 align_related_assignments = true
 # Avoid comments that state the obvious or repeat the code
 avoid_superfluous_comments = true
+
+[testing]
+# Assertion messages should be propositional statements
+# - Should be clear, testable statements of fact
+# - Present tense is preferred (e.g., "is" instead of "should be")
+# - Should describe the expected state/behavior
+propositional_assertion_messages = true
 
 [communication]
 # Be direct and to the point
