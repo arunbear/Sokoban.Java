@@ -257,6 +257,39 @@ class SokobanWindowTest {
     }
 
     @Test
+    void can_undo_the_last_move() {
+        // given - make a move
+        int initialLine   = controller.getWorker().getLine();
+        int initialColumn = controller.getWorker().getColumn();
+
+        // Move right
+        KeyEvent rightKey = new KeyEvent(window,
+                KeyEvent.KEY_PRESSED,
+                System.currentTimeMillis(),
+                0,
+                KeyEvent.VK_RIGHT,
+                KeyEvent.CHAR_UNDEFINED);
+        window.keyPressed(rightKey);
+
+        // when - press space to step back
+        KeyEvent spaceKey = new KeyEvent(window,
+                KeyEvent.KEY_PRESSED,
+                System.currentTimeMillis(),
+                0,
+                KeyEvent.VK_SPACE,
+                KeyEvent.CHAR_UNDEFINED);
+        window.keyPressed(spaceKey);
+
+        // then - worker should be back at initial position
+        then(controller.getWorker().getLine())
+            .as("line position is restored when undoing last move")
+            .isEqualTo(initialLine);
+        then(controller.getWorker().getColumn())
+            .as("column position is restored when undoing last move")
+            .isEqualTo(initialColumn);
+    }
+
+    @Test
     void completing_a_custom_level_disposes_window_and_shows_home_window() {
         // given - create a test window with the simplified level that only needs one push
         window = createTestWindow("src/test/resources/levels/test_level_end.txt");

@@ -10,6 +10,8 @@ avoid_unnecessary_getters = true
 # Method ordering: helper methods after their callers
 # Test names should be propositional (e.g., "returns_true_when_condition_met")
 propositional_test_names = true
+# Test descriptions should be propositional (e.g., "returns_initial_position_after_undo")
+propositional_test_descriptions = true
 helper_methods_after_caller = true
 
 [editing]
