@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.nio.file.Paths;
 
 import static org.assertj.core.api.BDDAssertions.then;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 
 import java.util.Arrays;
 
@@ -361,7 +362,7 @@ class SokobanWindowTest {
         // Simulate the user clicking Next Level to proceed to the next level
         // This has to be done before the move to push the box to the target
         // because the dialog will wait for user input
-        Timer timer = new Timer(10, _ -> window.clickNextLevelButton());
+        Timer timer = new Timer(100, _ -> window.clickNextLevelButton());
         timer.setRepeats(false);
         SwingUtilities.invokeLater(timer::start);
 
@@ -375,6 +376,37 @@ class SokobanWindowTest {
         then(Window.getWindows())
                 .as("A new window with title 'Level 2' is created")
                 .anyMatch(w -> w instanceof SokobanWindow sw && sw.getTitle().equals("Level 2"));
+    }
+
+    @Test
+    void no_more_levels_after_completing_level_10() {
+        // given - create a test window with the simplified test level
+        window.dispose();
+        window = createTestWindow("src/test/resources/levels/level10.txt");
+
+        // Simulate the user clicking Next Level to proceed to the next level
+        // This has to be done before the move to push the box to the target
+        // because the dialog will wait for user input
+        Timer timer = new Timer(100, _ -> window.clickOkButton());
+        timer.setRepeats(false);
+        SwingUtilities.invokeLater(timer::start);
+
+        // When:
+        // Perform a single move to push the box onto the target and end the level
+
+        assertTimeoutPreemptively(
+            java.time.Duration.ofSeconds(2),
+            () -> pressKey(KeyEvent.VK_RIGHT),
+            "Too long to complete the level"
+        );
+
+        then(window.isShowing())
+                .as("Current window is disposed after level completion")
+                .isFalse();
+
+        then(Window.getWindows())
+                .as("Contains a visible HomeWindow")
+                .anyMatch(w -> w instanceof HomeWindow && w.isShowing());
     }
 
     private void pressKey(int keyCode) {

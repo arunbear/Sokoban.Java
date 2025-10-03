@@ -99,7 +99,7 @@ public class SokobanWindow extends JFrame implements KeyListener{
     }
 
      private void handleEndOfLevel() {
-        if (controller.isOnCustomLevel()) {
+        if (controller.isOnCustomLevel() || controller.getLevel() == 10) {
 
             JDialog dialog = new JDialog(this, "Level Complete!", true);
             okButton.addActionListener(_ -> dialog.dispose());
